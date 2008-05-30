@@ -70,7 +70,7 @@ public TextTiling(RawText c, Stopword s) {
  * @param term java.lang.String
  * @param B java.util.Hashtable
  */
-protected void blockAdd(final String term, Hashtable B) {
+protected void blockAdd(final String term, Hashtable<String,Integer> B) {
 	Integer freq = (Integer) B.get(term);
 	
 	if (freq == null) freq = new Integer(1);
@@ -164,7 +164,7 @@ protected void boundaryIdentification() {
 	threshold = mean - sd / 2;
 
 	/* Identify segments in pseudo-sentence terms */
-	Vector pseudo_boundaries = new Vector();
+	Vector<Integer> pseudo_boundaries = new Vector<Integer>();
 	boolean largest = true; // Is the potential boundary the largest in the local area?
 	for (int i=depth_score.length; i-->0;) {
 
@@ -427,8 +427,8 @@ protected void similarityDetermination() {
 	Vector text = C.text; // The source text
 	Hashtable left = new Hashtable(); // Left sliding window
 	Hashtable right = new Hashtable(); // Right sliding window
-	Vector score = new Vector(); // Scores
-	Vector site = new Vector(); // Locations
+	Vector<Float> score = new Vector<Float>(); // Scores
+	Vector<Integer> site = new Vector<Integer>(); // Locations
 
 	/* Initialise windows */
 	for (int i=w; i-->0;) blockAdd((String) stemOf.get((String) text.elementAt(i)), left);
