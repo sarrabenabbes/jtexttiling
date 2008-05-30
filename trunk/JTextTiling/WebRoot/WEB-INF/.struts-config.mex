@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FlowViewLayout Version="1.2">
+  <StrutsActivity path="/ActualizarUsuario.do" location="1250,450" dimension="126,62" />
+  <StrutsActivity path="/EnviaCorreo.do" location="650,950" dimension="102,62" />
+  <StrutsActivity path="/VerArchivosMultiple.do" location="650,750" dimension="282,88" />
+  <StrutsActivity path="/VerArchivosSimple.do" location="50,850" dimension="266,88" />
+  <StrutsActivity path="/AplicarAlgoritmo.do" location="50,550" dimension="237,88" />
+  <StrutsActivity path="/Salir.do" location="350,450" dimension="63,62" />
+  <StrutsActivity path="/BorrarArchivo.do" location="950,350" dimension="109,62" />
+  <StrutsActivity path="/AltaUsuario.do" location="50,350" dimension="215,88" />
+  <StrutsActivity path="/ComprobarUsuario.do" location="950,150" dimension="249,88" />
+  <StrutsActivity path="/CargaArchivo.do" location="585,165" dimension="108,62" />
+  <StrutsActivity path="/mensajes.jsp" location="50,150" dimension="96,49" />
+  <StrutsActivity path="/verArchivo.jsp" location="350,750" dimension="103,49" />
+  <StrutsActivity path="aplicarAlgoritmo.jsp" location="350,650" dimension="123,49" />
+  <StrutsActivity path="/errorDesconocido.jsp" location="1250,650" dimension="135,49" />
+  <StrutsActivity path="/index.jsp" location="650,450" dimension="77,49" />
+  <StrutsActivity path="eliminarArchivo.jsp" location="650,350" dimension="119,49" />
+  <StrutsActivity path="index.jsp" location="350,50" dimension="73,49" />
+  <StrutsActivity path="/bienvenida.jsp" location="650,650" dimension="103,49" />
+  <StrutsActivity path="subirArchivo.jsp" location="350,350" dimension="106,49" />
+  <StrutsActivity path="./bienvenida.jsp" location="650,550" dimension="107,49" />
+  <StrutsActivity path="./mensajes.jsp" location="1250,250" dimension="100,49" />
+  <StrutsActivity path="mensajes.jsp" location="50,250" dimension="92,49" />
+  <StrutsActivity path="/listaArchivos.jsp" location="350,250" dimension="111,49" />
+  <StrutsActivity path="/modificarArchivo.jsp" location="950,650" dimension="130,49" />
+  <StrutsActivity path="listaArchivos.jsp" location="350,150" dimension="107,49" />
+  <StrutsActivity path="/exito.jsp" location="650,50" dimension="75,49" />
+  <StrutsActivity path="/error.jsp" location="950,50" dimension="75,49" />
+  <StrutsActivity path="/" location="950,550" dimension="33,49" />
+  <StrutsTransition id="/EnviaCorreo.do,exito,/mensajes.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="701,981" />
+      <AbsolutePoint location="98,174" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/ComprobarUsuario.do,exito,/bienvenida.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="1074,194" />
+      <AbsolutePoint location="0,0" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="subirArchivo.jsp,null,/CargaArchivo.do,2" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="456,374" />
+      <AbsolutePoint location="635,374" />
+      <AbsolutePoint location="635,227" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/Salir.do,error,/mensajes.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="350,481" />
+      <AbsolutePoint location="-45,481" />
+      <AbsolutePoint location="-45,174" />
+      <AbsolutePoint location="50,174" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="aplicarAlgoritmo.jsp,null,/AplicarAlgoritmo.do,2" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="398,650" />
+      <AbsolutePoint location="398,584" />
+      <AbsolutePoint location="287,584" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/VerArchivosMultiple.do,exito,/verArchivo.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="650,784" />
+      <AbsolutePoint location="453,784" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/AplicarAlgoritmo.do,exito,/mensajes.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="280,550" />
+      <AbsolutePoint location="280,196" />
+      <AbsolutePoint location="146,196" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/BorrarArchivo.do,exito,/mensajes.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="1059,381" />
+      <AbsolutePoint location="1274,381" />
+      <AbsolutePoint location="1274,-45" />
+      <AbsolutePoint location="98,-45" />
+      <AbsolutePoint location="98,150" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="eliminarArchivo.jsp,null,/BorrarArchivo.do,2" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="769,374" />
+      <AbsolutePoint location="950,374" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/VerArchivosSimple.do,exito,/verArchivo.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="183,850" />
+      <AbsolutePoint location="183,774" />
+      <AbsolutePoint location="350,774" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/Salir.do,exito,/index.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="413,481" />
+      <AbsolutePoint location="650,481" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/Salir.do,errorDesc,/errorDesconocido.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="381,481" />
+      <AbsolutePoint location="1317,674" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/ComprobarUsuario.do,error,/mensajes.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="1104,150" />
+      <AbsolutePoint location="1104,-120" />
+      <AbsolutePoint location="68,-120" />
+      <AbsolutePoint location="68,150" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/AplicarAlgoritmo.do,error,/mensajes.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="168,594" />
+      <AbsolutePoint location="98,174" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/CargaArchivo.do,exito,/mensajes.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="635,165" />
+      <AbsolutePoint location="635,15" />
+      <AbsolutePoint location="128,15" />
+      <AbsolutePoint location="128,150" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/VerArchivosMultiple.do,error,/mensajes.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="791,794" />
+      <AbsolutePoint location="98,174" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/VerArchivosSimple.do,error,/mensajes.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="50,894" />
+      <AbsolutePoint location="-120,894" />
+      <AbsolutePoint location="-120,214" />
+      <AbsolutePoint location="98,214" />
+      <AbsolutePoint location="98,199" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/ComprobarUsuario.do,errorDesc,/errorDesconocido.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="1074,194" />
+      <AbsolutePoint location="1317,674" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="index.jsp,null,/AltaUsuario.do,2" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="350,74" />
+      <AbsolutePoint location="191,74" />
+      <AbsolutePoint location="191,350" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/AltaUsuario.do,exito,/mensajes.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="157,394" />
+      <AbsolutePoint location="98,174" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/ActualizarUsuario.do,exito,/mensajes.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="1313,481" />
+      <AbsolutePoint location="98,174" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="index.jsp,null,/ComprobarUsuario.do,2" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="386,99" />
+      <AbsolutePoint location="386,114" />
+      <AbsolutePoint location="1074,114" />
+      <AbsolutePoint location="1074,150" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+</FlowViewLayout>
+
