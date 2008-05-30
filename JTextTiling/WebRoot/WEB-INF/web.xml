@@ -25,16 +25,6 @@
     <servlet-class>es.project.servlets.AlgoritmoServlet</servlet-class>
   </servlet>
   
-  <filter>
-  	 <filter-name>FiltroComprobarUsuario</filter-name>
-  	 <filter-class>es.project.filtros.FiltroComprobarUsuario</filter-class>
-  </filter>
-   
-  <filter-mapping>
-  	 <filter-name>FiltroComprobarUsuario</filter-name>
-  	 <url-pattern>/Salir.do</url-pattern>
-  </filter-mapping> 
-  
   <servlet-mapping>
     <servlet-name>action</servlet-name>
     <url-pattern>*.do</url-pattern>
