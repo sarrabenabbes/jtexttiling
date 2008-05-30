@@ -61,6 +61,16 @@ public class AplicarAlgoritmoAction extends Action{
 		return mapping.findForward(retorno);
 	}
 	
+	/**
+	 * <p>Obtiene los valores de los parámetros necesarios para la ejecución del algoritmo:
+	 * o bien del formulario o del fichero de un propiedades. Una vez obtenidos todos los
+	 * datos, realiza la llamada al método main del algoritmo, que se encarga de aplicar el
+	 * algoritmo al fichero especificado, guardar el resultado en la ruta indicada e imprimir
+	 * las especificaciones de los posibles problemas ocurridos.</p>
+	 * @param nombreArchivo Nombre del archivo al que queremos aplicar el algoritmo
+	 * @param nombreUsuario Nombre del usuario propietario del archivo al que vamos a aplicar
+	 * el algoritmo
+	 */
 	private void aplicarAlgoritmo(String nombreArchivo, String nombreUsuario) {
 		String separador = ConfigFicheros.getSeparador();
 		String window = ConfigAlgoritmo.getWindow();
