@@ -47,6 +47,7 @@ public class AplicarAlgoritmoAction extends Action{
 			Usuario user = (Usuario)request.getSession().getAttribute("usuarioActual");
 			this.aplicarAlgoritmo(nombres[0], user.getNombre());
 			//TODO sistema de archivos y actualizar BD 
+			//TODO in the ghetto
 		}
 		else {
 			retorno = "error";
