@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN" "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+
+<struts-config>
+  <data-sources />
+  <form-beans>
+  	<form-bean name="CargaArchivoForm" type="es.project.forms.CargaArchivoForm"/>
+  	<form-bean name="UsuarioForm" type="es.project.forms.UsuarioForm"/>
+  	<form-bean name="ArchivoForm" type="es.project.forms.ArchivoForm"/>
+  	<form-bean name="ListaNombresArchivoForm" type="es.project.forms.ListaNombresArchivoForm"/>
+  </form-beans>
+  <global-exceptions />
+  <global-forwards />
+  <action-mappings>
+  	<action 
+  		path="/ActualizarUsuario"
+  		type="es.project.actions.ActualizarUsuarioAction"
+  		name="UsuarioForm"
+  		scope="request"
+  		validate="false">
+  	<forward name="exito" path="/mensajes.jsp"/>
+  	</action>
+  	<action 
+  		path="/EnviaCorreo"
+  		type="es.project.actions.EnviaCorreoAction">
+  	<forward name="exito" path="/mensajes.jsp"/>
+  	</action>
+  	<action
+  		path="/VerArchivosMultiple"
+  		type="es.project.actions.VerArchivosMultipleAction"
+  		name="ListaNombresArchivoForm"
+  		scope="request"
+  		validate="false">
+  	<forward name="exito" path="/verArchivo.jsp"/>
+  	<forward name="error" path="/mensajes.jsp"/>
+  	</action>
+  	<action
+  		path="/VerArchivosSimple"
+  		type="es.project.actions.VerArchivosSimpleAction"
+  		name="ArchivoForm"
+  		scope="request"
+  		validate="false">
+  	<forward name="exito" path="/verArchivo.jsp"/>
+  	<forward name="error" path="/mensajes.jsp"/>
+  	</action>
+  	<action
+  		input="aplicarAlgoritmo.jsp"
+  		path="/AplicarAlgoritmo"
+  		type="es.project.actions.AplicarAlgoritmoAction"
+  		name="ListaNombresArchivoForm"
+  		scope="request"
+  		validate="false">
+  	<forward name="exito" path="/mensajes.jsp"/>
+  	<forward name="error" path="/mensajes.jsp"/>
+  	</action>
+  	<action 
+  		path="/Salir"
+  		type="es.project.actions.FinalizarSesionAction"
+  		name="UsuarioForm"
+  		scope="request"
+  		validate="false">
+  	<forward name="exito" path="/index.jsp"/>
+  	<forward name="error" path="/mensajes.jsp"/>
+  	<forward name="errorDesc" path="/errorDesconocido.jsp"/>
+  	</action>
+  	<action
+  		input="eliminarArchivo.jsp"
+  		path="/BorrarArchivo"
+  		type="es.project.actions.BorraArchivoAction"
+  		name="ListaNombresArchivoForm"
+  		scope="request"
+  		validate="false">
+  	<forward name="exito" path="/mensajes.jsp"/>
+  	</action>
+  	<action 
+  		input="index.jsp"
+  		path="/AltaUsuario"
+  		type="es.project.actions.AltaUsuarioAction"
+  		name="UsuarioForm"
+  		scope="request"
+  		validate="false">
+  		<forward name="exito" path="/mensajes.jsp"/>
+  	</action>
+  	<action 
+  		input="index.jsp"
+  		path="/ComprobarUsuario"
+  		type="es.project.actions.ComprobarUsuarioAction"
+  		name="UsuarioForm"
+  		scope="request"
+  		validate="false">
+  		<forward name="exito" path="/bienvenida.jsp"/>
+  		<forward name="error" path="/mensajes.jsp"/>
+  		<forward name="errorDesc" path="/errorDesconocido.jsp"/>
+  	</action>
+  	<action 
+  		input="subirArchivo.jsp" 
+  		path="/CargaArchivo" 
+  		type="es.project.actions.CargaArchivoAction" 
+  		name="CargaArchivoForm"
+  		scope="request"
+  		validate="false">
+  		<forward name="exito" path="/mensajes.jsp"/>
+  	</action>
+  </action-mappings>
+  <controller maxFileSize="4M" inputForward="true"/>
+  <message-resources parameter="es.project.utilidades.ApplicationResources" />
+</struts-config>
+
