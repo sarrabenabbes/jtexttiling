@@ -185,11 +185,12 @@ public class ActualizarUsuarioAction extends Action{
 		Iterator<Archivo> i = lista.iterator();
 		List<Archivo> listaNueva = new LinkedList<Archivo>();
 		String rutaArchivo = ConfigFicheros.getRutaBase() + usuario.getNombre();
+		String separador = ConfigFicheros.getSeparador();
 		
 		while(i.hasNext()) {
 			Archivo aux = i.next();
-			facadeBD.actualizarRutaArchivo(aux, rutaArchivo + "\\" + aux.getNombreArchivo());
-			aux.setRutaArchivo(rutaArchivo + "\\" + aux.getNombreArchivo());
+			facadeBD.actualizarRutaArchivo(aux, rutaArchivo + separador + aux.getNombreArchivo());
+			aux.setRutaArchivo(rutaArchivo + separador + aux.getNombreArchivo());
 			listaNueva.add(aux);
 		}
 		request.getSession().setAttribute("listaArchivos", listaNueva);
