@@ -147,4 +147,8 @@
 		document.getElementById(nombreBoton).disabled = false;
 		return true;
 	}
+	
+	function recargar() {
+		window.location.reload();
+	}
 </script>
