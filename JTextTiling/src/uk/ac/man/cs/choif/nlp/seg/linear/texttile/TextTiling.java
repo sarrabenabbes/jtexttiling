@@ -1,11 +1,15 @@
 package uk.ac.man.cs.choif.nlp.seg.linear.texttile;
 
+import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Vector;
+
+import es.project.ficheros.configuracion.ConfigFicheros;
 
 import uk.ac.man.cs.choif.nlp.stemming.Porter;
 import uk.ac.man.cs.choif.nlp.stemming.Stemmer;
@@ -18,6 +22,8 @@ import uk.ac.man.cs.choif.nlp.struct.RawText;
  * @author: Freddy Choi
  */
 public class TextTiling {
+	private static String rutaArchivo = ""; 
+	private static String nombreArchivo = "";
 	/* Program parameters */
 	protected int w = 100; // Size of the sliding window
 	protected int s = 10; // Step size
@@ -249,48 +255,52 @@ protected void depthScore() {
  * Generate text output with topic boundary markers.
  * Creation date: (07/12/99 07:39:00)
  */
-protected static void genOutput(RawText c, Vector seg, String fileOutput) throws IOException{
+protected static void genOutput(RawText c, Vector seg, String dirOutput) throws IOException{
 	/* Declare variables */
 	Vector text = c.text; // The text
 	Vector sentence = c.boundaries; // Sentence boundaries
 	int start, end; // Sentence boundaries
-	OutputStreamWriter osw = new OutputStreamWriter(new FileOutputStream(fileOutput));
+	File directory = new File(dirOutput);
+	directory.mkdir();
+	
+	BufferedWriter bw;
+	OutputStreamWriter osw;
+	String separador = ConfigFicheros.getSeparador();
 	/* The implicit boundary at the beginning of the file */
 	String aux = "";
 	
-	aux = "==========";
-	osw.write(aux + "\n");
+	aux = "==========1";
+	int indice = 0;
 	System.out.println(aux);
-
+	bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(dirOutput + separador + "doc_" + indice + ".txt")));
 	/* Print all the sentences */
 	for (int i=1; i<sentence.size(); i++) {
-
 		/* Get sentence boundaries */
 		start = ((Integer) sentence.elementAt(i-1)).intValue();
 		end = ((Integer) sentence.elementAt(i)).intValue();
 
 		/* If start is a topic boundary, print marker */
 		if (seg.contains(new Integer(start))) {
-			aux = "\n==========";
+			aux = "\n==========2";
 			System.out.println(aux);
-			osw.write(aux + "\n");
+			bw.close();
+			bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(dirOutput + separador + "doc_" + (++indice) + ".txt")));
 		}
 
 		/* Print a sentence */
 		for (int j=start; j<end; j++) {
 			aux = text.elementAt(j) + " ";
 			System.out.print(aux);
-			osw.write(aux);
+			bw.write(aux);
 		}
 		System.out.println();
-		osw.write("\n");
+		bw.write("\n");
 	}
 
 	/* The implicit boundary at the end of the file */
-	aux = "\n==========";
+	aux = "\n==========3";
 	System.out.println(aux);
-	osw.write(aux + "\n");
-	osw.close();
+	bw.close();
 }
 /**
  * Decide whether word i is worth using as feature for segmentation.
@@ -349,7 +359,7 @@ public static void main(String[] args) {
 		
 		/* Load data */
 		Stopword s = new Stopword(stopwordList);
-		RawText c = new RawText(args[3]);
+		RawText c = new RawText(rutaArchivo);
 
 		/* A bit of error checking */
 		aux = "# Collection    : " + c.text.size();
@@ -370,7 +380,7 @@ public static void main(String[] args) {
 		t.similarityDetermination();				// Compute similarity scores
 		t.depthScore();								// Compute depth scores using the similarity scores
 		t.boundaryIdentification();					// Identify the boundaries
-		t.genOutput(c, t.segmentation, args[4]);	// Generate segmented output
+		t.genOutput(c, t.segmentation, args[3]);	// Generate segmented output
 		logMensajes = "- La ejecución del algoritmo concluyó correctamente, puede ver un fichero con los " +
 				"resultados en su espacio personal";
 		extraerLog(logMensajes);
@@ -482,5 +492,11 @@ protected void similarityDetermination() {
 		site_loc[j] = ((Integer) site.elementAt(j+1)).intValue();
 	}
 	
+}
+public static void setRutaArchivo(String rutaArchivo) {
+	TextTiling.rutaArchivo = rutaArchivo;
+}
+public static void setNombreArchivo(String nombreArchivo) {
+	TextTiling.nombreArchivo = nombreArchivo;
 }
 }
