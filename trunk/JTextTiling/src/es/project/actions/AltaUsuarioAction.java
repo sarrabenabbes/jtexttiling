@@ -37,31 +37,39 @@ public class AltaUsuarioAction extends Action{
 		    HttpServletRequest request,
 		    HttpServletResponse response) {
 		
-		ActionMessages listaMensajes = new ActionMessages();
-		UsuarioForm formulario = (UsuarioForm)form;
-		Usuario user = new Usuario(formulario.getNombreUsuario(), 
-				formulario.getPassword(),formulario.getEmail());
-		FacadeBD facadeBD = new FacadeBD();
 		String retorno = "exito";
 		
-		if ((formulario.getPassword().length() == 0) || (formulario.getPassword2().length() == 0)) 
-			listaMensajes.add("errores", new ActionMessage("error.PasswordVacio"));
+		
+		try {
+			ActionMessages listaMensajes = new ActionMessages();
+			UsuarioForm formulario = (UsuarioForm)form;
+			Usuario user = new Usuario(formulario.getNombreUsuario(), 
+					formulario.getPassword(),formulario.getEmail());
+			FacadeBD facadeBD = new FacadeBD();
+			
+			
+			if ((formulario.getPassword().length() == 0) || (formulario.getPassword2().length() == 0)) 
+				listaMensajes.add("errores", new ActionMessage("error.PasswordVacio"));
 
-		else if (formulario.getPassword().compareTo(formulario.getPassword2()) != 0) 
-			listaMensajes.add("errores", new ActionMessage("error.PasswordNoConcuerda"));
-		
-		
-		else {
-			if (!facadeBD.insertarUsuario(user)) 
-				listaMensajes.add("errores", new ActionMessage("error.altausuario",user.getNombre()));
-		
+			else if (formulario.getPassword().compareTo(formulario.getPassword2()) != 0) 
+				listaMensajes.add("errores", new ActionMessage("error.PasswordNoConcuerda"));
+			
+			
 			else {
-				mandarMailAlta(listaMensajes, user, facadeBD);
+				if (!facadeBD.insertarUsuario(user)) 
+					listaMensajes.add("errores", new ActionMessage("error.altausuario",user.getNombre()));
+			
+				else {
+					mandarMailAlta(listaMensajes, user, facadeBD);
+				}
 			}
+			
+			if (!listaMensajes.isEmpty())
+				saveMessages(request, listaMensajes);
+			
+		} catch (Exception e) {
+			retorno = "errorDesc";
 		}
-		
-		if (!listaMensajes.isEmpty())
-			saveMessages(request, listaMensajes);
 		
 		return mapping.findForward(retorno);
 	}
