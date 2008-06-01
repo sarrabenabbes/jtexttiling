@@ -47,7 +47,6 @@ public class AplicarAlgoritmoAction extends Action{
 			Usuario user = (Usuario)request.getSession().getAttribute("usuarioActual");
 			this.aplicarAlgoritmo(nombres[0], user.getNombre());
 			//TODO sistema de archivos y actualizar BD 
-			//TODO in the ghetto
 		}
 		else {
 			retorno = "error";
@@ -77,9 +76,11 @@ public class AplicarAlgoritmoAction extends Action{
 		String step = ConfigAlgoritmo.getStep();
 		String stopwords = ConfigAlgoritmo.getStopwordsPath();
 		String rutaArchivo = ConfigFicheros.getRutaBase() + nombreUsuario + separador + nombreArchivo;
-		String rutaSalida = ConfigFicheros.getRutaBase() + nombreUsuario + separador + "superTextTiling.txt";
+		String directorioSalida = ConfigFicheros.getRutaBase() + nombreUsuario + separador + nombreArchivo + "_JTT";
 		
-		String args[] = new String[]{window,step,stopwords,rutaArchivo,rutaSalida};
+		String args[] = new String[]{window,step,stopwords,directorioSalida};
+		TextTiling.setNombreArchivo(nombreArchivo);
+		TextTiling.setRutaArchivo(rutaArchivo);
 		TextTiling.main(args);
 		listaMensajes.add("mensajes", new ActionMessage("mensaje.VacioTextTiling",TextTiling.getMensaje()));
 	}
