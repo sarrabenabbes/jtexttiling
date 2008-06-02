@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
+import java.util.Calendar;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Vector;
@@ -261,15 +262,23 @@ protected static void genOutput(RawText c, Vector seg, String dirOutput) throws 
 	Vector sentence = c.boundaries; // Sentence boundaries
 	int start, end; // Sentence boundaries
 	File directory = new File(dirOutput);
-	directory.mkdir();
+	Calendar cr = Calendar.getInstance();
+	
+	if (!directory.exists())
+		directory.mkdir();
+	else {
+		dirOutput = dirOutput + "_" + cr.get(Calendar.HOUR_OF_DAY) + "h-" + cr.get(Calendar.MINUTE) + "m-" 
+		+ cr.get(Calendar.SECOND) + "s";
+		directory = new File(dirOutput);
+		directory.mkdir();
+	}
 	
 	BufferedWriter bw;
-	OutputStreamWriter osw;
 	String separador = ConfigFicheros.getSeparador();
 	/* The implicit boundary at the beginning of the file */
 	String aux = "";
 	
-	aux = "==========1";
+	aux = "==========";
 	int indice = 0;
 	System.out.println(aux);
 	bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(dirOutput + separador + "doc_" + indice + ".txt")));
@@ -281,7 +290,7 @@ protected static void genOutput(RawText c, Vector seg, String dirOutput) throws 
 
 		/* If start is a topic boundary, print marker */
 		if (seg.contains(new Integer(start))) {
-			aux = "\n==========2";
+			aux = "\n==========";
 			System.out.println(aux);
 			bw.close();
 			bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(dirOutput + separador + "doc_" + (++indice) + ".txt")));
@@ -298,7 +307,7 @@ protected static void genOutput(RawText c, Vector seg, String dirOutput) throws 
 	}
 
 	/* The implicit boundary at the end of the file */
-	aux = "\n==========3";
+	aux = "\n==========";
 	System.out.println(aux);
 	bw.close();
 }

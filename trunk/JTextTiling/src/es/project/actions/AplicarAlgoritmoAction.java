@@ -15,7 +15,7 @@ import uk.ac.man.cs.choif.nlp.seg.linear.texttile.TextTiling;
 import es.project.algoritmo.configuracion.ConfigAlgoritmo;
 import es.project.bd.objetos.Usuario;
 import es.project.ficheros.configuracion.ConfigFicheros;
-import es.project.forms.ListaNombresArchivoForm;
+import es.project.forms.AlgoritmoForm;
 
 /**
  * <p>Aplica el algoritmo JTextTiling a los archivos elegidos desde la página jsp.</p>
@@ -31,7 +31,8 @@ public class AplicarAlgoritmoAction extends Action{
 	 * de mensajes que nos informa de lo ocurrido.</p>
 	 * <p>Aplica el algoritmo JTextTiling al archivo elegido desde la página, según los parámetros
 	 * introducidos ("window" y "step"), y utilizando una lista dada de "stopwords". El resultado
-	 * se recoge en un archivo que se genera automáticamente dentro del espacio del usuario</p>
+	 * se recoge en un conjunto de archivoa que se generan automáticamente dentro del espacio del 
+	 * usuario</p>
 	 */
 	public ActionForward execute (ActionMapping mapping,
 		    ActionForm form,
@@ -42,10 +43,12 @@ public class AplicarAlgoritmoAction extends Action{
 		listaMensajes = new ActionMessages();
 		
 		if ((Boolean)request.getSession().getAttribute("usuarioActivo")) {
-			ListaNombresArchivoForm formulario = (ListaNombresArchivoForm)form;
-			String nombres[] = formulario.getNombreArchivos();
+			AlgoritmoForm formulario = (AlgoritmoForm)form;
+			String nombre = formulario.getNombreArchivo();
+			String window = formulario.getWindow();
+			String step = formulario.getStep();
 			Usuario user = (Usuario)request.getSession().getAttribute("usuarioActual");
-			this.aplicarAlgoritmo(nombres[0], user.getNombre());
+			this.aplicarAlgoritmo(nombre, window, step, user.getNombre());
 			//TODO sistema de archivos y actualizar BD 
 		}
 		else {
@@ -70,15 +73,15 @@ public class AplicarAlgoritmoAction extends Action{
 	 * @param nombreUsuario Nombre del usuario propietario del archivo al que vamos a aplicar
 	 * el algoritmo
 	 */
-	private void aplicarAlgoritmo(String nombreArchivo, String nombreUsuario) {
+	private void aplicarAlgoritmo(String nombreArchivo, String window, String step, String nombreUsuario) {
 		String separador = ConfigFicheros.getSeparador();
-		String window = ConfigAlgoritmo.getWindow();
-		String step = ConfigAlgoritmo.getStep();
+		String w = (window .compareTo("") != 0)?(window):(ConfigAlgoritmo.getWindow());
+		String s = (step.compareTo("") != 0)?(step):(ConfigAlgoritmo.getStep());
 		String stopwords = ConfigAlgoritmo.getStopwordsPath();
 		String rutaArchivo = ConfigFicheros.getRutaBase() + nombreUsuario + separador + nombreArchivo;
 		String directorioSalida = ConfigFicheros.getRutaBase() + nombreUsuario + separador + nombreArchivo + "_JTT";
 		
-		String args[] = new String[]{window,step,stopwords,directorioSalida};
+		String args[] = new String[]{w, s, stopwords, directorioSalida};
 		TextTiling.setNombreArchivo(nombreArchivo);
 		TextTiling.setRutaArchivo(rutaArchivo);
 		TextTiling.main(args);

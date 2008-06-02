@@ -6,7 +6,7 @@
 		<%request.getSession().setAttribute("botonSalir",true); %>
 		
 		<script type="text/javascript"> 
-   			window.setInterval("cambiaDefectoCheck('nombreArchivos','botonAplicar')",50);
+   			window.setInterval("cambiaDefectoCheck('nombreArchivo','botonAplicar')",50);
    		</script>	
    		
 		<div class="table">
@@ -36,9 +36,26 @@
 		<html:form action="/AplicarAlgoritmo">
 		<p>
 			<c:forEach items="${lista}" var="item" >
-		 	  	<html:checkbox property="nombreArchivos" value="${item}">${item}</html:checkbox><br />
+		 	  	<html:checkbox property="nombreArchivo" value="${item}">${item}</html:checkbox><br />
    	    	</c:forEach>
    	    </p>
+   	    
+   	    <table>
+   	    	<tr>
+   	    		<td>
+   	    			<p class="window">
+   	    			Window:<br />
+   	    			<html:text property="window"></html:text>
+   	    			</p>
+   	    		</td>
+   	    		<td>
+   	    			<p class="step">
+   	    			Step:<br />
+   	    			<html:text property="step"></html:text>
+   	    			</p>
+   	    		</td>
+   	    	</tr>
+   	    </table>
 	
 		<p class="enviar">
 			<html:submit styleId="botonAplicar" value="Aplicar" disabled="true"/>

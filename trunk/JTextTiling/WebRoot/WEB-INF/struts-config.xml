@@ -8,6 +8,7 @@
   	<form-bean name="UsuarioForm" type="es.project.forms.UsuarioForm"/>
   	<form-bean name="ArchivoForm" type="es.project.forms.ArchivoForm"/>
   	<form-bean name="ListaNombresArchivoForm" type="es.project.forms.ListaNombresArchivoForm"/>
+  	<form-bean name="AlgoritmoForm" type="es.project.forms.AlgoritmoForm"/>
   </form-beans>
   <global-exceptions />
   <global-forwards />
@@ -47,7 +48,7 @@
   		input="aplicarAlgoritmo.jsp"
   		path="/AplicarAlgoritmo"
   		type="es.project.actions.AplicarAlgoritmoAction"
-  		name="ListaNombresArchivoForm"
+  		name="AlgoritmoForm"
   		scope="request"
   		validate="false">
   	<forward name="exito" path="/mensajes.jsp"/>
