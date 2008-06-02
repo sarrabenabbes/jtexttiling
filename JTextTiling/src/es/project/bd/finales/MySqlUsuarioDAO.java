@@ -118,10 +118,11 @@ public class MySqlUsuarioDAO extends UsuarioDAO{
 	/**
 	 * <p>Busca en la base de datos si hay una fila en la que el nombre y el password coinciden
 	 * con los especificados como parámetro, lo que quiere decir que es un usuario dado de alta en la
-	 * aplicación.</p>
+	 * aplicación. También puede darse el caso de que esté almacenado en la base de datos, pero no
+	 * haya terminado de activar su cuenta, lo cual también se trata como que no está dado de alta.</p>
 	 * @param nombre Nombre del usuario a comprobar
 	 * @param password Password del usuario a comprobar
-	 * @return Verdadero si todo fue bien
+	 * @return Verdadero si el usuario está dado de alta
 	 */
 	private boolean comprobarUsuario(String nombre, String password) {
 		ResultSet rs;
@@ -649,5 +650,45 @@ public class MySqlUsuarioDAO extends UsuarioDAO{
 		ps.close();
 		
 		return valor;
+	}
+	
+	/**
+	 * <p>Método que hace de interfaz de la clase con el resto de la aplicación para
+	 * la operación de comprobar si el usuario que se está autenticando es el 
+	 * administrador. Llama al método "esRoot", privado, con los parámetros apropiados.</p>
+	 * @param usuario Objeto de tipo Usuario que representa al administrador
+	 * @return Verdadero si el usuario es el administrador
+	 */
+	public boolean esRoot(Usuario usuario) {
+		return this.esRoot(usuario.getPassword());
+	}
+	
+	/**
+	 * <p>Comprueba si el usuario que se está autenticando es el administrador del servicio,
+	 * para lo cual compara la contraseña introducida con la almacenada en la base de datos</p>
+	 * @param usuario Objeto de tipo Usuario que representa al administrador
+	 * @return Verdadero si el usuario es el administrador
+	 */
+	public boolean esRoot(String password) {
+		boolean root = true;
+		PreparedStatement ps;
+		ResultSet rs;
+		
+		try {
+			ps = conectorBD.getPreparedStatement("select * from usuarios where nombre = 'root' and password = ?");
+			ps.setString(1, password);
+			rs = ps.executeQuery();
+			
+			if (!rs.next())
+				root = false;
+			
+			rs.close();
+			ps.close();
+			
+		} catch (SQLException sql) {
+			System.err.println("MySqlUsuarioDAO/esRoot " + sql.getMessage());
+			root = false;
+		}
+		return root;
 	}
  }
