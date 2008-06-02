@@ -56,11 +56,14 @@ public class AltaUsuarioAction extends Action{
 			
 			
 			else {
-				if (!facadeBD.insertarUsuario(user)) 
-					listaMensajes.add("errores", new ActionMessage("error.altausuario",user.getNombre()));
-			
+				if (formulario.getNombreUsuario().compareToIgnoreCase("root") == 0)
+					listaMensajes.add("errores", new ActionMessage("error.AltaRoot"));
+				
 				else {
-					mandarMailAlta(listaMensajes, user, facadeBD);
+					if (!facadeBD.insertarUsuario(user)) 
+						listaMensajes.add("errores", new ActionMessage("error.altausuario",user.getNombre()));
+					else 
+						mandarMailAlta(listaMensajes, user, facadeBD);
 				}
 			}
 			

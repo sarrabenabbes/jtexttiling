@@ -285,6 +285,17 @@ public class FacadeBD {
 	}
 	
 	/**
+	 * <p>Método que hace de interfaz de la clase con el resto de la aplicación para
+	 * la operación de comprobar si el usuario que se está autenticando es el 
+	 * administrador. Llama al método "esRoot", privado, con los parámetros apropiados.</p>
+	 * @param usuario Objeto de tipo Usuario que representa al administrador
+	 * @return Verdadero si el usuario es el administrador
+	 */
+	public boolean esRoot(Usuario usuario) {
+		return usuarioDAO.esRoot(usuario);
+	}
+	
+	/**
 	 * <p>Accede al atributo</p>
 	 * @return Devuelve la cadena que se necesita pasar como parámetro a un método cuando queramos
 	 * referirnos al campo nombre de un usuario

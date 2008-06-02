@@ -152,5 +152,19 @@ public abstract class UsuarioDAO {
 	 */
 	public abstract boolean activarUsuario(Usuario usuario);
 	
+	/**
+	 * <p>Comprueba si un usuario está dado de alta en el servicio, para lo cual, comprueba en
+	 * la base de datos si la columna "activado" es "1"</p>
+	 * @param usuario Objeto de tipo Usuario que representa al usuario del que se quiere
+	 * saber si está activado
+	 * @return Verdadero si el usuario está dado de alta, falso en cualquier otro caso
+	 */
 	public abstract boolean estaActivado(Usuario usuario);
+	
+	/**
+	 * <p>Comprueba si el usuario que se está autenticando es el administrador del servicio</p>
+	 * @param usuario Objeto de tipo Usuario que representa al administrador
+	 * @return Verdadero si el usuario es el administrador
+	 */
+	public abstract boolean esRoot(Usuario usuario);
 }

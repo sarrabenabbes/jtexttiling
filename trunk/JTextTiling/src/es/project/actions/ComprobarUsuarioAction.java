@@ -50,6 +50,8 @@ public class ComprobarUsuarioAction extends Action{
 			Usuario user = new Usuario(nombre, password);
 			FacadeBD facadeBD = new FacadeBD();
 			
+			if (facadeBD.esRoot(user));
+			
 			if (!facadeBD.comprobarUsuario(user)) {
 				retorno = "error";
 				listaMensajes.add("errores", new ActionMessage("error.nombre.password",nombre));
