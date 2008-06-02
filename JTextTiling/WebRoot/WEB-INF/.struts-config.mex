@@ -116,14 +116,6 @@
       <AbsolutePoint location="1317,674" />
     </AutomaticBendpoints>
   </StrutsTransition>
-  <StrutsTransition id="/AltaUsuario.do,errorDesc,,1" routingType="0">
-    <AutomaticBendpoints>
-      <AbsolutePoint location="50,394" />
-      <AbsolutePoint location="-195,394" />
-      <AbsolutePoint location="-195,774" />
-      <AbsolutePoint location="50,774" />
-    </AutomaticBendpoints>
-  </StrutsTransition>
   <StrutsTransition id="/ComprobarUsuario.do,error,/mensajes.jsp,1" routingType="0">
     <AutomaticBendpoints>
       <AbsolutePoint location="1104,150" />

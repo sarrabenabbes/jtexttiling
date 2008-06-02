@@ -65,7 +65,7 @@ p.pEnlace {
 	background-color:#DDDDDD;
 }
 
-div.divPrincipal p.nombreUsuario, p.password, p.email {
+div.divPrincipal p.nombreUsuario, p.password, p.email, p.window, p.step {
 	font-weight: bold;
 }
 
