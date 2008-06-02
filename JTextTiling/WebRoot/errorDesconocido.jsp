@@ -2,7 +2,7 @@
 
 	<c:choose>
 	<c:when test="${sessionScope.usuarioActivo == true}">
-	<%request.getSession().setAttribute("botonSalir",true); %>
+	<%request.getSession().setAttribute("botonSalir",true);%>
 		<div class="table">
 			<table>
 				<tr>
