@@ -502,10 +502,11 @@ protected void similarityDetermination() {
 	}
 	
 }
-public static void setRutaArchivo(String rutaArchivo) {
-	TextTiling.rutaArchivo = rutaArchivo;
-}
-public static void setNombreArchivo(String nombreArchivo) {
-	TextTiling.nombreArchivo = nombreArchivo;
-}
+	public static void setRutaArchivo(String rutaArchivo) {
+		TextTiling.rutaArchivo = rutaArchivo;
+	}
+	
+	public static void setNombreArchivo(String nombreArchivo) {
+		TextTiling.nombreArchivo = nombreArchivo;
+	}
 }
