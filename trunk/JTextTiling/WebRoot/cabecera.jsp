@@ -1,6 +1,7 @@
 <%@ page language="java" 
 		 import="java.util.*,es.project.bd.objetos.Archivo,
-		 		es.project.bd.objetos.Usuario,es.project.facade.FacadeBD" 
+		 		es.project.bd.objetos.Usuario,es.project.facade.FacadeBD,
+		 		es.project.root.estadisticas.*" 
 		 pageEncoding="ISO-8859-1"
 		 errorPage="./errorDesconocido.jsp"%>
 

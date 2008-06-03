@@ -1,6 +1,5 @@
 package es.project.bd.finales;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -690,5 +689,36 @@ public class MySqlUsuarioDAO extends UsuarioDAO{
 			root = false;
 		}
 		return root;
+	}
+	
+	/**
+	 * <p>Copia en una lista la información de todos los usuarios almacenados en la base de datos</p>
+	 * @return Lista enlazada con las propiedades de los usuarios
+	 */
+	public List<Usuario> getTodosUsuarios() {
+		List<Usuario> lista = new LinkedList<Usuario>();
+		Statement stat;
+		ResultSet rs;
+		Usuario aux;
+		
+		try {
+			stat = conectorBD.getStatement();
+			rs = stat.executeQuery("select * from usuarios");
+			
+			while (rs.next()) {
+				aux = new Usuario(rs.getString("nombre"), rs.getString("password"),
+						rs.getString("email"));
+				aux.setUltimo_login(rs.getString("ultimo_login"));
+				lista.add(aux);
+			}
+			
+			rs.close();
+			stat.close();
+			
+		} catch (SQLException sql) {
+			System.err.println("MySqlArchivoDAO/esRoot " + sql.getMessage());
+			lista = null;
+		}
+		return lista;
 	}
  }

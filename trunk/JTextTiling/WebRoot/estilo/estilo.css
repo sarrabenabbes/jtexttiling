@@ -16,6 +16,16 @@ div.divPrincipal {
 	_border_left:5px;
 }
 
+div.divPrincipalRoot {
+	background-color:#FF3333;
+	margin-left:10%;
+	border-left:3px;
+	width:85%;
+	border: thin dotted blue;
+	_border: thin none blue;
+	_border_left:5px;
+}
+
 /* cerrar las ventanas de avisos */
 a.aCerrar {
 	margin-left:10%;
@@ -69,12 +79,12 @@ div.divPrincipal p.nombreUsuario, p.password, p.email, p.window, p.step {
 	font-weight: bold;
 }
 
-div.divPrincipal p {
+div.divPrincipal p, div.divPrincipalRoot p {
 	margin-left:1em;
 	font-size: 20px;
 }
 
-div.divPrincipal table tr td {
+div.divPrincipal table tr td, div.divPrincipalRoot table tr td {
 	font-size:20px;
 }
 

@@ -20,7 +20,7 @@ public abstract class UsuarioDAO {
 	public abstract void verUsuarios();
 	
 	/**
-	 * <p>Número total de usuario contenidos en la base de datos. PARA PRUEBAS</p>
+	 * <p>Número total de usuario contenidos en la base de datos.</p>
 	 * @return Número entero con el recuento
 	 */
 	public abstract int numeroUsuarios();
@@ -167,4 +167,10 @@ public abstract class UsuarioDAO {
 	 * @return Verdadero si el usuario es el administrador
 	 */
 	public abstract boolean esRoot(Usuario usuario);
+	
+	/**
+	 * <p>Copia en una lista la información de todos los usuarios almacenados en la base de datos</p>
+	 * @return Lista enlazada con las propiedades de los usuarios
+	 */
+	public abstract List<Usuario> getTodosUsuarios();
 }

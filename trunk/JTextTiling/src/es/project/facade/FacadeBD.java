@@ -74,7 +74,7 @@ public class FacadeBD {
 	 * muestra por pantalla</p>
 	 * @return Número de usuarios contenidos en la base de datos
 	 */
-	public int numeroUsuarios() {
+	public int getNumeroUsuarios() {
 		return usuarioDAO.numeroUsuarios();
 	}
 	
@@ -296,6 +296,13 @@ public class FacadeBD {
 	}
 	
 	/**
+	 * <p>Copia en una lista la información de todos los usuarios almacenados en la base de datos</p>
+	 * @return Lista enlazada con las propiedades de los usuarios
+	 */
+	public List<Usuario> getTodosUsuarios() {
+		return usuarioDAO.getTodosUsuarios();
+	}
+	/**
 	 * <p>Accede al atributo</p>
 	 * @return Devuelve la cadena que se necesita pasar como parámetro a un método cuando queramos
 	 * referirnos al campo nombre de un usuario
@@ -347,7 +354,7 @@ public class FacadeBD {
 	 * muestra por pantalla</p>
 	 * @return Número de archivos contenidos en la base de datos
 	 */
-	public int numeroArchivos() {
+	public int getNumeroArchivos() {
 		return archivoDAO.numeroArchivos();
 	}
 	
@@ -426,6 +433,18 @@ public class FacadeBD {
 	 */
 	public boolean actualizarNombreArchivo(Archivo archivo, String valor) {
 		return archivoDAO.actualizarNombreArchivo(archivo, valor);
+	}
+	
+	/**
+	 * <p>Recorre la tabla que almacena la información referente a los archivos y la copia
+	 * en una lista enlazada. Si se produce algún problema durante la ejecución, el método
+	 * devuelve una lista que apunta a null</p>
+	 * @return Si todo fue bien, una lista enlazada con la información de todos los archivos;
+	 * si se produjo algún error se devuelve una lista que apunta
+	 * a null
+	 */
+	public List<Archivo> getTodosArchivos() {
+		return archivoDAO.getTodosArchivos();
 	}
 	/* </ARCHIVOS>*/
 }

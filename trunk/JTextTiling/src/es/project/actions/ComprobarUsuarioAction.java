@@ -50,20 +50,27 @@ public class ComprobarUsuarioAction extends Action{
 			Usuario user = new Usuario(nombre, password);
 			FacadeBD facadeBD = new FacadeBD();
 			
-			if (facadeBD.esRoot(user));
-			
-			if (!facadeBD.comprobarUsuario(user)) {
-				retorno = "error";
-				listaMensajes.add("errores", new ActionMessage("error.nombre.password",nombre));
-				listaMensajes.add("errores", new ActionMessage("error.CompletarAlta"));
-				request.getSession().setAttribute("usuarioActivo", false);
-			}
-			
-			else {
+			if (facadeBD.esRoot(user)) {
 				request.getSession().setAttribute("usuarioActivo", true);
 				request.getSession().setAttribute("usuarioActual", user);
-				List<Archivo> listaArchivos = facadeBD.getArchivosPorUsuario(user);
-				request.getSession().setAttribute("listaArchivos", listaArchivos);
+				List<Archivo> listaArchivos = null;
+				request.getSession().setAttribute("listaAarchivos", listaArchivos);
+				retorno = "root";
+			}
+			else {
+				if (!facadeBD.comprobarUsuario(user)) {
+					retorno = "error";
+					listaMensajes.add("errores", new ActionMessage("error.nombre.password",nombre));
+					listaMensajes.add("errores", new ActionMessage("error.CompletarAlta"));
+					request.getSession().setAttribute("usuarioActivo", false);
+				}
+				
+				else {
+					request.getSession().setAttribute("usuarioActivo", true);
+					request.getSession().setAttribute("usuarioActual", user);
+					List<Archivo> listaArchivos = facadeBD.getArchivosPorUsuario(user);
+					request.getSession().setAttribute("listaArchivos", listaArchivos);
+				}
 			}
 			
 			if (!listaMensajes.isEmpty()) 

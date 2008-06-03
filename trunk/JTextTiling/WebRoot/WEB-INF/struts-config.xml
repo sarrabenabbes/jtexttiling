@@ -93,6 +93,7 @@
   		<forward name="exito" path="/bienvenida.jsp"/>
   		<forward name="error" path="/mensajes.jsp"/>
   		<forward name="errorDesc" path="/errorDesconocido.jsp"/>
+  		<forward name="root" path="/bienvenidaRoot.jsp"/>
   	</action>
   	<action 
   		input="subirArchivo.jsp" 
