@@ -29,7 +29,7 @@
   <StrutsActivity path="/error.jsp" location="950,50" dimension="75,49" />
   <StrutsActivity path="/" location="950,550" dimension="33,49" />
   <StrutsActivity path="" location="50,750" dimension="29,49" />
-  <StrutsActivity path="/bienvenidaRoot.jsp" />
+  <StrutsActivity path="/bienvenidaRoot.jsp" location="1250,750" dimension="126,49" />
   <StrutsTransition id="/EnviaCorreo.do,exito,/mensajes.jsp,1" routingType="0">
     <AutomaticBendpoints>
       <AbsolutePoint location="701,981" />
@@ -141,8 +141,9 @@
   </StrutsTransition>
   <StrutsTransition id="/ComprobarUsuario.do,root,/bienvenidaRoot.jsp,1" routingType="0">
     <AutomaticBendpoints>
-      <AbsolutePoint location="1074,194" />
-      <AbsolutePoint location="0,0" />
+      <AbsolutePoint location="1104,238" />
+      <AbsolutePoint location="1104,774" />
+      <AbsolutePoint location="1250,774" />
     </AutomaticBendpoints>
   </StrutsTransition>
   <StrutsTransition id="/VerArchivosMultiple.do,error,/mensajes.jsp,1" routingType="0">

@@ -42,13 +42,14 @@ public class FinalizarSesionAction extends Action{
 			if ((Boolean)request.getSession().getAttribute("usuarioActivo")) {
 				FacadeBD facadeBD = new FacadeBD();
 				Usuario user = (Usuario)request.getSession().getAttribute("usuarioActual");
-			
 				facadeBD.actualizarUltimoLogin(user);
 			
 				try {
 					request.getSession().setAttribute("usuarioActual", null);
 					request.getSession().setAttribute("usuarioActivo", false);
 					request.getSession().setAttribute("listaArchivos", null);
+					/* lo ponemos a falso sea root o no */
+					request.getSession().setAttribute("root", false);
 				} catch (Exception e) {
 					listaMensajes.add("errores", new ActionMessage("error.finalizarSesion",
 						e.getMessage()));
@@ -69,6 +70,7 @@ public class FinalizarSesionAction extends Action{
 			request.getSession().setAttribute("usuarioActual", null);
 			request.getSession().setAttribute("usuarioActivo", false);
 			request.getSession().setAttribute("listaArchivos", null);
+			request.getSession().setAttribute("root", false);
 		}
 		
 		return mapping.findForward(retorno);

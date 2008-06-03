@@ -1,8 +1,45 @@
 <%@ include file="./cabecera.jsp" %>
    
-    <title>Servicio web para el uso del algoritmo JTextTiling - Bienvenida</title>
+    <title>Servicio web para el<!-- PARTE DEL ROOT -->
     <c:choose>
-    	<c:when test="${sessionScope.usuarioActivo == true}">
+    	<c:when test="${sessionScope.root == true}">
+    	<%request.getSession().setAttribute("botonSalir",true); %>
+    	
+    	<div class="table">
+			<table>
+				<tr>
+					<td class="actual"><a>Estadísticas de Usuarios</a></td>
+					<td><a href="./listaUsuarios.jsp">Lista de usuarios</a></td>
+					<td><a href="./listaArchivos.jsp">Lista de archivos</a></td>
+					<td><a href="./eliminarUsuarios.jsp">Eliminar Usuarios</a><br /></td>
+					<td><a href="./eliminarArchivo.jsp">Eliminar archivos</a></td>
+				</tr>
+			</table>
+		</div>
+    	
+    	<%
+			EstadisticasUsuarios estU = new EstadisticasUsuarios();
+			EstadisticasArchivos estA = new EstadisticasArchivos();
+			request.setAttribute("numArchivos",estA.getNum());
+			request.setAttribute("numUsuarios",estU.getNum());
+		%>
+		<div class="divPrincipalRoot">
+			<table>
+    			<tr>
+    				<td width="450">¡Hola root!</td>
+    				<td>Una bacalá infame</td>
+    			</tr>
+    			<tr>
+    				<td width="350">Número de archivos totales en el servidor: ${requestScope.numArchivos}</td>
+    			</tr>
+    			<tr>
+    				<td width="350">Número de usuarios totales del servicio: ${requestScope.numUsuarios}</td>
+    			</tr>
+    		</table>
+		</div>
+    	</c:when>
+    	
+    	<c:when test="${sessionScope.usuarioActivo == true and sessionScope.root == false}">
     	<%request.getSession().setAttribute("botonSalir",true); %>
     	
     	<div class="table">
@@ -49,6 +86,7 @@
     	</c:when>
     	
     	<c:otherwise>
+    	<%request.getSession().setAttribute("botonSalir",true); %>
     	<div class="table">
 			<a href="./index.jsp">Inicio</a>
 		</div>
