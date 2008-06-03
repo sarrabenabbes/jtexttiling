@@ -40,7 +40,7 @@ public class TestInsercionArchivos extends TestCase{
 	}
 	
 	public void testVacio() {
-		int n = facadeBD.numeroArchivos();
+		int n = facadeBD.getNumeroArchivos();
 		assertTrue(this.testVacio + n, 
 				this.numArchivos == n);
 	}
@@ -54,11 +54,11 @@ public class TestInsercionArchivos extends TestCase{
 	public void testNoVacio() {
 		this.insertarArchivo(archivo1);
 		assertTrue(this.testNoVacio, 
-				this.numArchivos == facadeBD.numeroArchivos());
+				this.numArchivos == facadeBD.getNumeroArchivos());
 		
 		this.insertarArchivo(archivo2);
 		assertTrue(this.testNoVacio,
-				this.numArchivos == facadeBD.numeroArchivos());
+				this.numArchivos == facadeBD.getNumeroArchivos());
 	}
 	
 	public void testViolacionFK() {

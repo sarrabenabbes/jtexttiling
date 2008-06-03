@@ -39,17 +39,17 @@ public class TestBorradoUsuarios extends TestCase{
 	public void testBorradoNombre() {
 		borrarUsuario(usuario1);
 		assertTrue(this.testBorrado, 
-				numUsuarios == facadeBD.numeroUsuarios());
+				numUsuarios == facadeBD.getNumeroUsuarios());
 		
 		borrarUsuario(usuario2);
 		assertTrue(this.testBorrado,
-				numUsuarios == facadeBD.numeroUsuarios());
+				numUsuarios == facadeBD.getNumeroUsuarios());
 	}
 	
 	public void testBorrarTodos() {
 		borrarTodos();
 		assertTrue(this.testBorrarTodos, 
-				numUsuarios == facadeBD.numeroUsuarios());
+				numUsuarios == facadeBD.getNumeroUsuarios());
 	}
 	
 	private boolean insertarUsuario(Usuario user) {

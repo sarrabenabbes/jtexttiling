@@ -4,6 +4,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.LinkedList;
+import java.util.List;
 
 import es.project.bd.abstractos.ArchivoDAO;
 import es.project.bd.objetos.Archivo;
@@ -309,6 +311,40 @@ public class MySqlArchivoDAO extends ArchivoDAO{
 			System.err.println("MySqlArchivoDAO/actualizarArchivo: " + sql.getMessage());
 		}
 		return modificado;
+	}
+	
+	/**
+	 * <p>Recorre la tabla que almacena la información referente a los archivos y la copia
+	 * en una lista enlazada. Si se produce algún problema durante la ejecución, el método
+	 * devuelve una lista que apunta a null</p>
+	 * @return Si todo fue bien, una lista enlazada con la información de todos los archivos;
+	 * si se produjo algún error se devuelve una lista que apunta
+	 * a null
+	 */
+	public List<Archivo> getTodosArchivos() {
+		List<Archivo> listaArchivos = new LinkedList<Archivo>();
+		Statement stat;
+		ResultSet rs;
+		Archivo aux;
 		
+		try {
+			stat = conectorBD.getStatement();
+			rs = stat.executeQuery("select * from archivos");
+				
+			while (rs.next()) {
+				aux = new Archivo(rs.getString("nombreArchivo"),
+						rs.getString("nombrePropietario"),rs.getString("ruta"));
+				listaArchivos.add(aux);
+			}
+				
+			rs.close();
+			stat.close();
+				
+		} catch (SQLException sql) {
+			System.err.println("MySqlArchivoDAO/getTodosArchivos " + sql.getMessage());
+			listaArchivos = null;
+		}
+		
+		return listaArchivos;
 	}
  }

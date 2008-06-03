@@ -1,5 +1,7 @@
 package es.project.bd.abstractos;
 
+import java.util.List;
+
 import es.project.bd.objetos.Archivo;
 
 /**
@@ -71,5 +73,11 @@ public abstract class ArchivoDAO {
 	 * @return Verdadero si se consiguió actualizar el nombre, falso en caso contrario
 	 */
 	public abstract boolean actualizarNombreArchivo(Archivo archivo, String valor);
+	
+	/**
+	 * <p>Copia en la lista todos los archivos de todos los usuarios</p>
+	 * @return Lista con todos los archivos almacenados en la base de datos
+	 */
+	public abstract List<Archivo> getTodosArchivos();
 
 }

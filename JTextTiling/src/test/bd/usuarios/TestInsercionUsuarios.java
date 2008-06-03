@@ -46,7 +46,7 @@ public class TestInsercionUsuarios extends TestCase{
 	}
 	
 	public void testVacio() {
-		int numUsuarios = facadeBD.numeroUsuarios();
+		int numUsuarios = facadeBD.getNumeroUsuarios();
 		assertTrue(this.testVacio + numUsuarios, 
 				numUsuarios == 0);
 	}
@@ -54,13 +54,13 @@ public class TestInsercionUsuarios extends TestCase{
 	public void testNoVacio() {
 		insertarUsuario(usuario1);
 		
-		int numUsuarios = facadeBD.numeroUsuarios();
+		int numUsuarios = facadeBD.getNumeroUsuarios();
 		assertTrue(this.testNoVacio + numUsuarios + "(" + contador + ")"
 				,numUsuarios == contador);
 		
 		insertarUsuario(usuario2);
 		
-		numUsuarios = facadeBD.numeroUsuarios();
+		numUsuarios = facadeBD.getNumeroUsuarios();
 		assertTrue(this.testNoVacio + numUsuarios + "(" + contador + ")"
 				,numUsuarios == contador);
 	}
