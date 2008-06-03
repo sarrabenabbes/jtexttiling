@@ -53,9 +53,9 @@ public class ComprobarUsuarioAction extends Action{
 			if (facadeBD.esRoot(user)) {
 				request.getSession().setAttribute("usuarioActivo", true);
 				request.getSession().setAttribute("usuarioActual", user);
-				List<Archivo> listaArchivos = null;
-				request.getSession().setAttribute("listaAarchivos", listaArchivos);
-				retorno = "root";
+				List<Archivo> listaArchivos = facadeBD.getTodosArchivos();
+				request.getSession().setAttribute("listaArchivos", listaArchivos);
+				request.getSession().setAttribute("root", true);
 			}
 			else {
 				if (!facadeBD.comprobarUsuario(user)) {
@@ -68,6 +68,7 @@ public class ComprobarUsuarioAction extends Action{
 				else {
 					request.getSession().setAttribute("usuarioActivo", true);
 					request.getSession().setAttribute("usuarioActual", user);
+					request.getSession().setAttribute("root", false);
 					List<Archivo> listaArchivos = facadeBD.getArchivosPorUsuario(user);
 					request.getSession().setAttribute("listaArchivos", listaArchivos);
 				}

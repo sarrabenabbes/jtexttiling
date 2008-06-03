@@ -87,6 +87,7 @@ public class BorraArchivoAction extends Action {
 		for (int i = 0; i < lista.length; i++) {
 			correcto = true;
 			archivoAuxiliar = new Archivo(lista[i]);
+			//TODO aqui está el quid de la "borración"
 			archivoAuxiliar.setNombrePropietario(nombrePropietario);
 			correcto = facadeBD.borrarArchivo(archivoAuxiliar);
 			

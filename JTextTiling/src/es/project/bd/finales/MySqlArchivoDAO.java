@@ -333,7 +333,7 @@ public class MySqlArchivoDAO extends ArchivoDAO{
 				
 			while (rs.next()) {
 				aux = new Archivo(rs.getString("nombreArchivo"),
-						rs.getString("nombrePropietario"),rs.getString("ruta"));
+						rs.getString("nombrePropietario"),rs.getString("rutaArchivo"));
 				listaArchivos.add(aux);
 			}
 				
