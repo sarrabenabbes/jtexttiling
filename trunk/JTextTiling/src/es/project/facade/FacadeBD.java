@@ -116,8 +116,8 @@ public class FacadeBD {
 	 * @param usuario Objeto de tipo Usuario que representa el usuario que se va a eliminar
 	 * @return Verdadero si todo fue bien
 	 */
-	public void borrarUsuario(Usuario usuario) {
-		usuarioDAO.borrarUsuario(usuario);
+	public boolean borrarUsuario(Usuario usuario) {
+		return usuarioDAO.borrarUsuario(usuario);
 	}
 	
 	/**

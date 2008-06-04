@@ -28,6 +28,15 @@ public class Usuario {
 	public Usuario() {}
 	
 	/**
+	 * <p>Crea un usuario a partir del nombre. Se utiliza para eliminar los usuarios, en las tareas
+	 * de root</p>
+	 * @param nombre Nombre del usuario
+	 */
+	public Usuario(String nombre) {
+		this.nombre = nombre;
+	}
+	 
+	/**
 	 * <p>Crea un usuario y le asigna un nombre, un password, una dirección de email y el estado
 	 * de activación de su cuenta</p>
 	 * @param nombre Nombre del usuario

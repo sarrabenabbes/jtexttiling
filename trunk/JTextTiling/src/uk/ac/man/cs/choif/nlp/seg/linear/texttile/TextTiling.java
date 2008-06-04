@@ -401,7 +401,7 @@ public static void main(String[] args) {
 		t.depthScore();								// Compute depth scores using the similarity scores
 		t.boundaryIdentification();					// Identify the boundaries
 		t.genOutput(c, t.segmentation, args[3]);	// Generate segmented output
-		logMensajes += "- La ejecución del algoritmo concluyó correctamente, puede ver un fichero con los " +
+		logMensajes = "- La ejecución del algoritmo concluyó correctamente, puede ver un fichero con los " +
 				"resultados en su espacio personal";
 		extraerLog(logMensajes);
 	}
