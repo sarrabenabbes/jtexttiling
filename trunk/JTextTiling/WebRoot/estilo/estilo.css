@@ -17,7 +17,7 @@ div.divPrincipal {
 }
 
 div.divPrincipalRoot {
-	background-color:#FF3333;
+	background-color:#669966;
 	margin-left:10%;
 	border-left:3px;
 	width:85%;
@@ -107,26 +107,27 @@ a:hover {
 
 div.displayTag {
 	margin-left:1em;
+	margin-right:1em;
 	margin-bottom:1em;
 }
 
-table.displayArchivos {
+table.displayArchivos, table.displayUsuarios{
 	border: thin solid black;
 }
 
-table.displayArchivos th {
+table.displayArchivos th, table.displayUsuarios th{
 	background-color: #669999;
 	width:20em;
 }
 
-table.displayArchivos td {
+table.displayArchivos td, table.displayUsuarios td {
 	text-align: center;
 }
 
-table.displayArchivos tr.even {
+table.displayArchivos tr.even, table.displayUsuarios tr.even{
 	background-color: #999999;
 }
 
-table.displayArchivos tr.odd {
+table.displayArchivos tr.odd, table.displayUsuarios tr.odd {
 	background-color: white;
 }

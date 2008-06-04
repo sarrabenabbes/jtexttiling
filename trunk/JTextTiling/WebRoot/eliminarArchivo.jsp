@@ -16,20 +16,21 @@
 					<td><a href="./bienvenida.jsp">Estadísticas de Usuarios</a></td>
 					<td><a href="./listaUsuarios.jsp">Lista de usuarios</a></td>
 					<td><a href="./listaArchivos.jsp">Lista de archivos</a></td>
-					<td><a href="./eliminarUsuarios.jsp">Eliminar Usuarios</a><br /></td>
+					<td><a href="./eliminarUsuario.jsp">Eliminar Usuarios</a><br /></td>
 					<td class="actual"><a>Eliminar archivos</a></td>
 				</tr>
 			</table>
 		</div>
 		
 		<%
-		List<Archivo> listaRoot = (List<Archivo>)request.getSession().getAttribute("listaArchivos"); 
-		request.setAttribute("lista",listaRoot);
-		request.setAttribute("numArchivos",listaRoot.size());
+		EstadisticasArchivos estA = new EstadisticasArchivos();
+		List<Archivo> listaRoot = estA.getLista(); 
+		request.setAttribute("lista", listaRoot);
+		request.setAttribute("numArchivos", estA.getNum());
 		%>
 		<c:choose>
 			<c:when test="${numArchivos > 0}">
-				<div class="divPrincipal">
+				<div class="divPrincipalRoot">
 					<p>Elige los archivos a borrar:</p> 
 					<html:form action="/BorrarArchivo">
 						<p>

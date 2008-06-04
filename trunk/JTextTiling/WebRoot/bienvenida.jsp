@@ -1,6 +1,6 @@
 <%@ include file="./cabecera.jsp" %>
    
-    <title>Servicio web para el<!-- PARTE DEL ROOT -->
+    <title>Servicio web para el uso del algoritmo JTextTiling - Bienvenida</title>
     <c:choose>
     	<c:when test="${sessionScope.root == true}">
     	<%request.getSession().setAttribute("botonSalir",true); %>
@@ -11,7 +11,7 @@
 					<td class="actual"><a>Estadísticas de Usuarios</a></td>
 					<td><a href="./listaUsuarios.jsp">Lista de usuarios</a></td>
 					<td><a href="./listaArchivos.jsp">Lista de archivos</a></td>
-					<td><a href="./eliminarUsuarios.jsp">Eliminar Usuarios</a><br /></td>
+					<td><a href="./eliminarUsuario.jsp">Eliminar Usuarios</a><br /></td>
 					<td><a href="./eliminarArchivo.jsp">Eliminar archivos</a></td>
 				</tr>
 			</table>

@@ -706,10 +706,13 @@ public class MySqlUsuarioDAO extends UsuarioDAO{
 			rs = stat.executeQuery("select * from usuarios");
 			
 			while (rs.next()) {
-				aux = new Usuario(rs.getString("nombre"), rs.getString("password"),
-						rs.getString("email"));
-				aux.setUltimo_login(rs.getString("ultimo_login"));
-				lista.add(aux);
+				if (rs.getString("nombre").compareToIgnoreCase("root") != 0) {
+					aux = new Usuario(rs.getString("nombre"), rs.getString("password"),
+							rs.getString("email"));
+					aux.setUltimo_login(rs.getString("ultimo_login"));
+					aux.setFecha_alta(rs.getString("fecha_alta"));
+					lista.add(aux);
+				}
 			}
 			
 			rs.close();

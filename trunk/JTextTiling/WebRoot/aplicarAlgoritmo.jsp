@@ -52,6 +52,7 @@
    	    			<p class="step">
    	    			Step:<br />
    	    			<html:text property="step"></html:text>
+   	    			<a href="#" onclick="window.open('./avisoWindowStep.html','','width=680,height=200')">(?)</a><br />
    	    			</p>
    	    		</td>
    	    	</tr>

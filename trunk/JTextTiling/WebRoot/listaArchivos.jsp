@@ -8,9 +8,10 @@
 	<c:when test="${sessionScope.root == true}">
 	
 	<%	request.getSession().setAttribute("botonSalir",true); 
-		List<Archivo> listaRoot = (List<Archivo>)request.getSession().getAttribute("listaArchivos"); 
+		EstadisticasArchivos estA = new EstadisticasArchivos();
+		List<Archivo> listaRoot = estA.getLista();
 		request.setAttribute("lista",listaRoot);
-		request.setAttribute("numArchivos", listaRoot.size());
+		request.setAttribute("numArchivos", estA.getNum());
 	%>
 	
 		<div class="table">
@@ -19,7 +20,7 @@
 					<td><a href="./bienvenida.jsp">Estadísticas de Usuarios</a></td>
 					<td><a href="./listaUsuarios.jsp">Lista de usuarios</a></td>
 					<td class="actual"><a>Lista de archivos</a></td>
-					<td><a href="./eliminarUsuarios.jsp">Eliminar Usuarios</a><br /></td>
+					<td><a href="./eliminarUsuario.jsp">Eliminar Usuarios</a><br /></td>
 					<td><a href="./eliminarArchivo.jsp">Eliminar archivos</a></td>
 				</tr>
 			</table>
@@ -27,7 +28,7 @@
 		
 		<c:choose>
 		<c:when test="${numArchivos > 0}">
-		<div class="divPrincipal">
+		<div class="divPrincipalRoot">
 			<p id="listArchivosMensaje">
 				Lista de archivos:
 			</p>	
