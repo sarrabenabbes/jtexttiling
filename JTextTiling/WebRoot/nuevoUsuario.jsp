@@ -31,7 +31,7 @@
 			</td>
 			<td>
 			<p class="password">
-				Repita su password:<a href="#" onclick="window.open('./avisoPassword.html','','width=400,height=200')">(?)</a><br />
+				Repita su password:<a href="#" onclick="window.open('./avisoPassword.html','','width=680,height=200')">(?)</a><br />
 				<html:password styleId="pass2" property="password2">
 				</html:password>
 			</p>
@@ -40,7 +40,7 @@
 		<tr>
 			<td>
 			<p class="email">
-				Dirección de email:<a href="#" onclick="window.open('./avisoMail.html','','width=400,height=200')">(?)</a><br />
+				Dirección de email:<a href="#" onclick="window.open('./avisoMail.html','','width=680,height=200')">(?)</a><br />
 				<html:text styleId="mail" property="email">
 				</html:text>
 			</p>

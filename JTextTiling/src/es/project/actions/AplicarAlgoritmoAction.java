@@ -86,5 +86,6 @@ public class AplicarAlgoritmoAction extends Action{
 		TextTiling.setRutaArchivo(rutaArchivo);
 		TextTiling.main(args);
 		listaMensajes.add("mensajes", new ActionMessage("mensaje.VacioTextTiling",TextTiling.getMensaje()));
+		TextTiling.vaciarMensaje();
 	}
 }

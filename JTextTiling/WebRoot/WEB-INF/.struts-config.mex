@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <FlowViewLayout Version="1.2">
+  <StrutsActivity path="/BorrarUsuario.do" location="1250,850" dimension="243,88" />
   <StrutsActivity path="/ActualizarUsuario.do" location="1250,450" dimension="126,62" />
   <StrutsActivity path="/EnviaCorreo.do" location="650,950" dimension="102,62" />
   <StrutsActivity path="/VerArchivosMultiple.do" location="650,750" dimension="282,88" />
@@ -70,13 +71,6 @@
       <AbsolutePoint location="453,784" />
     </AutomaticBendpoints>
   </StrutsTransition>
-  <StrutsTransition id="/AplicarAlgoritmo.do,exito,/mensajes.jsp,1" routingType="0">
-    <AutomaticBendpoints>
-      <AbsolutePoint location="280,550" />
-      <AbsolutePoint location="280,196" />
-      <AbsolutePoint location="146,196" />
-    </AutomaticBendpoints>
-  </StrutsTransition>
   <StrutsTransition id="/BorrarArchivo.do,exito,/mensajes.jsp,1" routingType="0">
     <AutomaticBendpoints>
       <AbsolutePoint location="1059,381" />
@@ -84,6 +78,13 @@
       <AbsolutePoint location="1274,-45" />
       <AbsolutePoint location="98,-45" />
       <AbsolutePoint location="98,150" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/AplicarAlgoritmo.do,exito,/mensajes.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="280,550" />
+      <AbsolutePoint location="280,196" />
+      <AbsolutePoint location="146,196" />
     </AutomaticBendpoints>
   </StrutsTransition>
   <StrutsTransition id="eliminarArchivo.jsp,null,/BorrarArchivo.do,2" routingType="0">
@@ -139,11 +140,10 @@
       <AbsolutePoint location="128,150" />
     </AutomaticBendpoints>
   </StrutsTransition>
-  <StrutsTransition id="/ComprobarUsuario.do,root,/bienvenidaRoot.jsp,1" routingType="0">
+  <StrutsTransition id="/BorrarUsuario.do,exito,/mensajes.jsp,1" routingType="0">
     <AutomaticBendpoints>
-      <AbsolutePoint location="1104,238" />
-      <AbsolutePoint location="1104,774" />
-      <AbsolutePoint location="1250,774" />
+      <AbsolutePoint location="1371,894" />
+      <AbsolutePoint location="98,174" />
     </AutomaticBendpoints>
   </StrutsTransition>
   <StrutsTransition id="/VerArchivosMultiple.do,error,/mensajes.jsp,1" routingType="0">

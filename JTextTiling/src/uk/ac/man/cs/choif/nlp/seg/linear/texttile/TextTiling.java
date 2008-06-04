@@ -10,6 +10,7 @@ import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Vector;
 
+import es.project.algoritmo.configuracion.ConfigAlgoritmo;
 import es.project.ficheros.configuracion.ConfigFicheros;
 
 import uk.ac.man.cs.choif.nlp.stemming.Porter;
@@ -353,8 +354,18 @@ public static void main(String[] args) {
 	String aux = "";
 	/* Obtain variables */
 	try {
-		int window = (Integer.valueOf(args[0])).intValue();
-		int step = (Integer.valueOf(args[1])).intValue();
+		
+		int window;
+		int step;
+		
+		try {
+			window = (Integer.valueOf(args[0])).intValue();
+			step = (Integer.valueOf(args[1])).intValue();
+		} catch (Exception e) {
+			window = Integer.valueOf(ConfigAlgoritmo.getWindow());
+			step = Integer.valueOf(ConfigAlgoritmo.getStep());
+		}
+		
 		String stopwordList = args[2];
 		
 		aux = "# Stopword list : " + stopwordList;
@@ -390,7 +401,7 @@ public static void main(String[] args) {
 		t.depthScore();								// Compute depth scores using the similarity scores
 		t.boundaryIdentification();					// Identify the boundaries
 		t.genOutput(c, t.segmentation, args[3]);	// Generate segmented output
-		logMensajes = "- La ejecución del algoritmo concluyó correctamente, puede ver un fichero con los " +
+		logMensajes += "- La ejecución del algoritmo concluyó correctamente, puede ver un fichero con los " +
 				"resultados en su espacio personal";
 		extraerLog(logMensajes);
 	}
@@ -413,6 +424,10 @@ private static void extraerLog(String log) {
 
 public static String getMensaje() {
 	return mensajeDevuelto;
+}
+
+public static void vaciarMensaje() {
+	mensajeDevuelto = "";
 }
 
 /**
