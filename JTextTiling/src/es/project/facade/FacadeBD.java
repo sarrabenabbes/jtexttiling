@@ -71,7 +71,7 @@ public class FacadeBD {
 	
 	/**
 	 * <p>Calcula el número total de usuarios mediante la operación "count", y lo
-	 * muestra por pantalla</p>
+	 * muestra por pantalla. No se cuenta el root ni los usuarios que están sin activar.</p>
 	 * @return Número de usuarios contenidos en la base de datos
 	 */
 	public int getNumeroUsuarios() {

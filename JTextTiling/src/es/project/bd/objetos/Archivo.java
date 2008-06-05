@@ -6,6 +6,7 @@ package es.project.bd.objetos;
  */
 public class Archivo {
 	
+	private static boolean accesoRoot = false;
 	/**
 	 * <p>Atributos del objeto Archivo</p>
 	 */
@@ -99,7 +100,9 @@ public class Archivo {
 	 * @return Cadena con el nombre del archivo
 	 */
 	public String toString() {
-		return this.getNombreArchivo();
+		if (this.isAccesoRoot())
+			return this.getNombreArchivo() + " (Propietario: " + this.getNombrePropietario() + ")";
+		else return this.getNombreArchivo();
 	}
 	
 	/**
@@ -108,5 +111,13 @@ public class Archivo {
 	 */
 	public String verInformacionArchivo() {
 		return this.getNombreArchivo() + "(" + this.getNombrePropietario() + ")   " + this.getRutaArchivo();
+	}
+
+	public static boolean isAccesoRoot() {
+		return accesoRoot;
+	}
+
+	public static void setAccesoRoot(boolean accesoRoot) {
+		Archivo.accesoRoot = accesoRoot;
 	}
 }

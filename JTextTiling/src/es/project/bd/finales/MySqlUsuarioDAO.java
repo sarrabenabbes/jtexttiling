@@ -227,14 +227,14 @@ public class MySqlUsuarioDAO extends UsuarioDAO{
 	
 	/**
 	 * <p>Calcula el número total de usuarios mediante la operación "count", y lo
-	 * muestra por pantalla</p>
+	 * muestra por pantalla. No se cuenta el root ni los usuarios que están sin activar.</p>
 	 * @return Número de usuarios contenidos en la base de datos
 	 */
 	public int numeroUsuarios() {
 		int numUsuarios = 0;
 		try {
 			Statement stat = conectorBD.getStatement();
-			ResultSet rs = stat.executeQuery("select count(nombre) total from usuarios");
+			ResultSet rs = stat.executeQuery("select count(nombre) total from usuarios where nombre != 'root' and activado = '1'");
 			
 			if (rs.next())
 				numUsuarios = rs.getInt("total");
@@ -706,7 +706,10 @@ public class MySqlUsuarioDAO extends UsuarioDAO{
 			rs = stat.executeQuery("select * from usuarios");
 			
 			while (rs.next()) {
-				if (rs.getString("nombre").compareToIgnoreCase("root") != 0) {
+				boolean esRoot = rs.getString("nombre").compareToIgnoreCase("root") == 0;
+				boolean estaActivado = rs.getString("activado").compareToIgnoreCase("1") == 0;
+				
+				if (!esRoot && estaActivado) {
 					aux = new Usuario(rs.getString("nombre"), rs.getString("password"),
 							rs.getString("email"));
 					aux.setUltimo_login(rs.getString("ultimo_login"));

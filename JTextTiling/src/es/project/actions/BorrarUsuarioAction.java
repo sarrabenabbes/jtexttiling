@@ -55,18 +55,20 @@ public class BorrarUsuarioAction extends Action{
 				lista.add("errores", new ActionMessage("error.BorrandoUsuario",nombreUsuarios[i]));
 				procesoCorrecto = false;
 			} else {
-				this.borrarArchivosUsuario(nombreUsuarios[i], lista);
+				if (borrarArchivosUsuario(nombreUsuarios[i], lista))
+					lista.add("mensajes", new ActionMessage("mensaje.BorradoFicherosUsuario"));
+				else lista.add("errores", new ActionMessage("error.BorradoFicherosUsuario"));
 			}
 		}
 		return procesoCorrecto;
 	}
 	
-	private void borrarArchivosUsuario(String nombreUsuario, ActionMessages lista) {
+	private boolean borrarArchivosUsuario(String nombreUsuario, ActionMessages lista) {
 		String ruta = ConfigFicheros.getRutaBase() + nombreUsuario;
-		borrarFicheros(ruta);
+		return borrarFicheros(ruta);
 	}
 	
-	private void borrarFicheros(String ruta) {
+	private boolean borrarFicheros(String ruta) {
 		File inicial = new File(ruta);
 		String[] lista = inicial.list();
 		
@@ -81,6 +83,6 @@ public class BorrarUsuarioAction extends Action{
 			else aux.delete();
 		}
 		/* finalmente, borramos el directorio que ya estára vacío */
-		inicial.delete();
+		return inicial.delete();
 	}
 }

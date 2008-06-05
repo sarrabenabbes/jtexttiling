@@ -20,7 +20,8 @@ public abstract class UsuarioDAO {
 	public abstract void verUsuarios();
 	
 	/**
-	 * <p>Número total de usuario contenidos en la base de datos.</p>
+	 * <p>Número total de usuario contenidos en la base de datos (menos el root y
+	 * los usuarios sin activar)</p>
 	 * @return Número entero con el recuento
 	 */
 	public abstract int numeroUsuarios();
