@@ -446,5 +446,26 @@ public class FacadeBD {
 	public List<Archivo> getTodosArchivos() {
 		return archivoDAO.getTodosArchivos();
 	}
+	
+	/**
+	 * <p>Busca el usuario propietario del archivo en la tabla que almacena la información
+	 * sobre los archivos. Para conocer al propietario de un archivo nos basta con saber la
+	 * ruta de éste</p>
+	 * @param archivo Objeto de tipo archivo que representa el archivo del cual queremos
+	 * averiguar su propietario
+	 * @return Objeto de tipo usuario que representa al propietario del archivo
+	 */
+	public Usuario getPropietario(Archivo archivo) {
+		return archivoDAO.getPropietario(archivo);
+	}
+	
+	/**
+	 * <p>Obtiene el nombre del archivo a partir de su ruta</p>
+	 * @param ruta Ruta del archivo del cual queremos obtener el nombre
+	 * @return Devuelve una cadena con el nombre del archivo
+	 */
+	public String getNombreArchivo(String ruta) {
+		return archivoDAO.getNombreArchivo(ruta);
+	}
 	/* </ARCHIVOS>*/
 }

@@ -82,18 +82,37 @@ public class BorraArchivoAction extends Action {
 		Archivo archivoAuxiliar;
 		List<Archivo> listaAuxiliar = (List<Archivo>)request.getSession().getAttribute("listaArchivos");
 		Usuario usuario = (Usuario)request.getSession().getAttribute("usuarioActual");
-		String nombrePropietario = usuario.getNombre();
+		String nombreSesion = usuario.getNombre();
+		boolean esRoot = nombreSesion.compareToIgnoreCase("root") == 0;
+		String nombrePropietario = ""; 
 		
 		for (int i = 0; i < lista.length; i++) {
 			correcto = true;
-			archivoAuxiliar = new Archivo(lista[i]);
-			//TODO aqui está el quid de la "borración"
+			archivoAuxiliar = new Archivo();
+			
+			/* si el usuario es el propietario del archivo: 
+			 * - el nombre del propietario estará almacenado en la sesión 
+			 * - el nombre del archivo estará en la lista */
+			if (!esRoot) {
+				nombrePropietario = nombreSesion;
+				archivoAuxiliar.setNombreArchivo(lista[i]);
+			}
+			/* si el usuario es el root:
+			 * - en la lista tendremos la ruta del archivo 
+			 * - para averiguar el nombre necesitamos su ruta 
+			 * - para averiguar el propietario necesitamos su ruta */
+			else {
+				archivoAuxiliar.setRutaArchivo(lista[i]);
+				archivoAuxiliar.setNombreArchivo(facadeBD.getNombreArchivo(lista[i]));
+				nombrePropietario = facadeBD.getPropietario(archivoAuxiliar).getNombre();
+			}
+			
 			archivoAuxiliar.setNombrePropietario(nombrePropietario);
 			correcto = facadeBD.borrarArchivo(archivoAuxiliar);
 			
 			borrarEnLista(archivoAuxiliar.getNombreArchivo(), listaAuxiliar, request);
 			
-			if (!borrarFisicamente(archivoAuxiliar.getNombreArchivo(), request))
+			if (!borrarFisicamente(archivoAuxiliar.getNombreArchivo(), nombrePropietario, request))
 				correcto = false; 
 			else correcto = true;
 		}
@@ -137,12 +156,11 @@ public class BorraArchivoAction extends Action {
 	 * @param request <p>Petición mediante la cual accedemos al atributo de sesión</p>
 	 * @return <p>Verdadero si la operación de borrado fue bien, falso en caso contrario</p>
 	 */
-	private boolean borrarFisicamente(String nombreArchivo, HttpServletRequest request) {
+	private boolean borrarFisicamente(String nombreArchivo, String propietario, HttpServletRequest request) {
 		Usuario usuario = (Usuario)request.getSession().getAttribute("usuarioActual");
-		String nombrePropietario = usuario.getNombre();
 		String separador = ConfigFicheros.getSeparador();
 		
-		File borrado = new File(ConfigFicheros.getRutaBase() + nombrePropietario + separador + nombreArchivo);
+		File borrado = new File(ConfigFicheros.getRutaBase() + propietario + separador + nombreArchivo);
 		return borrado.delete();
 	}
 }

@@ -25,6 +25,7 @@
 		<%
 		EstadisticasArchivos estA = new EstadisticasArchivos();
 		List<Archivo> listaRoot = estA.getLista(); 
+		request.getSession().setAttribute("listaArchivos",listaRoot);
 		request.setAttribute("lista", listaRoot);
 		request.setAttribute("numArchivos", estA.getNum());
 		Archivo a = new Archivo();

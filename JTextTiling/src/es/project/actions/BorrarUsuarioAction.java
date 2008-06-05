@@ -16,7 +16,7 @@ import es.project.bd.objetos.Usuario;
 import es.project.facade.FacadeBD;
 import es.project.ficheros.configuracion.ConfigFicheros;
 import es.project.forms.ListaNombresUsuarioForm;
-
+//TODO documentar
 public class BorrarUsuarioAction extends Action{
 	
 	public ActionForward execute (
