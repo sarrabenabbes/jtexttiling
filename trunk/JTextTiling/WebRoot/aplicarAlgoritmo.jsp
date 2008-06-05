@@ -26,6 +26,8 @@
 		List<Archivo> lista = (List<Archivo>)request.getSession().getAttribute("listaArchivos"); 
 		request.setAttribute("lista",lista);
 		request.setAttribute("numArchivos", lista.size());
+		Archivo a = new Archivo();
+		a.setAccesoRoot(false);
 	 %>
 	
 	<c:choose>
@@ -36,7 +38,7 @@
 		<html:form action="/AplicarAlgoritmo">
 		<p>
 			<c:forEach items="${lista}" var="item" >
-		 	  	<html:checkbox property="nombreArchivo" value="${item}">${item}</html:checkbox><br />
+		 	  	<html:radio property="nombreArchivo" value="${item}">${item}</html:radio><br />
    	    	</c:forEach>
    	    </p>
    	    
@@ -52,7 +54,7 @@
    	    			<p class="step">
    	    			Step:<br />
    	    			<html:text property="step"></html:text>
-   	    			<a href="#" onclick="window.open('./avisoWindowStep.html','','width=680,height=200')">(?)</a><br />
+   	    			<a href="#" onclick="window.open('./avisoWindowStep.html','','width=400,height=200')">(?)</a><br />
    	    			</p>
    	    		</td>
    	    	</tr>

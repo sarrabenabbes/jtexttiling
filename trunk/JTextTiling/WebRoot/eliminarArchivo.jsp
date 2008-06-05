@@ -27,6 +27,8 @@
 		List<Archivo> listaRoot = estA.getLista(); 
 		request.setAttribute("lista", listaRoot);
 		request.setAttribute("numArchivos", estA.getNum());
+		Archivo a = new Archivo();
+		a.setAccesoRoot(true);
 		%>
 		<c:choose>
 			<c:when test="${numArchivos > 0}">
@@ -46,7 +48,7 @@
 			</c:when>
 	
 		<c:otherwise>
-			<div class="divPrincipal">
+			<div class="divPrincipalRoot">
   				<p>No hay archivos en el servidor</p>
   			</div>
 		</c:otherwise>
@@ -73,6 +75,8 @@
 		List<Archivo> lista = (List<Archivo>)request.getSession().getAttribute("listaArchivos"); 
 		request.setAttribute("lista",lista);
 		request.setAttribute("numArchivos",lista.size());
+		Archivo b = new Archivo();
+		b.setAccesoRoot(false);
 	%>
 	<c:choose>
 	<c:when test="${numArchivos > 0}">

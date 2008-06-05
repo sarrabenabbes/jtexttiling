@@ -23,7 +23,7 @@
 		</div>
 		
 		<div class="divPrincipal">
-			<p>Ayuda <a href="#" onclick="window.open('./ayudaActualizar.html','','width=680,height=280')">(?)</a></p>
+			<p>Ayuda <a href="#" onclick="window.open('./ayudaActualizar.html','','width=400,height=280')">(?)</a></p>
 			<html:form action="/ActualizarUsuario">
 				<table width="576" height="148">
 					<tr>
