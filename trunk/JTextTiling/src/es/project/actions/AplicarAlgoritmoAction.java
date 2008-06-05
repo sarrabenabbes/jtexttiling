@@ -49,7 +49,7 @@ public class AplicarAlgoritmoAction extends Action{
 			String step = formulario.getStep();
 			Usuario user = (Usuario)request.getSession().getAttribute("usuarioActual");
 			this.aplicarAlgoritmo(nombre, window, step, user.getNombre());
-			//TODO sistema de archivos y actualizar BD 
+			//TODO sistema de archivos y actualizar BD ¿?
 		}
 		else {
 			retorno = "error";

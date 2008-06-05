@@ -61,7 +61,11 @@
 			request.setAttribute("numArchivos", lista.size());
 			Usuario user = (Usuario)request.getSession().getAttribute("usuarioActual");
 			FacadeBD facadeBD = new FacadeBD();
+			String mail = facadeBD.getEmail(user);
+			request.setAttribute("mail",mail);
 			String fecha;
+			String fechaAlta = facadeBD.getFechaAlta(user);
+			request.setAttribute("fechaAlta",fechaAlta);
 			try {
 				fecha = facadeBD.getUltimoLogin(user);
 			} catch (Exception e) {
@@ -77,6 +81,12 @@
     			</tr>
     			<tr>
     				<td width="350">Número de archivos en el servidor: ${requestScope.numArchivos}</td>
+    			</tr>
+    			<tr>
+    				<td width="400">Cuenta de mail utilizada: ${mail}</td>
+    			</tr>
+    			<tr>
+    				<td width="350">Fecha de alta: ${fechaAlta}</td>
     			</tr>
     			<tr>
     				<td width="350">Fecha del último login: ${requestScope.ultimoLogin}</td>

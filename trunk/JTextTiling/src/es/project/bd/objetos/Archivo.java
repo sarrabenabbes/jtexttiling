@@ -101,7 +101,7 @@ public class Archivo {
 	 */
 	public String toString() {
 		if (this.isAccesoRoot())
-			return this.getNombreArchivo() + " (Propietario: " + this.getNombrePropietario() + ")";
+			return this.getRutaArchivo();
 		else return this.getNombreArchivo();
 	}
 	

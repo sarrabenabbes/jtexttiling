@@ -9,6 +9,7 @@ import java.util.List;
 
 import es.project.bd.abstractos.ArchivoDAO;
 import es.project.bd.objetos.Archivo;
+import es.project.bd.objetos.Usuario;
 import es.project.facade.ConectorBD;
 
 /**
@@ -346,5 +347,76 @@ public class MySqlArchivoDAO extends ArchivoDAO{
 		}
 		
 		return listaArchivos;
+	}
+	
+	/**
+	 * <p>Método que hace de interfaz de la clase con el resto de la aplicación para
+	 * la operación de averiguar el usuario propietario de un archivo. Llama al método 
+	 * "getPropietario", privado, con los parámetros necesarios</p>
+	 * @param archivo Objeto de tipo archivo que representa el archivo del cual queremos
+	 * averiguar su propietario
+	 * @return Objeto de tipo usuario que representa al propietario del archivo
+	 */
+	public Usuario getPropietario(Archivo archivo) {
+		return this.getPropietario(archivo.getRutaArchivo());
+	}
+	
+	/**
+	 * <p>Busca el usuario propietario del archivo en la tabla que almacena la información
+	 * sobre los archivos. Para conocer al propietario de un archivo nos basta con saber la
+	 * ruta de éste</p>
+	 * @param archivo Objeto de tipo archivo que representa el archivo del cual queremos
+	 * averiguar su propietario
+	 * @return Objeto de tipo usuario que representa al propietario del archivo
+	 */
+	private Usuario getPropietario(String rutaArchivo) {
+		Usuario propietario = null;
+		PreparedStatement ps;
+		ResultSet rs;
+		
+		try {
+			ps = conectorBD.getPreparedStatement("select nombrePropietario from archivos where rutaArchivo = ?");
+			ps.setString(1, rutaArchivo);
+			rs = ps.executeQuery();
+			
+			if (rs.next()) 
+				propietario = new Usuario(rs.getString("nombrePropietario"));
+			
+			rs.close();
+			ps.close();
+				
+		} catch (SQLException sql) {
+			System.err.println("MySqlArchivoDAO/getPropietario " + sql.getMessage());
+			propietario = null;
+		}
+		return propietario;
+	}
+	
+	/**
+	 * <p>Obtiene el nombre del archivo a partir de su ruta</p>
+	 * @param ruta Ruta del archivo del cual queremos obtener el nombre
+	 * @return Devuelve una cadena con el nombre del archivo
+	 */
+	public String getNombreArchivo(String ruta) {
+		String nombre = "";
+		PreparedStatement ps;
+		ResultSet rs;
+		
+		try {
+			ps = conectorBD.getPreparedStatement("select nombreArchivo from archivos where rutaArchivo = ?");
+			ps.setString(1, ruta);
+			rs = ps.executeQuery();
+			
+			if (rs.next())
+				nombre = rs.getString("nombreArchivo");
+			
+			rs.close();
+			ps.close();
+			
+		} catch (SQLException sql) {
+			System.err.println("MySqlArchivoDAO/getPropietario " + sql.getMessage());
+			nombre = "";
+		}
+		return nombre;
 	}
  }
