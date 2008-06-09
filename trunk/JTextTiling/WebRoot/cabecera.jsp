@@ -19,7 +19,7 @@
 	<link rel="stylesheet" href="./estilo/estilo.css">
 	
 	<p class="pImagen"> 
-		<html:img src="./includes/images/logo4.gif" height="75" width="300"/>
+		<html:img src="./includes/images/JTextTiling01.png"  height="120" width="906"/>
     </p>
 	<p class="pEnlace"> 
 		<a class="aTextTiling" href="http://people.ischool.berkeley.edu/~hearst/tiling-about.html" target="_blank">

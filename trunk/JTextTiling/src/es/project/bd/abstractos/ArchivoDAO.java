@@ -19,7 +19,7 @@ public abstract class ArchivoDAO {
 	public abstract void verArchivos();
 	
 	/**
-	 * <p>Número total de archivos contenidos en la base de datos. PARA PRUEBAS</p>
+	 * <p>Número total de archivos contenidos en la base de datos.</p>
 	 * @return Número entero con el recuento
 	 */
 	public abstract int numeroArchivos();

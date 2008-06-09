@@ -9,25 +9,56 @@ import org.apache.struts.action.ActionForm;
 public class AlgoritmoForm extends ActionForm{
 	private static final long serialVersionUID = -1;
 	
-	private String nombreArchivo;
-	private String window;
-	private String step;
+	/**
+	 * <p>Nombre del archivo al que se va a aplicar el algoritmo, y valor de los parámetros
+	 * window y step</p>
+	 */
+	private String nombreArchivo, window, step;
 	
+	/**
+	 * <p>Accede al atributo</p>
+	 * @return Devuelve el nombre del archivo
+	 */
 	public String getNombreArchivo() {
 		return nombreArchivo;
 	}
+	
+	/**
+	 * <p>Asigna un valor al nombre del archivo</p>
+	 * @param nombreArchivo Nombre a asignar
+	 */
 	public void setNombreArchivo(String nombreArchivo) {
 		this.nombreArchivo = nombreArchivo;
 	}
+	
+	/**
+	 * <p>Accede al atributo</p>
+	 * @return Devuelve el valor del parámetro window
+	 */
 	public String getWindow() {
 		return window;
 	}
+	
+	/**
+	 * <p>Asigna un valor al parámetro window</p>
+	 * @param window Parámetro a asignar
+	 */
 	public void setWindow(String window) {
 		this.window = window;
 	}
+	
+	/**
+	 * <p>Accede al atributo</p>
+	 * @return Devuelve el valor del parámetro step
+	 */
 	public String getStep() {
 		return step;
 	}
+	
+	/**
+	 * <p>Asigna un valor al parámetro step</p>
+	 * @param step Parámetro a asignar
+	 */
 	public void setStep(String step) {
 		this.step = step;
 	}
