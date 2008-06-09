@@ -94,9 +94,9 @@ public class AltaUsuarioAction extends Action{
 
 		try {
 			enviaCorreo.enviarMail(user);
+			listaMensajes.add("mensajes", new ActionMessage("mensaje.CompletarAlta"));
 		} catch (MessagingException e) {
 			listaMensajes.add("errores", new ActionMessage("error.MailAlta"));
 		}
-		listaMensajes.add("mensajes", new ActionMessage("mensaje.CompletarAlta"));
 	}
 }

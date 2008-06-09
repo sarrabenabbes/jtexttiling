@@ -96,7 +96,10 @@ public class Archivo {
 	}
 	
 	/**
-	 * <p>Método toString de la clase: muestra el nombre del archivo</p>
+	 * <p>Método toString de la clase: muestra el nombre del archivo o su ruta dependiendo
+	 * de que el usuario de la web sea el administrador o no. Es necesario, puesto que el
+	 * root necesita la ruta completa para poder borrar un archivo, mientras que el usuario
+	 * propietario sólo necesita el nombre</p>
 	 * @return Cadena con el nombre del archivo
 	 */
 	public String toString() {
@@ -113,10 +116,18 @@ public class Archivo {
 		return this.getNombreArchivo() + "(" + this.getNombrePropietario() + ")   " + this.getRutaArchivo();
 	}
 
+	/**
+	 * <p>Accede al atributo de la clase</p>
+	 * @return Verdadero si el usuario en sesión es el root, falso si es un usuario normal
+	 */
 	public static boolean isAccesoRoot() {
 		return accesoRoot;
 	}
 
+	/**
+	 * <p>Establece el valor del atributo de la clase</p>
+	 * @param accesoRoot Verdadero si el usuario en sesión es el root, falso en caso contrario
+	 */
 	public static void setAccesoRoot(boolean accesoRoot) {
 		Archivo.accesoRoot = accesoRoot;
 	}
