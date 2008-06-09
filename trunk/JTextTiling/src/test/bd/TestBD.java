@@ -13,6 +13,7 @@ import es.project.bd.objetos.Usuario;
 import es.project.facade.FacadeBD;
 import es.project.mail.Mail;
 import es.project.mail.MailAlta;
+import es.project.procesadorXSLT.ProcesadorXSLT;
 
 public class TestBD {
 	
@@ -27,7 +28,17 @@ public class TestBD {
 		*/
 	}
 	
-	public void escribirAFichero() {
+	private void transformarXSLT() {
+		String args[] = new String[]{""};
+		try {
+			ProcesadorXSLT.main(args);
+		} catch (Exception e) {
+			// TODO por aquí voy
+			e.printStackTrace();
+		}
+	}
+	
+	private void escribirAFichero() {
 		try {
 			OutputStreamWriter osw = new OutputStreamWriter
 						(new FileOutputStream("c:\\pruebasFicheros\\dani\\pruebaEsc.txt"));
