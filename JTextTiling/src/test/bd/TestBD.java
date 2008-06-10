@@ -26,10 +26,17 @@ public class TestBD {
 		this.pruebaRuntime();
 		this.escribirAFichero();
 		*/
+		this.transformarXSLT();
 	}
 	
 	private void transformarXSLT() {
-		String args[] = new String[]{""};
+		String contenido = "mailActivacion";
+		String rutaBase = "./es/project/temp/mail/";
+		String rutaXsl = rutaBase + contenido + ".xsl";
+		String rutaXml = rutaBase + contenido + ".xml";
+		String rutaHtml = rutaBase + contenido + ".html";
+		
+		String args[] = new String[]{rutaXsl, rutaXml, rutaHtml};
 		try {
 			ProcesadorXSLT.main(args);
 		} catch (Exception e) {

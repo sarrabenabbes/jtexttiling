@@ -1,0 +1,4 @@
+<!ELEMENT usuario (nombre,password,url)>
+<!ELEMENT nombre (#PCDATA)>
+<!ELEMENT password (#PCDATA)>
+<!ELEMENT url (#PCDATA)>
