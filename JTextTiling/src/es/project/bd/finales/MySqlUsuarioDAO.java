@@ -160,7 +160,7 @@ public class MySqlUsuarioDAO extends UsuarioDAO{
 	 * @return Verdadero si todo fue bien
 	 */
 	public boolean insertarUsuario(Usuario usuario) {
-		return insertarUsuario(usuario.getNombre(), usuario.getPassword(),usuario.getEmail(),usuario.isActivado());
+		return insertarUsuario(usuario.getNombre(), usuario.getPassword(),usuario.getEmail(),true);
 	}
 	
 	/**

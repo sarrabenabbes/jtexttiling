@@ -1,5 +1,7 @@
 package es.project.actions;
 
+import java.util.List;
+
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -11,6 +13,7 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
 
+import es.project.bd.objetos.Archivo;
 import es.project.bd.objetos.Usuario;
 import es.project.facade.FacadeBD;
 import es.project.forms.UsuarioForm;
@@ -62,8 +65,16 @@ public class AltaUsuarioAction extends Action{
 				else {
 					if (!facadeBD.insertarUsuario(user)) 
 						listaMensajes.add("errores", new ActionMessage("error.altausuario",user.getNombre()));
-					else 
-						mandarMailAlta(listaMensajes, user, facadeBD);
+					else  {
+						listaMensajes.add("mensajes", new ActionMessage("mensaje.AltaCompleta"));
+						request.getSession().setAttribute("usuarioActivo", true);
+						request.getSession().setAttribute("usuarioActual", user);
+						request.getSession().setAttribute("root", false);
+						List<Archivo> listaArchivos = facadeBD.getArchivosPorUsuario(user);
+						request.getSession().setAttribute("listaArchivos", listaArchivos);
+					}
+					/*else 
+						mandarMailAlta(listaMensajes, user, facadeBD);*/
 				}
 			}
 			
