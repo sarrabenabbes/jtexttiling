@@ -1,5 +1,11 @@
 package es.project.mail;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.util.Iterator;
 import java.util.List;
 
@@ -10,13 +16,17 @@ import javax.mail.Transport;
 
 import es.project.bd.objetos.Archivo;
 import es.project.bd.objetos.Usuario;
+import es.project.mail.configuracion.ConfigMail;
+import es.project.procesadorXSLT.ProcesadorXSLT;
 
 /**
  * <p>Envía el mail con los ficheros que el usuario tiene subidos en el servidor de la
  * aplicación</p>
  * @author Daniel Fernández Aller
  */
-public class MailFicheros extends Mail{
+public class MailFicheros extends Mail {
+	private String cabecera = ConfigMail.getCabeceraXmlAdjuntos();
+	private String rutaXsl = ConfigMail.getXslAdjuntos();
 
 	/**
 	 * <p>Crea el mensaje con el texto apropiado, le añade los ficheros del usuario,
@@ -29,6 +39,10 @@ public class MailFicheros extends Mail{
 		this.crearTextoMail(usuario, mensaje, mp);
 		this.incluirFicheros(usuario);
         Transport.send(mensaje);
+	}
+	
+	protected void borrarArchivos() {
+		
 	}
 
 	/**
@@ -55,8 +69,25 @@ public class MailFicheros extends Mail{
 	protected void crearTextoMail(Usuario usuario, Message mensaje, Multipart mp)
 		throws MessagingException {
 		
-		String cuerpo = 
-			"<html><body>Se le adjuntan los ficheros que tiene subidos en el servidor</body></html>";
+		try {
+			FileOutputStream fos = new FileOutputStream(new File(super.rutaXml));
+			BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(fos));
+			bw.write(cabecera);
+			bw.write("<mensaje>Ha recibido como adjuntos los ficheros alojados en el servidor</mensaje>");
+			bw.close();
+			
+			String args[] = new String[]{this.rutaXsl, super.rutaXml, super.rutaHtml};
+ 			ProcesadorXSLT.main(args);
+ 			
+		} catch (FileNotFoundException fnfe) {
+			System.err.println("file not found exception: \n" + fnfe.getMessage());
+		} catch (IOException ioe) {
+			System.err.println("fioexception: \n" + ioe.getMessage());
+		} catch (Exception e) {
+			System.err.println("exception la que sea en la clase mail: \n" + e.getMessage());
+		}
+		
+		String cuerpo = super.rutaHtml;	
 		this.crearCuerpo(mensaje, mp, cuerpo);
 	}
 }

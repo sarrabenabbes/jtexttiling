@@ -31,7 +31,7 @@ public class TestBD {
 	
 	private void transformarXSLT() {
 		String contenido = "mailActivacion";
-		String rutaBase = "./es/project/temp/mail/";
+		String rutaBase = "./WebRoot/WEB-INF/classes/es/project/temp/mail/";
 		String rutaXsl = rutaBase + contenido + ".xsl";
 		String rutaXml = rutaBase + contenido + ".xml";
 		String rutaHtml = rutaBase + contenido + ".html";
@@ -40,7 +40,6 @@ public class TestBD {
 		try {
 			ProcesadorXSLT.main(args);
 		} catch (Exception e) {
-			// TODO por aquí voy
 			e.printStackTrace();
 		}
 	}

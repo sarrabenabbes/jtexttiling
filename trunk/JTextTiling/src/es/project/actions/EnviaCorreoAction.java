@@ -76,7 +76,7 @@ public class EnviaCorreoAction extends Action {
 			enviaCorreo.enviarMail(aux);
 		} catch (MessagingException e) {
 			enviado = false;
-			System.out.println(e.getMessage());
+			e.printStackTrace();
 		}
 		return enviado;
 	}
