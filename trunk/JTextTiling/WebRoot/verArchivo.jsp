@@ -76,8 +76,8 @@
 				</c:choose>
 				</td>
 				<td width="350">
-				<a href="http://localhost:8080/JTextTiling/EnviaCorreo.do">
-				Envíame los archivos al correo</a>
+				<!-- <a href="http://localhost:8080/JTextTiling/EnviaCorreo.do"> 
+				Envíame los archivos al correo</a> -->
 				</td>
 				</tr>
 				</table>
