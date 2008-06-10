@@ -44,43 +44,46 @@ public class ConfigMail {
 	}
 	
 	/**
-	 * <p>Accede a la propiedad "ruta_imagen"</p>
-	 * @return Devuelve una cadena con la ruta de la imagen que se incluye en la cabecera
-	 */
-	public static String getRutaImagen() {
-		return propiedades.getString("ruta_imagen");
-	}
-	/**
 	 * <p>Accede a la propiedad "asunto"</p>
 	 * @return Devuelve una cadena con el asunto del mensaje
 	 */
+	public static String getAsuntoAlta() {
+		return propiedades.getString("asuntoAlta");
+	}
+	
+	public static String getAsuntoAdjuntos() {
+		return propiedades.getString("asuntoAdjuntos");
+	}
+	
 	public static String getAsunto() {
 		return propiedades.getString("asunto");
 	}
 	
-	/**
-	 * <p>Accede a la propiedad "encabezado"</p>
-	 * @return Devuelve una cadena con el encabezado del mensaje
-	 */
-	public static String getEncabezado() {
-		return propiedades.getString("encabezado");
+	public static String getCabeceraXmlAlta() {
+		return propiedades.getString("cabeceraXmlAlta");
 	}
 	
-	/**
-	 * <p>Accede a las propiedades "cuerpo" y "url_base", que conforman la primera
-	 * mitad del mensaje, antes de incluir el uuid del usuario</p>
-	 * @return Devuelve una cadena con la primera parte del cuerpo del mensaje
-	 */
-	public static String getCuerpo() {
-		return propiedades.getString("cuerpo") + propiedades.getString("url_base");
+	public static String getCabeceraXmlAdjuntos() {
+		return propiedades.getString("cabeceraXmlAdjuntos");
 	}
 	
-	/**
-	 * <p>Accede a la propiedad "final_cuerpo", que completa el mensaje: es el texto
-	 * que se incluye después del uuid del usuario</p>
-	 * @return Devuelve una cadena con la última parte del cuerpo del mensaje
-	 */
-	public static String getFinalCuerpo() {
-		return propiedades.getString("final_cuerpo");
+	public static String getRutaXml() {
+		return propiedades.getString("rutaXml");
 	}
-}
+	
+	public static String getUrlBase() {
+		return propiedades.getString("url_base");
+	}
+	
+	public static String getXslAlta() {
+		return propiedades.getString("rutaXslAlta");
+	}
+	
+	public static String getXslAdjuntos() {
+		return propiedades.getString("rutaXslAdjuntos");
+	}
+	
+	public static String getRutaHtml() {
+		return propiedades.getString("rutaHtml");
+	}
+ }

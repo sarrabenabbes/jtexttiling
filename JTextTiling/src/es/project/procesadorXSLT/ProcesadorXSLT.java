@@ -36,10 +36,6 @@ public class ProcesadorXSLT {
       File datafile = new File(args[1]); //y el fichero xml a validar
 
       //Decimos cual va a ser el fichero de salida
-     /* File salida = new File(args[2]);
-      if (!salida.exists())
-    	  salida.createNewFile();*/
-      
       miFicheroSt = new FileOutputStream(args[2]);
       
       //Generamos el arbol parseando el fichero.XML
@@ -53,12 +49,7 @@ public class ProcesadorXSLT {
       DOMSource source = new DOMSource(document);
       StreamResult result = new StreamResult(miFicheroSt);
       transformer.transform(source, result);
-
-      System.out.println("Tarea realizada con éxito");
     }
     
-
-
-
 //Capturar excepciones
  }

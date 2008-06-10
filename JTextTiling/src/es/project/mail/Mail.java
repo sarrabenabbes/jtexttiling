@@ -31,7 +31,8 @@ public abstract class Mail {
 	private String port = ConfigMail.getPuerto();
 	private String host = ConfigMail.getHost();
 	private String subject = ConfigMail.getAsunto();
-	private String rutaImagen = ConfigMail.getRutaImagen();
+	protected String rutaXml = ConfigMail.getRutaXml();
+	protected String rutaHtml = ConfigMail.getRutaHtml();
 	
 	protected Message mensaje;
 	protected Multipart mp;
@@ -44,6 +45,7 @@ public abstract class Mail {
 	 */
 	public abstract void enviarMail(Usuario usuario) throws MessagingException;
 	
+	protected abstract void borrarArchivos();
 	/**
 	 * <p>Crea los objetos necesarios para enviar el mensaje e inicializa las propiedades
 	 * según los valores obtenidos del fichero de propiedades.</p>
@@ -62,7 +64,7 @@ public abstract class Mail {
 		mensaje.setFrom(new InternetAddress(user));
 		mensaje.addRecipient(Message.RecipientType.TO, new InternetAddress(usuario.getEmail()));
 		mp = new MimeMultipart();
-	    this.adjuntarArchivo(rutaImagen);
+	    //this.adjuntarArchivo(rutaImagen);
 	}
 	
 	/**
@@ -105,6 +107,10 @@ public abstract class Mail {
 		adjunto.setDataHandler(new DataHandler(source));
 		adjunto.setFileName(fichero.getName());
 		mp.addBodyPart(adjunto);
+	}
+	
+	protected void borrarTemp(){
+		
 	}
 	
 	/**
