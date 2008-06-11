@@ -1,5 +1,7 @@
 package test.suite;
 
+import java.util.Enumeration;
+
 import test.bd.archivos.TestActualizarArchivos;
 import test.bd.archivos.TestBorradoArchivos;
 import test.bd.archivos.TestInsercionArchivos;
@@ -7,15 +9,17 @@ import test.bd.usuarios.TestActualizarUsuarios;
 import test.bd.usuarios.TestBorradoUsuarios;
 import test.bd.usuarios.TestComprobarUsuario;
 import test.bd.usuarios.TestInsercionUsuarios;
-import junit.extensions.TestDecorator;
 import junit.framework.Test;
+import junit.framework.TestFailure;
 import junit.framework.TestResult;
 import junit.framework.TestSuite;
 
 public class TestGeneral {
 	
+	private static TestSuite suite;
+	
 	public static Test suite() {
-		TestSuite suite = new TestSuite("Test General");
+		suite = new TestSuite("Test General");
 		
 		TestSuite suiteUsuarios = new TestSuite("Test Usuarios");
 		TestSuite suiteArchivos = new TestSuite("Test Archivos");
@@ -56,7 +60,23 @@ public class TestGeneral {
 	}
 	
 	public static void main(String[] args) {
-		junit.textui.TestRunner.run(suite());
+		//junit.textui.TestRunner.run(suite());
+		TestResult result = new TestResult();
+		
+		System.out.println("errores1: " + result.errorCount());
+		result.startTest(suite());
+		
+		System.out.println("errores: " + result.errorCount());
+		System.out.println("failures: " + result.failureCount());
+		System.out.println("total: " + result.runCount());
+		Enumeration<TestFailure> e = result.errors();
+		
+		TestFailure aux;
+		
+		while (e.hasMoreElements()) {
+			aux = e.nextElement();
+			System.out.println("failure: " + aux.exceptionMessage());
+		}
 	}
 
 }
