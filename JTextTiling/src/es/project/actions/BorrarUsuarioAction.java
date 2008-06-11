@@ -52,6 +52,7 @@ public class BorrarUsuarioAction extends Action{
 				saveMessages(request, listaMensajes);
 			
 		} catch (Exception e) {
+			e.printStackTrace();
 			retorno = "errorDesc";
 		}
 		
@@ -98,9 +99,9 @@ public class BorrarUsuarioAction extends Action{
 	}
 	
 	/**
-	 * <p>Borra físicamente los archivos del usuario: a partir de la ruta base, obtiene
-	 * la lista de ficheros y directorios y, para cada uno de ellos realiza la siguiente
-	 * operación:
+	 * <p>Borra físicamente los archivos del usuario (si es que tiene): a partir de la ruta 
+	 * base, obtiene la lista de ficheros y directorios y, para cada uno de ellos realiza 
+	 * la siguiente operación:
 	 * <ul>
 	 * 	<li>si es un fichero, lo borra</li>
 	 * 	<li>si es un directorio, hace una llamada recursiva en la cual se tomará como ruta
@@ -114,17 +115,21 @@ public class BorrarUsuarioAction extends Action{
 		File inicial = new File(ruta);
 		String[] lista = inicial.list();
 		
-		for(int i = 0; i < lista.length; i++) {
-			String rutaNueva = ruta + ConfigFicheros.getSeparador() + lista[i];
-			File aux = new File(rutaNueva);
-			
-			/* si el objeto File es un directorio, tenemos que actuar recursivamente */
-			if (aux.isDirectory())
-				borrarFicheros(rutaNueva);
-			/* si es un archivo, se borra directamente */ 
-			else aux.delete();
+		if (lista != null) {
+		
+			for(int i = 0; i < lista.length; i++) {
+				String rutaNueva = ruta + ConfigFicheros.getSeparador() + lista[i];
+				File aux = new File(rutaNueva);
+				
+				/* si el objeto File es un directorio, tenemos que actuar recursivamente */
+				if (aux.isDirectory())
+					borrarFicheros(rutaNueva);
+				/* si es un archivo, se borra directamente */ 
+				else aux.delete();
+			}
+			/* finalmente, borramos el directorio que ya estára vacío */
+			return inicial.delete();
 		}
-		/* finalmente, borramos el directorio que ya estára vacío */
-		return inicial.delete();
+		else return true;
 	}
 }
