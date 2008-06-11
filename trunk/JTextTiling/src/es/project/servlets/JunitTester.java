@@ -1,10 +1,14 @@
 package es.project.servlets;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
@@ -12,6 +16,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import es.project.junit.configuracion.ConfigJunit;
 import es.project.procesadorXSLT.ProcesadorXSLT;
 
 import test.suite.TestGeneral;
@@ -48,29 +53,54 @@ public class JunitTester extends HttpServlet {
 
 		response.setContentType("text/html");
 		PrintWriter out = response.getWriter();
-		String args[] = new String[]{"c:\\pruebasFicheros\\temp\\junit.xsl",
-										"c:\\pruebasFicheros\\temp\\junit.xml",
-										"c:\\pruebasFicheros\\temp\\junit.html"};
+		this.crearXml();
+		String args[] = new String[]{ConfigJunit.getRutaXsl(),
+										ConfigJunit.getRutaXml(),
+										ConfigJunit.getRutaHtml()};
+		
 		try {
 			ProcesadorXSLT.main(args);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
 		BufferedReader br = new BufferedReader(
 				new InputStreamReader(
 						new FileInputStream(
-								new File("c:\\pruebasFicheros\\temp\\junit.html"))));
+								new File(ConfigJunit.getRutaHtml()))));
 		
 		String texto = "";
 		
 		while (br.ready())
 			texto += br.readLine();
 		
+		br.close();
+		
 		out.print(texto);
 		out.flush();
 		out.close();
+	}
+	
+	private void crearXml() {
+		try {
+			BufferedWriter bw = new BufferedWriter(
+					new OutputStreamWriter(
+							new FileOutputStream(ConfigJunit.getRutaXml())));
+			
+			bw.write(ConfigJunit.getCabecera());
+			bw.write("<mensajes>");
+			bw.write("<mensaje>una bacalailla infame</mensaje>");
+			bw.write("<mensaje>dos bacalailla infame</mensaje>");
+			bw.write("<mensaje>tres bacalailla infame</mensaje>");
+			bw.write("</mensajes>");
+			
+			bw.close();
+			
+		} catch (FileNotFoundException fnfe) {
+			fnfe.printStackTrace();
+		} catch (IOException ioe) {
+			ioe.printStackTrace();
+		}
 	}
 
 	/**
