@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import es.project.bd.abstractos.ArchivoDAO;
+import es.project.bd.abstractos.DatosDAO;
 import es.project.bd.abstractos.FactoriaDAO;
 import es.project.bd.abstractos.UsuarioDAO;
 import es.project.bd.objetos.Archivo;
@@ -34,6 +35,8 @@ public class FacadeBD {
 	 */
 	private ArchivoDAO archivoDAO;
 	
+	private DatosDAO datosDAO;
+	
 	/**
 	 * <p>Constructor de la clase: llama al método que inicializa el valor de los objetos</p>
 	 */
@@ -49,6 +52,7 @@ public class FacadeBD {
 		factoriaDAO = FactoriaDAO.getFactoriaDAO(FactoriaDAO.mySql);
 		usuarioDAO = factoriaDAO.getUsuario();
 		archivoDAO = factoriaDAO.getArchivo();
+		datosDAO = factoriaDAO.getDatosDAO();
 	}
 	
 	/**
@@ -58,6 +62,7 @@ public class FacadeBD {
 		usuarioDAO = null;
 		archivoDAO = null;
 		factoriaDAO = null;
+		datosDAO = null;
 	}
 
 	/* <USUARIOS> */
@@ -468,4 +473,22 @@ public class FacadeBD {
 		return archivoDAO.getNombreArchivo(ruta);
 	}
 	/* </ARCHIVOS>*/
+	
+	/* <DATOS> */
+	public boolean actualizarDatosUltimoLogin(Usuario usuario) {
+		return datosDAO.actualizarUltimoLogin(usuario);
+	}
+	
+	public boolean actualizarDatosUltimaAlta(Usuario usuario) {
+		return datosDAO.actualizarUltimaAlta(usuario);
+	}
+	
+	public Usuario getDatosUltimoLogin() {
+		return datosDAO.getUltimoLogin();
+	}
+	
+	public Usuario getDatosUltimaAlta() {
+		return datosDAO.getUltimaAlta();
+	}
+	/* </DATOS>*/
 }

@@ -18,22 +18,27 @@
 		</div>
     	
     	<%
+    		FacadeBD facade = new FacadeBD();
 			EstadisticasUsuarios estU = new EstadisticasUsuarios();
 			EstadisticasArchivos estA = new EstadisticasArchivos();
 			request.setAttribute("numArchivos",estA.getNum());
 			request.setAttribute("numUsuarios",estU.getNum());
+			Usuario aux1 = facade.getDatosUltimaAlta();
+			Usuario aux2 = facade.getDatosUltimoLogin();
+			String ultimaAlta = (aux1 != null)?(aux1.getNombre()):("no ha habido altas");
+			String ultimoLogin = (aux2 != null)?(aux2.getNombre()):("no ha habido logins");
+			request.setAttribute("ultimaAlta", ultimaAlta);
+			request.setAttribute("ultimoLogin", ultimoLogin);
 		%>
 		<div class="divPrincipalRoot">
 			<table>
     			<tr>
-    				<td width="450">¡Hola root!</td>
-    				<td>Una bacalá infame</td>
+    				<td width="420">Número de archivos totales en el servidor: ${requestScope.numArchivos}</td>
+    				<td>Último usuario que ha utilizado el servicio: ${ultimoLogin}</td>
     			</tr>
     			<tr>
-    				<td width="350">Número de archivos totales en el servidor: ${requestScope.numArchivos}</td>
-    			</tr>
-    			<tr>
-    				<td width="350">Número de usuarios totales del servicio: ${requestScope.numUsuarios}</td>
+    				<td width="420">Número de usuarios totales del servicio: ${requestScope.numUsuarios}</td>
+    				<td>Último usuario en darse de alta en el servicio: ${ultimaAlta}</td>
     			</tr>
     		</table>
 		</div>

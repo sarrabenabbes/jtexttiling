@@ -72,6 +72,7 @@ public class AltaUsuarioAction extends Action{
 						request.getSession().setAttribute("root", false);
 						List<Archivo> listaArchivos = facadeBD.getArchivosPorUsuario(user);
 						request.getSession().setAttribute("listaArchivos", listaArchivos);
+						facadeBD.actualizarDatosUltimaAlta(user);
 					}
 					/*else 
 						mandarMailAlta(listaMensajes, user, facadeBD);*/
