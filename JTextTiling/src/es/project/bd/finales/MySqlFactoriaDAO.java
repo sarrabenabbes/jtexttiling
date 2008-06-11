@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 import es.project.bd.abstractos.ArchivoDAO;
+import es.project.bd.abstractos.DatosDAO;
 import es.project.bd.abstractos.FactoriaDAO;
 import es.project.bd.abstractos.UsuarioDAO;
 import es.project.bd.configuracion.ConfigBD;
@@ -71,6 +72,14 @@ public class MySqlFactoriaDAO extends FactoriaDAO {
 	 */
 	public ArchivoDAO getArchivo() {
 		return new MySqlArchivoDAO();
+	}
+	
+	/**
+	 * <p>Crea un objeto de tipo DatosDAO, particularizado para un base de datos MySQL</p>
+	 * @return Devuelve un objeto de tipo MySqlDatosDAO (que hereda de DatosDAO)
+	 */
+	public DatosDAO getDatosDAO() {
+		return new MySqlDatosDAO();
 	}
 	
 	/**

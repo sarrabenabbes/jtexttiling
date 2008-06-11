@@ -23,6 +23,13 @@ public abstract class FactoriaDAO {
 	public abstract ArchivoDAO getArchivo();
 	
 	/**
+	 * <p>Devuelve un objeto heredado de DatosDAO, que manejará las operaciones con archivos
+	 * de la base de datos especificada</p>
+	 * @return Objeto derivado de DatosDAO
+	 */
+	public abstract DatosDAO getDatosDAO();
+	
+	/**
 	 * <p>Variable global que se le asigna a la base de datos MySQL. Estas variables son necesarias
 	 * para elegir la conexión con la base de datos que se crea con el método "getFactoriaDAO"</p>
 	 */
