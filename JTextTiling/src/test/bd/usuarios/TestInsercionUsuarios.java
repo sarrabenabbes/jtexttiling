@@ -18,6 +18,13 @@ public class TestInsercionUsuarios extends TestCase{
 	private final String testFalloPassword = "Nos permite dar de alta un usuario sin password";
 	private final String testFalloMail = "Nos permite dar de alta un usuario sin mail";
 	
+	private final String testFalloDatosUltimaAlta_1 = "La última alta debería ser la del usuario 'root'";
+	private final String testFalloDatosUltimaAlta_2 = "La última alta debería ser la del usuario ";
+	private final String testFalloDatosUltimoLogin_1 = "El último login debería ser el del usuario 'root'";
+	private final String testFalloDatosUltimoLogin_2 = "El último login debería ser el del usuario ";
+	
+	private final String NOMBRE_USUARIO_INICIAL = "root";
+	
 	Usuario usuario1 = new Usuario("nombre1", "pass1","mail");
 	Usuario usuario2 = new Usuario("nombre2", "pass2","mail");
 	
@@ -33,10 +40,50 @@ public class TestInsercionUsuarios extends TestCase{
 	}
 	
 	public void tearDown() {
+		Usuario root = new Usuario("root");
+		facadeBD.actualizarDatosUltimaAlta(root);
+		facadeBD.actualizarDatosUltimoLogin(root);
 		facadeBD.borrarUsuarios();
 		contador = 0;
 		facadeBD.tearDown();
 		facadeBD = null;
+	}
+	
+	public void testDatosUltimoLogin() {
+		Usuario auxLogin = facadeBD.getDatosUltimoLogin();
+		assertTrue(this.testFalloDatosUltimoLogin_1, 
+				auxLogin.getNombre().compareTo(this.NOMBRE_USUARIO_INICIAL) == 0);
+		
+		this.insertarUsuario(usuario1);
+		facadeBD.actualizarDatosUltimoLogin(usuario1);
+		auxLogin = facadeBD.getDatosUltimoLogin();
+		assertTrue(this.testFalloDatosUltimoLogin_2 + usuario1.getNombre(), 
+				auxLogin.getNombre().compareTo(usuario1.getNombre()) == 0);
+		
+		this.insertarUsuario(usuario2);
+		facadeBD.actualizarDatosUltimoLogin(usuario2);
+		auxLogin = facadeBD.getDatosUltimoLogin();
+		assertTrue(this.testFalloDatosUltimoLogin_2 + usuario2.getNombre(), 
+				auxLogin.getNombre().compareTo(usuario2.getNombre()) == 0);
+	}
+	
+	public void testDatosUltimaAlta() {
+		Usuario auxAlta = facadeBD.getDatosUltimaAlta();
+		assertTrue(this.testFalloDatosUltimaAlta_1, 
+				auxAlta.getNombre().compareTo(this.NOMBRE_USUARIO_INICIAL) == 0);
+		
+		this.insertarUsuario(usuario1);
+		facadeBD.actualizarDatosUltimaAlta(usuario1);
+		auxAlta = facadeBD.getDatosUltimaAlta();
+		assertTrue(this.testFalloDatosUltimaAlta_2 + usuario1.getNombre(), 
+				auxAlta.getNombre().compareTo(usuario1.getNombre()) == 0);
+		
+		this.insertarUsuario(usuario2);
+		facadeBD.actualizarDatosUltimaAlta(usuario2);
+		auxAlta = facadeBD.getDatosUltimaAlta();
+		assertTrue(this.testFalloDatosUltimaAlta_2 + usuario2.getNombre(), 
+				auxAlta.getNombre().compareTo(usuario2.getNombre()) == 0);
+		
 	}
 	
 	public void testFallo() {

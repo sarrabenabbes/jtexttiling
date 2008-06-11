@@ -152,6 +152,7 @@ public class ActualizarUsuarioAction extends Action{
 					usuario.setNombre(nuevoNombre);
 					this.actualizarRutasArchivos(usuario, facadeBD,request);
 					request.getSession().setAttribute("usuarioActual", usuario);
+					facadeBD.actualizarDatosUltimoLogin(usuario);
 				}
 			}
 		}

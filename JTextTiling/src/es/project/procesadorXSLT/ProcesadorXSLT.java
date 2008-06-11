@@ -24,6 +24,7 @@ public class ProcesadorXSLT {
   static Document document;
   static FileOutputStream miFicheroSt;
   static DocumentBuilderFactory factory;
+  private static String texto = "";
 
   public static void main(String[] args) throws Exception {
     DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
@@ -36,7 +37,8 @@ public class ProcesadorXSLT {
       File datafile = new File(args[1]); //y el fichero xml a validar
 
       //Decimos cual va a ser el fichero de salida
-      miFicheroSt = new FileOutputStream(args[2]);
+     miFicheroSt = new FileOutputStream(args[2]);
+    
       
       //Generamos el arbol parseando el fichero.XML
       DocumentBuilder builder = factory.newDocumentBuilder();
@@ -47,9 +49,14 @@ public class ProcesadorXSLT {
       Transformer transformer = tFactory.newTransformer(stylesource);
       //Con el Transformer generamos la pagina HTML con los datos XML
       DOMSource source = new DOMSource(document);
-      StreamResult result = new StreamResult(miFicheroSt);
+      
+      
+      StreamResult result = new StreamResult(miFicheroSt); 
       transformer.transform(source, result);
     }
     
+  public static String getTexto() {
+	  return texto;
+  }
 //Capturar excepciones
  }
