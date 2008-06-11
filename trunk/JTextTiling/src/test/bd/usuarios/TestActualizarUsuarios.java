@@ -20,6 +20,7 @@ public class TestActualizarUsuarios extends TestCase{
 	private final String testActualizarNombreArchivo_1 = 
 		"No almacena correctamente la información sobre los archivos";
 	private final String testActualizarNombreArchivo_2 = "No actualiza el nombre del propietario del archivo";
+	private final String testFalloDatosUltimoLogin = "No actualiza el nombre del último usuario logueado";
 	
 	private Usuario usuario1 = new Usuario("nombre1","pass1","mail1");
 	private Usuario usuario2 = new Usuario("nombre2", "pass2","mail2");
@@ -32,7 +33,9 @@ public class TestActualizarUsuarios extends TestCase{
 	}
 	
 	public void tearDown() {
+		Usuario root = new Usuario("root");
 		borrarUsuarios();
+		facadeBD.actualizarDatosUltimoLogin(root);
 		facadeBD.tearDown();
 		facadeBD = null;
 	}
@@ -47,6 +50,21 @@ public class TestActualizarUsuarios extends TestCase{
 		nombreNuevo = usuario2.getNombre();
 		assertFalse(this.testActualizarNombreIncorrecto, 
 				facadeBD.actualizarNombre(usuario1, nombreNuevo));
+	}
+	
+	public void testActualizarDatosLogin() {
+		/* sabemos que el último usuario insertado es usuario 2 */
+		Usuario aux = facadeBD.getDatosUltimoLogin();
+		assertTrue(this.testFalloDatosUltimoLogin,
+				aux.getNombre().compareTo(usuario2.getNombre()) == 0);
+		
+		String nombreNuevo = "nombreNuevo";
+		facadeBD.actualizarNombre(usuario2, nombreNuevo);
+		usuario2.setNombre(nombreNuevo);
+		facadeBD.actualizarDatosUltimoLogin(usuario2);
+		aux = facadeBD.getDatosUltimoLogin();
+		assertTrue(this.testFalloDatosUltimoLogin,
+				aux.getNombre().compareTo(nombreNuevo) == 0);
 	}
 	
 	public void testActualizarMail() {
@@ -87,7 +105,9 @@ public class TestActualizarUsuarios extends TestCase{
 	
 	private void insertarUsuarios() {
 		facadeBD.insertarUsuario(usuario1);
+		facadeBD.actualizarDatosUltimoLogin(usuario1);
 		facadeBD.insertarUsuario(usuario2);
+		facadeBD.actualizarDatosUltimoLogin(usuario2);
 	}
 	
 	private void insertarArchivos() {

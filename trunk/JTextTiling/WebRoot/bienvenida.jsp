@@ -33,12 +33,15 @@
 		<div class="divPrincipalRoot">
 			<table>
     			<tr>
-    				<td width="420">Número de archivos totales en el servidor: ${requestScope.numArchivos}</td>
-    				<td>Último usuario que ha utilizado el servicio: ${ultimoLogin}</td>
+    				<td width="420">- Número de archivos totales en el servidor: ${requestScope.numArchivos}</td>
+    				<td>- Último usuario que ha utilizado el servicio: ${ultimoLogin}</td>
     			</tr>
     			<tr>
-    				<td width="420">Número de usuarios totales del servicio: ${requestScope.numUsuarios}</td>
-    				<td>Último usuario en darse de alta en el servicio: ${ultimaAlta}</td>
+    				<td width="420">- Número de usuarios totales del servicio: ${requestScope.numUsuarios}</td>
+    				<td>- Último usuario en darse de alta en el servicio: ${ultimaAlta}</td>
+    			</tr>
+    			<tr>
+    				<td><a href="./servlet/JunitTester" target="_blank">Ejecutar pruebas JUnit</a></td>
     			</tr>
     		</table>
 		</div>
@@ -85,16 +88,16 @@
     				<td><a href="./actualizarUsuario.jsp">Actualice sus datos</a></td>
     			</tr>
     			<tr>
-    				<td width="350">Número de archivos en el servidor: ${requestScope.numArchivos}</td>
+    				<td width="350">- Número de archivos en el servidor: ${requestScope.numArchivos}</td>
     			</tr>
     			<tr>
-    				<td width="400">Cuenta de mail utilizada: ${mail}</td>
+    				<td width="400">- Cuenta de mail utilizada: ${mail}</td>
     			</tr>
     			<tr>
-    				<td width="350">Fecha de alta: ${fechaAlta}</td>
+    				<td width="350">- Fecha de alta: ${fechaAlta}</td>
     			</tr>
     			<tr>
-    				<td width="350">Fecha del último login: ${requestScope.ultimoLogin}</td>
+    				<td width="350">- Fecha del último login: ${requestScope.ultimoLogin}</td>
     			</tr>
     		</table>
     	</div>

@@ -7,7 +7,9 @@ import test.bd.usuarios.TestActualizarUsuarios;
 import test.bd.usuarios.TestBorradoUsuarios;
 import test.bd.usuarios.TestComprobarUsuario;
 import test.bd.usuarios.TestInsercionUsuarios;
+import junit.extensions.TestDecorator;
 import junit.framework.Test;
+import junit.framework.TestResult;
 import junit.framework.TestSuite;
 
 public class TestGeneral {
@@ -58,3 +60,4 @@ public class TestGeneral {
 	}
 
 }
+
