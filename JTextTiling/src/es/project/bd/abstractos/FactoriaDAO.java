@@ -7,6 +7,7 @@ import es.project.bd.finales.MySqlFactoriaDAO;
  * @author Daniel Fernández Aller
  */
 public abstract class FactoriaDAO {
+	private boolean esTest = false;
 	
     /**
 	 * <p>Devuelve un objeto heredado de UsuarioDAO, que manejará las operaciones con usuarios
@@ -50,5 +51,13 @@ public abstract class FactoriaDAO {
 		default: 
 			return null;
 		}
+	}
+
+	public boolean isEsTest() {
+		return esTest;
+	}
+
+	public void setEsTest(boolean esTest) {
+		this.esTest = esTest;
 	}
 }

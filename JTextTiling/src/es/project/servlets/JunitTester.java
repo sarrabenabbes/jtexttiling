@@ -10,12 +10,17 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
+import java.util.Enumeration;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import junit.framework.TestFailure;
+
+import es.project.bd.configuracion.ConfigBD;
+import es.project.facade.FacadeBD;
 import es.project.junit.configuracion.ConfigJunit;
 import es.project.procesadorXSLT.ProcesadorXSLT;
 
@@ -23,6 +28,10 @@ import test.suite.TestGeneral;
 
 public class JunitTester extends HttpServlet {
 
+	private final String TOKEN_APERTURA_1 = "<error>";
+	private final String TOKEN_APERTURA_2 = "<failure>";
+	private final String TOKEN_CIERRE_1 = "</error>";
+	private final String TOKEN_CIERRE_2 = "</failure>";
 	/**
 	 * Constructor of the object.
 	 */
@@ -53,7 +62,17 @@ public class JunitTester extends HttpServlet {
 
 		response.setContentType("text/html");
 		PrintWriter out = response.getWriter();
-		this.crearXml();
+		
+		FacadeBD facadeBD = new FacadeBD();
+		facadeBD.setTipoConexion(true);
+		
+		TestGeneral.main(null);
+		int runCount = TestGeneral.getRunCount();
+		Enumeration <TestFailure> errors = TestGeneral.getErrors();
+		Enumeration <TestFailure> failures = TestGeneral.getFailures();
+		
+		this.crearXml(runCount,errors,failures);
+		
 		String args[] = new String[]{ConfigJunit.getRutaXsl(),
 										ConfigJunit.getRutaXml(),
 										ConfigJunit.getRutaHtml()};
@@ -79,9 +98,13 @@ public class JunitTester extends HttpServlet {
 		out.print(texto);
 		out.flush();
 		out.close();
+		
+		facadeBD.setTipoConexion(false);
 	}
 	
-	private void crearXml() {
+	private void crearXml(int runCount, Enumeration<TestFailure> errors, 
+			Enumeration<TestFailure> failures) {
+		
 		try {
 			BufferedWriter bw = new BufferedWriter(
 					new OutputStreamWriter(
@@ -89,9 +112,15 @@ public class JunitTester extends HttpServlet {
 			
 			bw.write(ConfigJunit.getCabecera());
 			bw.write("<mensajes>");
-			bw.write("<mensaje>una bacalailla infame</mensaje>");
-			bw.write("<mensaje>dos bacalailla infame</mensaje>");
-			bw.write("<mensaje>tres bacalailla infame</mensaje>");
+			bw.write("<run>Se han ejecutado " + runCount + " tests</run>");
+			
+			bw.write("<errors>");
+			this.printResultados(bw, errors, this.TOKEN_APERTURA_1, this.TOKEN_CIERRE_1);
+			bw.write("</errors>");
+			
+			bw.write("<failures>");
+			this.printResultados(bw, failures, this.TOKEN_APERTURA_2, this.TOKEN_CIERRE_2);
+			bw.write("</failures>");
 			bw.write("</mensajes>");
 			
 			bw.close();
@@ -100,6 +129,15 @@ public class JunitTester extends HttpServlet {
 			fnfe.printStackTrace();
 		} catch (IOException ioe) {
 			ioe.printStackTrace();
+		}
+	}
+	
+	private void printResultados(BufferedWriter bw, Enumeration<TestFailure> enumeration, 
+			String token1, String token2) throws IOException {
+		
+		while (enumeration.hasMoreElements()) {
+			TestFailure aux = enumeration.nextElement();
+			bw.write(token1 + "<valor>" + aux.toString() + "</valor>" + token2);
 		}
 	}
 

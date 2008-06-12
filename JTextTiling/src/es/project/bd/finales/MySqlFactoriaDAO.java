@@ -42,8 +42,8 @@ public class MySqlFactoriaDAO extends FactoriaDAO {
 		    }
 
 		    try {
-		        connection = DriverManager.getConnection(ConfigBD.getBDUrl() + ConfigBD.getEsquema(),
-		        		ConfigBD.getUser(), ConfigBD.getPassword());
+		    	connection = DriverManager.getConnection(ConfigBD.getBDUrl() + ConfigBD.getEsquema(),
+		    		ConfigBD.getUser(), ConfigBD.getPassword());
 		    }
 		      
 		    catch (SQLException sql) {
