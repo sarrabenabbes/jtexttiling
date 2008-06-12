@@ -54,7 +54,6 @@ public class TestComprobarUsuario extends TestCase {
 	}
 	
 	public void testComprobarCorrecto() {
-		facadeBD.verUsuarios();
 		assertTrue(usuario1.getNombre() + this.comprobarCorrecto, 
 				facadeBD.comprobarUsuario(usuario1));
 

@@ -23,6 +23,7 @@ public class TestInsercionArchivos extends TestCase{
 	Usuario usuario2 = new Usuario("nombre2", "pass2","mail2");
 	Archivo archivo1 = new Archivo("archivo1","nombre1","c:\\ruta");
 	Archivo archivo2 = new Archivo("archivo2","nombre1","d:\\ruta");
+	
 	private final int numArchivosUsuario1 = 2;
 	private final int numArchivosUsuario2 = 0;
 	

@@ -41,4 +41,8 @@ public class ConfigBD {
 	public static String getEsquema() {
 		return propiedades.getString("esquema");
 	}
+	
+	public static String getEsquema_2() {
+		return propiedades.getString("esquema_2");
+	}
 }

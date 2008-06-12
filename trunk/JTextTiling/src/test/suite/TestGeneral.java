@@ -17,6 +17,9 @@ import junit.framework.TestSuite;
 public class TestGeneral {
 	
 	private static TestSuite suite;
+	private static Enumeration<TestFailure> failures;
+	private static Enumeration<TestFailure> errors;
+	private static int runCount;
 	
 	public static Test suite() {
 		suite = new TestSuite("Test General");
@@ -60,24 +63,27 @@ public class TestGeneral {
 	}
 	
 	public static void main(String[] args) {
-		//junit.textui.TestRunner.run(suite());
-		TestResult result = new TestResult();
+		Test test = suite();
+		TestResult tr = new TestResult();
+		test.run(tr);
 		
-		System.out.println("errores1: " + result.errorCount());
-		result.startTest(suite());
-		
-		System.out.println("errores: " + result.errorCount());
-		System.out.println("failures: " + result.failureCount());
-		System.out.println("total: " + result.runCount());
-		Enumeration<TestFailure> e = result.errors();
-		
-		TestFailure aux;
-		
-		while (e.hasMoreElements()) {
-			aux = e.nextElement();
-			System.out.println("failure: " + aux.exceptionMessage());
-		}
+		failures = tr.failures();
+		errors = tr.errors();
+		runCount = tr.runCount();
+	}
+	
+	public static Enumeration<TestFailure> getFailures() {
+		return failures;
+	}
+	
+	public static Enumeration<TestFailure> getErrors() {
+		return errors;
+	}
+	
+	public static int getRunCount() {
+		return runCount;
 	}
 
 }
+
 

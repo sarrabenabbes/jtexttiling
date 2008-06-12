@@ -64,6 +64,10 @@ public class FacadeBD {
 		factoriaDAO = null;
 		datosDAO = null;
 	}
+	
+	public void setTipoConexion(boolean esTest) {
+		factoriaDAO.setEsTest(esTest);
+	}
 
 	/* <USUARIOS> */
 	/**
