@@ -1,11 +1,17 @@
 package test.bd;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.util.Calendar;
 import java.util.Properties;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 import javax.mail.MessagingException;
 
@@ -25,8 +31,35 @@ public class TestBD {
 		pruebaSistema();
 		this.pruebaRuntime();
 		this.escribirAFichero();
-		*/
 		this.transformarXSLT();
+		*/
+		this.comprimir();
+	}
+	
+	private void comprimir() {
+		File file = new File("c:\\pruebasFicheros\\temp.zip");
+		
+		try {
+			FileInputStream entrada = new FileInputStream(new File("c:\\pruebasFicheros\\temp\\mailActivacion.dtd"));
+			ZipOutputStream zos = new ZipOutputStream(new FileOutputStream(file));
+			ZipEntry entry = new ZipEntry("prueba");
+			zos.putNextEntry(entry);
+			
+			BufferedReader br = new BufferedReader(new InputStreamReader(entrada));
+			
+			while (br.ready()) {
+				zos.write(br.read());
+			}
+			
+			br.close();
+			zos.close();
+			entrada.close();
+			//TODO por ahi vamos
+		} catch (FileNotFoundException fnfe) {
+			fnfe.printStackTrace();
+		} catch (IOException ioe) {
+			ioe.printStackTrace();
+		}
 	}
 	
 	private void transformarXSLT() {
