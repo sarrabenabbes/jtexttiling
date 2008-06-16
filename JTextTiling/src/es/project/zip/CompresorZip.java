@@ -9,6 +9,8 @@ import java.io.InputStreamReader;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
+import es.project.bd.objetos.Archivo;
+import es.project.facade.FacadeBD;
 import es.project.ficheros.configuracion.ConfigFicheros;
 
 /**
@@ -19,18 +21,21 @@ import es.project.ficheros.configuracion.ConfigFicheros;
  */
 public class CompresorZip {
 	
-	private static FileInputStream entrada;
-	private static ZipOutputStream zos;
+	private FileInputStream entrada;
+	private ZipOutputStream zos;
+	private FacadeBD facadeBD;
 	
 	/**
 	 * <p>Recibe la ruta del archivo a comprimir y obtiene la lista de sus "hijos".
 	 * Recorre esta lista y, para cada uno de los ficheros simples, realiza el 
-	 * proceso de compresión mediante el método privado "realizarCompresion"</p>
+	 * proceso de compresión mediante el método privado "realizarCompresion". Finalmente,
+	 * actualiza la base de datos asignando el archivo creado al usuario propietario.</p>
 	 * @param rutaFuente Ruta del directorio a comprimir
 	 * @param rutaCompresion Ruta donde se va a colocar el archivo comprimido
+	 * @param nombreUsuario Nombre del usuario propietario del archivo comprimido
 	 * @throws IOException java.io.IOException
 	 */
-	public static void comprimirArchivo(String rutaFuente, String rutaCompresion) 
+	public void comprimirArchivo(String rutaFuente, String rutaCompresion, String nombreUsuario) 
 		throws IOException {
 		
 		File inicial = new File(rutaFuente);
@@ -44,8 +49,16 @@ public class CompresorZip {
 				File aux = new File(rutaNueva);
 				realizarCompresion(aux.getName(), rutaNueva, rutaCompresion);
 			}
+			
+			actualizarBD(inicial.getName() + ".zip",nombreUsuario,rutaCompresion);
 			cerrarConexion();
 		}
+	}
+	
+	private void actualizarBD(String nombreArchivo, String nombrePropietario, String ruta) {
+		facadeBD = new FacadeBD();
+		Archivo aux = new Archivo(nombreArchivo, nombrePropietario, ruta);
+		facadeBD.insertarArchivo(aux);
 	}
 	
 	/**
@@ -56,7 +69,7 @@ public class CompresorZip {
 	 * @param rutaCompresion Ruta donde se va a colocar el archivo comprimido
 	 * @throws IOException java.io.IOException
 	 */
-	private static void realizarCompresion(String nombre, String rutaFuente, String rutaCompresion) 
+	private void realizarCompresion(String nombre, String rutaFuente, String rutaCompresion) 
 		throws IOException {
 		
 		entrada = new FileInputStream(new File(rutaFuente));
@@ -72,7 +85,11 @@ public class CompresorZip {
 		entrada.close();
 	}
 	
-	private static void cerrarConexion() throws IOException {
+	/**
+	 * <p>Cierra el ZipOutputStream</p>
+	 * @throws IOException java.io.IOException
+	 */
+	private void cerrarConexion() throws IOException {
 		zos.close();
 	}
 }

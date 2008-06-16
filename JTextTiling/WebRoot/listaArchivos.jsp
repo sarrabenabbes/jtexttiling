@@ -57,7 +57,10 @@
 	<%request.getSession().setAttribute("botonSalir",true); %>
 	
 		<%
-			List<Archivo> lista = (List<Archivo>)request.getSession().getAttribute("listaArchivos"); 
+			FacadeBD facadeBD = new FacadeBD();
+			Usuario actual = (Usuario)request.getSession().getAttribute("usuarioActual");
+			List<Archivo> lista = facadeBD.getArchivosPorUsuario(actual);
+			request.getSession().setAttribute("listaArchivos", lista);
 			request.setAttribute("lista",lista);
 			request.setAttribute("numArchivos", lista.size());
 		%>

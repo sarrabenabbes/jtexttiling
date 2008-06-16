@@ -258,7 +258,8 @@ protected void depthScore() {
  * Generate text output with topic boundary markers.
  * Creation date: (07/12/99 07:39:00)
  */
-protected static void genOutput(RawText c, Vector seg, String dirOutput) throws IOException{
+protected static void genOutput(RawText c, Vector seg, String dirOutput, String nombreUsuario) 
+	throws IOException{
 	/* Declare variables */
 	Vector text = c.text; // The text
 	Vector sentence = c.boundaries; // Sentence boundaries
@@ -311,7 +312,10 @@ protected static void genOutput(RawText c, Vector seg, String dirOutput) throws 
 	/* The implicit boundary at the end of the file */
 	aux = "\n==========";
 	System.out.println(aux);
-	CompresorZip.comprimirArchivo(dirOutput, dirOutput + ".zip");
+	CompresorZip cz = new CompresorZip();
+	cz.comprimirArchivo(dirOutput, dirOutput + ".zip", nombreUsuario);
+	//TODO a ver aquí
+	directory.delete();
 	bw.close();
 }
 /**
@@ -402,7 +406,7 @@ public static void main(String[] args) {
 		t.similarityDetermination();				// Compute similarity scores
 		t.depthScore();								// Compute depth scores using the similarity scores
 		t.boundaryIdentification();					// Identify the boundaries
-		t.genOutput(c, t.segmentation, args[3]);	// Generate segmented output
+		t.genOutput(c, t.segmentation, args[3],args[4]);	// Generate segmented output
 		logMensajes = "- La ejecución del algoritmo concluyó correctamente, puede ver un fichero con los " +
 				"resultados en su espacio personal";
 		extraerLog(logMensajes);

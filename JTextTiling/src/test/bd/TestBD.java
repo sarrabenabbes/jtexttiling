@@ -40,7 +40,8 @@ public class TestBD {
 	
 	private void comprimirDos() {
 		try {
-			CompresorZip.comprimirArchivo("c:\\pruebasFicheros\\dani\\cn.txt_JTT", "c:\\pruebasFicheros\\dani\\cn.txt_JTT.zip");
+			CompresorZip cz = new CompresorZip();
+			cz.comprimirArchivo("c:\\pruebasFicheros\\dani\\cn.txt_JTT", "c:\\pruebasFicheros\\dani\\cn.txt_JTT.zip","dani");
 		} catch (IOException ioe) {
 			ioe.printStackTrace();
 		}
