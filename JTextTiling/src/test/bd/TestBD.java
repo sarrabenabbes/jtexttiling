@@ -20,6 +20,7 @@ import es.project.facade.FacadeBD;
 import es.project.mail.Mail;
 import es.project.mail.MailAlta;
 import es.project.procesadorXSLT.ProcesadorXSLT;
+import es.project.zip.CompresorZip;
 
 public class TestBD {
 	
@@ -33,7 +34,16 @@ public class TestBD {
 		this.escribirAFichero();
 		this.transformarXSLT();
 		*/
-		this.comprimir();
+		//this.comprimir();
+		this.comprimirDos();
+	}
+	
+	private void comprimirDos() {
+		try {
+			CompresorZip.comprimirArchivo("c:\\pruebasFicheros\\dani\\cn.txt_JTT", "c:\\pruebasFicheros\\dani\\cn.txt_JTT.zip");
+		} catch (IOException ioe) {
+			ioe.printStackTrace();
+		}
 	}
 	
 	private void comprimir() {
@@ -41,6 +51,7 @@ public class TestBD {
 		
 		try {
 			FileInputStream entrada = new FileInputStream(new File("c:\\pruebasFicheros\\temp\\mailActivacion.dtd"));
+			
 			ZipOutputStream zos = new ZipOutputStream(new FileOutputStream(file));
 			ZipEntry entry = new ZipEntry("prueba");
 			zos.putNextEntry(entry);
@@ -54,7 +65,7 @@ public class TestBD {
 			br.close();
 			zos.close();
 			entrada.close();
-			//TODO por ahi vamos
+			
 		} catch (FileNotFoundException fnfe) {
 			fnfe.printStackTrace();
 		} catch (IOException ioe) {
