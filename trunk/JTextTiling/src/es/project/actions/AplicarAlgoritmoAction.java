@@ -81,7 +81,7 @@ public class AplicarAlgoritmoAction extends Action{
 		String rutaArchivo = ConfigFicheros.getRutaBase() + nombreUsuario + separador + nombreArchivo;
 		String directorioSalida = ConfigFicheros.getRutaBase() + nombreUsuario + separador + nombreArchivo + "_JTT";
 		
-		String args[] = new String[]{w, s, stopwords, directorioSalida};
+		String args[] = new String[]{w, s, stopwords, directorioSalida, nombreUsuario};
 		TextTiling.setNombreArchivo(nombreArchivo);
 		TextTiling.setRutaArchivo(rutaArchivo);
 		TextTiling.main(args);
