@@ -12,6 +12,7 @@ import java.util.Vector;
 
 import es.project.algoritmo.configuracion.ConfigAlgoritmo;
 import es.project.ficheros.configuracion.ConfigFicheros;
+import es.project.zip.CompresorZip;
 
 import uk.ac.man.cs.choif.nlp.stemming.Porter;
 import uk.ac.man.cs.choif.nlp.stemming.Stemmer;
@@ -310,6 +311,7 @@ protected static void genOutput(RawText c, Vector seg, String dirOutput) throws 
 	/* The implicit boundary at the end of the file */
 	aux = "\n==========";
 	System.out.println(aux);
+	CompresorZip.comprimirArchivo(dirOutput, dirOutput + ".zip");
 	bw.close();
 }
 /**
