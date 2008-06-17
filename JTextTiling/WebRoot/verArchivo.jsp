@@ -33,7 +33,9 @@
 			</div>
 			
 			<% 
-				List<Archivo> lista = (List<Archivo>)request.getSession().getAttribute("listaArchivos"); 
+				FacadeBD facadeBD = new FacadeBD();
+				Usuario actual = (Usuario)request.getSession().getAttribute("usuarioActual");
+				List<Archivo> lista = facadeBD.getArchivosPorUsuario(actual);
 				request.setAttribute("lista",lista);
 				request.setAttribute("numArchivos", lista.size());
 				Archivo a = new Archivo();
