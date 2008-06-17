@@ -24,8 +24,18 @@
 	
 	<%
 		List<Archivo> lista = (List<Archivo>)request.getSession().getAttribute("listaArchivos"); 
-		request.setAttribute("lista",lista);
-		request.setAttribute("numArchivos", lista.size());
+		List<Archivo> listaFinal = new LinkedList<Archivo>();
+		
+		Iterator<Archivo> i = lista.iterator();
+		Archivo aux;
+		while (i.hasNext()) {
+			aux = i.next();
+			if (!aux.getNombreArchivo().endsWith("zip"))
+				listaFinal.add(aux);
+		}
+		
+		request.setAttribute("lista",listaFinal);
+		request.setAttribute("numArchivos", listaFinal.size());
 		Archivo a = new Archivo();
 		a.setAccesoRoot(false);
 	 %>
@@ -33,7 +43,9 @@
 	<c:choose>
 	<c:when test="${numArchivos > 0}">
 	<div class="divPrincipal">
-		<p>Elija los archivos a los que quiere aplicar el algoritmo: </p>
+		<p>Elija el archivo al que quiere aplicar el algoritmo: 
+			<a href="#" onclick="window.open('./avisoExtensiones.html','','width=400,height=210')">(?)</a>
+		</p>
 
 		<html:form action="/AplicarAlgoritmo">
 		<p>
@@ -54,7 +66,7 @@
    	    			<p class="step">
    	    			Step:<br />
    	    			<html:text property="step"></html:text>
-   	    			<a href="#" onclick="window.open('./avisoWindowStep.html','','width=400,height=200')">(?)</a><br />
+   	    			<a href="#" onclick="window.open('./avisoWindowStep.html','','width=480,height=230')">(?)</a><br />
    	    			</p>
    	    		</td>
    	    	</tr>

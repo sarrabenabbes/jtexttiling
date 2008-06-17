@@ -35,7 +35,8 @@ public class CompresorZip {
 	 * @param nombreUsuario Nombre del usuario propietario del archivo comprimido
 	 * @throws IOException java.io.IOException
 	 */
-	public void comprimirArchivo(String rutaFuente, String rutaCompresion, String nombreUsuario) 
+	public void comprimirArchivo(String rutaFuente, String rutaCompresion, String nombreUsuario,
+			String nombreZip) 
 		throws IOException {
 		
 		File inicial = new File(rutaFuente);
@@ -50,11 +51,18 @@ public class CompresorZip {
 				realizarCompresion(aux.getName(), rutaNueva, rutaCompresion);
 			}
 			
-			actualizarBD(inicial.getName() + ".zip",nombreUsuario,rutaCompresion);
+			actualizarBD(nombreZip,nombreUsuario,rutaCompresion);
 			cerrarConexion();
 		}
 	}
 	
+	/**
+	 * <p>Inserta el nuevo archivo (el archivo zip) en la base de datos, indicando su nombre,
+	 * su propietario y su ruta</p>
+	 * @param nombreArchivo Nombre del archivo a insertar
+	 * @param nombrePropietario Nombre del propietario del archivo a insertar
+	 * @param ruta Ruta del archivo a insertar
+	 */
 	private void actualizarBD(String nombreArchivo, String nombrePropietario, String ruta) {
 		facadeBD = new FacadeBD();
 		Archivo aux = new Archivo(nombreArchivo, nombrePropietario, ruta);
