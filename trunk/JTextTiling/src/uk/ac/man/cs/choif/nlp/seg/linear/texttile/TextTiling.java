@@ -11,6 +11,7 @@ import java.util.Hashtable;
 import java.util.Vector;
 
 import es.project.algoritmo.configuracion.ConfigAlgoritmo;
+import es.project.borrarDirectorios.BorrarDirectorio;
 import es.project.ficheros.configuracion.ConfigFicheros;
 import es.project.zip.CompresorZip;
 
@@ -285,6 +286,7 @@ protected static void genOutput(RawText c, Vector seg, String dirOutput, String 
 	int indice = 0;
 	System.out.println(aux);
 	bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(dirOutput + separador + "doc_" + indice + ".txt")));
+	
 	/* Print all the sentences */
 	for (int i=1; i<sentence.size(); i++) {
 		/* Get sentence boundaries */
@@ -314,8 +316,9 @@ protected static void genOutput(RawText c, Vector seg, String dirOutput, String 
 	System.out.println(aux);
 	CompresorZip cz = new CompresorZip();
 	cz.comprimirArchivo(dirOutput, dirOutput + ".zip", nombreUsuario);
-	//TODO a ver aquí
-	directory.delete();
+	
+	BorrarDirectorio bd = new BorrarDirectorio();
+	bd.borrarFicheros(directory);
 	bw.close();
 }
 /**
