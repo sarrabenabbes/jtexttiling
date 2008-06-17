@@ -39,23 +39,29 @@ public class BorrarDirectorio {
 				if (aux.isDirectory()) 
 					borrar(rutaNueva);
 				/* si es un archivo, se borra directamente */ 
-				else {
-					//TODO deja sin borrar el último fichero
-					System.out.println("nombre: " + aux.getName());
+				else 
 					aux.delete();
-				}
 			}
 		}
 		/* finalmente, borramos el directorio que ya estára vacío */
 		return inicial.delete();
 	}
 	
+	/**
+	 * <p>Interfaz pública para la operación de borrado de ficheros/directorios: accede al método
+	 * privado pasándole la ruta como parámetro</p>
+	 * @param ruta Ruta del fichero/directorio a borrar
+	 */
 	public boolean borrarFicheros(String ruta) {
 		return this.borrar(ruta);
 	}
 	
+	/**
+	 * <p>Interfaz pública para la operación de borrado de ficheros/directorios: recibe como parámetro
+	 * un java.io.File y obtiene su ruta</p>
+	 * @param file java.io.File
+	 */
 	public boolean borrarFicheros(File file) {
-		System.out.println("path: " + file.getAbsolutePath());
 		return this.borrarFicheros(file.getAbsolutePath());
 	}
 }

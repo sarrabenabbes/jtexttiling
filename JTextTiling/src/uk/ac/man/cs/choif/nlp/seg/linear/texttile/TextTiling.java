@@ -267,12 +267,13 @@ protected static void genOutput(RawText c, Vector seg, String dirOutput, String 
 	int start, end; // Sentence boundaries
 	File directory = new File(dirOutput);
 	Calendar cr = Calendar.getInstance();
+	String apendice = "_" + cr.get(Calendar.HOUR_OF_DAY) + "h-" + cr.get(Calendar.MINUTE) + "m-" 
+	+ cr.get(Calendar.SECOND) + "s";
 	
 	if (!directory.exists())
 		directory.mkdir();
 	else {
-		dirOutput = dirOutput + "_" + cr.get(Calendar.HOUR_OF_DAY) + "h-" + cr.get(Calendar.MINUTE) + "m-" 
-		+ cr.get(Calendar.SECOND) + "s";
+		dirOutput = dirOutput + apendice;
 		directory = new File(dirOutput);
 		directory.mkdir();
 	}
@@ -315,11 +316,13 @@ protected static void genOutput(RawText c, Vector seg, String dirOutput, String 
 	aux = "\n==========";
 	System.out.println(aux);
 	CompresorZip cz = new CompresorZip();
-	cz.comprimirArchivo(dirOutput, dirOutput + ".zip", nombreUsuario);
+	String nombreZip = directory.getName() + apendice + ".zip";
+	cz.comprimirArchivo(dirOutput, dirOutput + apendice + ".zip", nombreUsuario, nombreZip);
+	bw.close();
 	
 	BorrarDirectorio bd = new BorrarDirectorio();
 	bd.borrarFicheros(directory);
-	bw.close();
+	
 }
 /**
  * Decide whether word i is worth using as feature for segmentation.

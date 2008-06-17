@@ -84,6 +84,11 @@ div.divPrincipal p, div.divPrincipalRoot p {
 	font-size: 20px;
 }
 
+ul.ulClass {
+	font-weight:bold;
+	font-size:17px;
+}
+
 div.divPrincipal table tr td, div.divPrincipalRoot table tr td {
 	font-size:20px;
 }

@@ -9,13 +9,16 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.util.Calendar;
+import java.util.HashSet;
 import java.util.Properties;
+import java.util.Set;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
 import javax.mail.MessagingException;
 
 import es.project.bd.objetos.Usuario;
+import es.project.borrarDirectorios.BorrarDirectorio;
 import es.project.facade.FacadeBD;
 import es.project.mail.Mail;
 import es.project.mail.MailAlta;
@@ -25,23 +28,40 @@ import es.project.zip.CompresorZip;
 public class TestBD {
 	
 	public TestBD() {
-		/*pruebaBD();
-		pruebaCalendario();
-		pruebaRuntime();
-		pruebaEnvioMail();
-		pruebaSistema();
-		this.pruebaRuntime();
-		this.escribirAFichero();
-		this.transformarXSLT();
-		*/
-		//this.comprimir();
-		this.comprimirDos();
+		this.extension();
+	}
+	
+	private void extension() {
+		String cadena = "cn.txt";
+		String cadena2 = "knopfler.rtf";
+		
+		String args[] = cadena.split("\\.");
+		System.out.println(args[1]);
+		
+	}
+	private void conjuntos() {
+		Set<String> set = new HashSet<String>();
+		set.add("txt");
+		set.add("rtf");
+		set.add("doc");
+		
+		boolean bool = set.contains("bacalá");
+		boolean bul = set.contains("txt");
+		
+		System.out.print("bool: " + bool);
+		System.out.print("\nbul: " + bul);
+	}
+	
+	private void borrar() {
+		BorrarDirectorio bd = new BorrarDirectorio();
+		bd.borrarFicheros("C:\\pruebasFicheros\\dani\\cn.txt_JTT");
 	}
 	
 	private void comprimirDos() {
 		try {
 			CompresorZip cz = new CompresorZip();
-			cz.comprimirArchivo("c:\\pruebasFicheros\\dani\\cn.txt_JTT", "c:\\pruebasFicheros\\dani\\cn.txt_JTT.zip","dani");
+			cz.comprimirArchivo("c:\\pruebasFicheros\\dani\\cn.txt_JTT", 
+					"c:\\pruebasFicheros\\dani\\cn.txt_JTT.zip","dani","cn.txt_JTT.zip");
 		} catch (IOException ioe) {
 			ioe.printStackTrace();
 		}

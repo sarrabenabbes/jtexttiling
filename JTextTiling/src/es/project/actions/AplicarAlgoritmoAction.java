@@ -1,5 +1,7 @@
 package es.project.actions;
 
+import java.util.Set;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -33,6 +35,8 @@ public class AplicarAlgoritmoAction extends Action{
 	 * introducidos ("window" y "step"), y utilizando una lista dada de "stopwords". El resultado
 	 * se recoge en un conjunto de archivoa que se generan automáticamente dentro del espacio del 
 	 * usuario</p>
+	 * <p>Para asegurar el funcionamiento correcto del algoritmo, se comprueba la extensión del
+	 * al que se quiere aplicar.</p>
 	 */
 	public ActionForward execute (ActionMapping mapping,
 		    ActionForm form,
@@ -41,20 +45,25 @@ public class AplicarAlgoritmoAction extends Action{
 		
 		String retorno = "exito";
 		listaMensajes = new ActionMessages();
+		AlgoritmoForm formulario = (AlgoritmoForm)form;
+		String nombre = formulario.getNombreArchivo();
+		String window = formulario.getWindow();
+		String step = formulario.getStep();
 		
-		if ((Boolean)request.getSession().getAttribute("usuarioActivo")) {
-			AlgoritmoForm formulario = (AlgoritmoForm)form;
-			String nombre = formulario.getNombreArchivo();
-			String window = formulario.getWindow();
-			String step = formulario.getStep();
-			Usuario user = (Usuario)request.getSession().getAttribute("usuarioActual");
-			this.aplicarAlgoritmo(nombre, window, step, user.getNombre());
-			//TODO sistema de archivos y actualizar BD ¿?
-		}
-		else {
+		if (!(Boolean)request.getSession().getAttribute("usuarioActivo")) {
 			retorno = "error";
 			listaMensajes.add("errores", new ActionMessage("error.NoHayUsuario"));
 			request.getSession().setAttribute("botonSalir",false);
+			
+		}
+		if (!this.extensionPermitida(this.obtenerExtension(nombre))) {
+			retorno = "error";
+			listaMensajes.add("errores", new ActionMessage("error.ExtensionArchivo"));
+			request.getSession().setAttribute("botonSalir",false);
+		}
+		else {
+			Usuario user = (Usuario)request.getSession().getAttribute("usuarioActual");
+			this.aplicarAlgoritmo(nombre, window, step, user.getNombre());
 		}
 		
 		if (!listaMensajes.isEmpty())
@@ -87,5 +96,26 @@ public class AplicarAlgoritmoAction extends Action{
 		TextTiling.main(args);
 		listaMensajes.add("mensajes", new ActionMessage("mensaje.VacioTextTiling",TextTiling.getMensaje()));
 		TextTiling.vaciarMensaje();
+	}
+	
+	/**
+	 * <p>Devuelve la extensión del archivo que recibe como parámetro mediante el método java.lang.String.split</p>
+	 * @param cadena Cadena con el nombre del archivo del que queremos obtener su extensión 
+	 * @return Cadena con la extensión del archivo
+	 */
+	private String obtenerExtension(String cadena) {
+		String extension[] = cadena.split("\\.");
+ 		return extension[1];
+	}
+	
+	/**
+	 * <p>Comprueba si la extensión del archivo es una de las extensiones válidas para el algoritmo. Para
+	 * realizar esta comprobación, se accede a un conjunto, el cual se obtiene del fichero de propiedades.</p>
+	 * @param extension Extensión a comprobar
+	 * @return Verdadero si la extensión es válida (si está dentro del conjunto)
+	 */
+	private boolean extensionPermitida(String extension) {
+		Set<String> extensiones = ConfigAlgoritmo.getExtensiones();
+		return extensiones.contains(extension);
 	}
 }
