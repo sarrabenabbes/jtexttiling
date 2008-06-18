@@ -1,5 +1,8 @@
 package es.project.blindLight;
 
+import java.util.LinkedList;
+import java.util.List;
+
 /**
  * <p>Recibe un texto y lo formatea según las siguientes premisas:
  * <ul>
@@ -19,18 +22,59 @@ public class FormateadorTexto {
 	
 	public FormateadorTexto(String texto) {
 		this.texto = texto;
+		this.formatearTexto();
 	}
 	
-	public String formatearTexto() {
-		String retorno = "";
-		
-		for (int i = 0; i < texto.length(); i++) {
-			retorno += texto.charAt(i);
-		}
-		
-		return retorno;
-	}
+	private void formatearTexto() {
+        boolean beginning = true;
+        char c = ' ';
+        char buffer = 0;
+        StringBuffer result = new StringBuffer(texto.length());
 
+        for (int i=0; i<texto.length(); i++) {
+            c = texto.charAt(i); 
+            if((c & 0x80)== 0){ //ascii
+                if(esEspacio(c)){
+                    if(buffer!='>')
+                        buffer = ' ';
+            }else{
+                if(esSeparador(c))
+                    buffer = '>';
+                else{
+                    if((buffer!=0) && (beginning==false))
+                    {
+                        result.append(buffer);
+                        buffer = 0;
+                    }
+                    if (beginning)
+                    {
+                        beginning = false;
+                        buffer = 0;
+                    }
+                    result.append(c);
+                  }
+                }
+            }else{//extendido
+                if((buffer!=0) && (beginning==false))
+                {
+                   result.append(buffer);
+                   buffer = 0;
+                }
+                if(beginning)
+                {
+                    beginning = false;
+                    buffer = 0;
+                }
+               result.append(c); 
+            }  
+          }//end_while
+        texto = result.toString();
+    }//end formatearTexto
+
+	public String[] getListaFrases() {
+		String[] lista = texto.split("\\>");
+		return lista;
+	}	
 	/**
 	 * <p>Indica si el carácter recibido es espaciador</p>
 	 * @param c Carácter a comprobar
@@ -54,5 +98,42 @@ public class FormateadorTexto {
            ((c>=58)&&(c<=63))||((c>=91)&&(c<=96))||
            ((c>=123)&&(c<=191))||((c==215)||(c==247)));
         }
+	}
+
+	//TODO estamos aquí
+	public List<NGrama> getNGrama(String frase, int n) throws NGramaException {
+		NGrama.setN(n);
+		LinkedList<NGrama> lista = new LinkedList<NGrama>();
+		String textoNGrama;
+		NGrama aux;
+	
+		int inicio;
+		int tope;
+		
+		for (int i = 0; i < frase.length(); i++) {
+			textoNGrama = "";
+			inicio = i;
+			tope = inicio + n;
+			
+			for (inicio = i; inicio < tope; inicio++) {
+				if (tope <= frase.length()) {
+					textoNGrama += frase.charAt(inicio);
+					
+					if (textoNGrama.length() == n) {
+						aux = new NGrama(textoNGrama);
+						lista.add(aux);
+					}
+				}
+			}
+		}
+		return lista;
+	}
+	
+	public String getTexto() {
+		return texto;
+	}
+
+	public void setTexto(String texto) {
+		this.texto = texto;
 	}
 }
