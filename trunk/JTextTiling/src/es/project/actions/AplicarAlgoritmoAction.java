@@ -1,5 +1,8 @@
 package es.project.actions;
 
+import java.io.File;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,8 +19,14 @@ import uk.ac.man.cs.choif.nlp.seg.linear.texttile.TextTiling;
 
 import es.project.algoritmo.configuracion.ConfigAlgoritmo;
 import es.project.bd.objetos.Usuario;
+import es.project.blindLight.FormateadorTexto;
+import es.project.blindLight.ListaNGramas;
+import es.project.blindLight.NGrama;
+import es.project.blindLight.NGramaException;
+import es.project.blindLight.TextoANGrama;
 import es.project.ficheros.configuracion.ConfigFicheros;
 import es.project.forms.AlgoritmoForm;
+import es.project.utilidades.ArchivoATexto;
 
 /**
  * <p>Aplica el algoritmo JTextTiling a los archivos elegidos desde la página jsp.</p>
@@ -26,6 +35,7 @@ import es.project.forms.AlgoritmoForm;
 public class AplicarAlgoritmoAction extends Action{
 	
 	private ActionMessages listaMensajes;
+	private int n;
 	
 	/**
 	 * <p>Procesa la petición y devuelve un objeto ActionForward que determina la dirección
@@ -49,6 +59,7 @@ public class AplicarAlgoritmoAction extends Action{
 		String nombre = formulario.getNombreArchivo();
 		String window = formulario.getWindow();
 		String step = formulario.getStep();
+		this.n = formulario.getN();
 		
 		if (!(Boolean)request.getSession().getAttribute("usuarioActivo")) {
 			retorno = "error";
@@ -96,8 +107,6 @@ public class AplicarAlgoritmoAction extends Action{
 		TextTiling.main(args);
 		listaMensajes.add("mensajes", new ActionMessage("mensaje.VacioTextTiling",TextTiling.getMensaje()));
 		TextTiling.vaciarMensaje();
-		
-		//TODO aplicar BlindLight y documentar
 	}
 	
 	/**

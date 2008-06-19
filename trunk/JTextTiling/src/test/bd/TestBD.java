@@ -23,21 +23,33 @@ import java.util.zip.ZipOutputStream;
 import javax.mail.MessagingException;
 
 import es.project.bd.objetos.Usuario;
-import es.project.blindLight.ArchivoATexto;
 import es.project.blindLight.FormateadorTexto;
+import es.project.blindLight.ListaAArchivo;
 import es.project.blindLight.NGrama;
 import es.project.blindLight.NGramaException;
+import es.project.blindLight.TextoANGrama;
 import es.project.borrarDirectorios.BorrarDirectorio;
 import es.project.facade.FacadeBD;
 import es.project.mail.Mail;
 import es.project.mail.MailAlta;
 import es.project.procesadorXSLT.ProcesadorXSLT;
+import es.project.utilidades.ArchivoATexto;
 import es.project.zip.CompresorZip;
 
 public class TestBD {
 	
 	public TestBD() {
-		this.trocear();
+		this.blindLight();
+	}
+	
+	private void blindLight() {
+		try {
+			List<NGrama> lista = TextoANGrama.calcularNGramas("C:\\pruebasFicheros\\pruebas", 4);
+			ListaAArchivo.setFile(lista, "C:\\pruebasFicheros\\pruebas\\salida.txt");
+			
+		} catch (NGramaException e) {
+			e.printStackTrace();
+		} 
 	}
 	
 	private void trocear() {
@@ -58,11 +70,10 @@ public class TestBD {
 			for (int i = 0; i < lista2.length; i++) 
 				tt2.calcularNGramas(lista2[i], 4);
 			
-			List<NGrama> conjunto1 = tt.getConjuntoNGramas();
-			List<NGrama> conjunto2 = tt2.getConjuntoNGramas();
-			
 			List<NGrama> total = new LinkedList<NGrama>();
+			List<NGrama> conjunto1 = tt.getConjuntoNGramas();
 			total.addAll(conjunto1);
+			List<NGrama> conjunto2 = tt2.getConjuntoNGramas();
 			total.addAll(conjunto2);
 			
 			System.out.println(total.toString());

@@ -14,6 +14,7 @@ public class AlgoritmoForm extends ActionForm{
 	 * window y step</p>
 	 */
 	private String nombreArchivo, window, step;
+	private int n;
 	
 	/**
 	 * <p>Accede al atributo</p>
@@ -61,6 +62,23 @@ public class AlgoritmoForm extends ActionForm{
 	 */
 	public void setStep(String step) {
 		this.step = step;
+	}
+
+	//TODO documentar por aquí
+	/**
+	 *
+	 * @return
+	 */
+	public int getN() {
+		return n;
+	}
+
+	/**
+	 * 
+	 * @param n
+	 */
+	public void setN(int n) {
+		this.n = n;
 	}
 
 }
