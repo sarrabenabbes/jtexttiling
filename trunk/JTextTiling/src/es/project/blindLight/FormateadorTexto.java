@@ -1,7 +1,10 @@
 package es.project.blindLight;
 
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 /**
  * <p>Recibe un texto y lo formatea según las siguientes premisas:
@@ -19,10 +22,16 @@ import java.util.List;
 public class FormateadorTexto {
 	
 	private String texto;
+	private List<NGrama> conjuntoNGramas;
 	
 	public FormateadorTexto(String texto) {
 		this.texto = texto;
+		this.inicializarConjunto();
 		this.formatearTexto();
+	}
+	
+	private void inicializarConjunto() {
+		conjuntoNGramas = new LinkedList<NGrama>();
 	}
 	
 	private void formatearTexto() {
@@ -99,11 +108,32 @@ public class FormateadorTexto {
            ((c>=123)&&(c<=191))||((c==215)||(c==247)));
         }
 	}
+	
+	private void addNGrama(NGrama ngrama) {
+		NGrama aux = modificarEspacios(ngrama);
+		if (!estaIncluidoNGrama(ngrama)) 
+			conjuntoNGramas.add(aux);
+	}
+	
+	private boolean estaIncluidoNGrama(NGrama ngrama) {
+		Iterator<NGrama> i = conjuntoNGramas.iterator();
+		
+		while (i.hasNext()) 
+			if (ngrama.equals(i.next()))
+				return true;
 
-	//TODO estamos aquí
-	public List<NGrama> getNGrama(String frase, int n) throws NGramaException {
+		return false;
+	}
+	
+	private NGrama modificarEspacios (NGrama ngrama) {
+		String texto = ngrama.getTexto();
+		String modificado = texto.replace(' ', '_');
+		ngrama.setTexto(modificado);
+		return ngrama;
+	}
+
+	public void calcularNGramas(String frase, int n) throws NGramaException {
 		NGrama.setN(n);
-		LinkedList<NGrama> lista = new LinkedList<NGrama>();
 		String textoNGrama;
 		NGrama aux;
 	
@@ -121,12 +151,11 @@ public class FormateadorTexto {
 					
 					if (textoNGrama.length() == n) {
 						aux = new NGrama(textoNGrama);
-						lista.add(aux);
+						this.addNGrama(aux);
 					}
 				}
 			}
 		}
-		return lista;
 	}
 	
 	public String getTexto() {
@@ -135,5 +164,13 @@ public class FormateadorTexto {
 
 	public void setTexto(String texto) {
 		this.texto = texto;
+	}
+
+	public List<NGrama> getConjuntoNGramas() {
+		return conjuntoNGramas;
+	}
+
+	public void setConjuntoNGramas(List<NGrama> conjuntoNGramas) {
+		this.conjuntoNGramas = conjuntoNGramas;
 	}
 }

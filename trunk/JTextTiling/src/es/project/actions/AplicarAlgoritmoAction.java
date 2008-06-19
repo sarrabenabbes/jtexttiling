@@ -96,6 +96,8 @@ public class AplicarAlgoritmoAction extends Action{
 		TextTiling.main(args);
 		listaMensajes.add("mensajes", new ActionMessage("mensaje.VacioTextTiling",TextTiling.getMensaje()));
 		TextTiling.vaciarMensaje();
+		
+		//TODO aplicar BlindLight y documentar
 	}
 	
 	/**

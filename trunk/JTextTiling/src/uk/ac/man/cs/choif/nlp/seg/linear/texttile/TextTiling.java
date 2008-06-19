@@ -320,8 +320,10 @@ protected static void genOutput(RawText c, Vector seg, String dirOutput, String 
 	cz.comprimirArchivo(dirOutput, dirOutput + apendice + ".zip", nombreUsuario, nombreZip);
 	bw.close();
 	
-	BorrarDirectorio bd = new BorrarDirectorio();
-	bd.borrarFicheros(directory);
+	//dirOutput es la ruta de la carpeta
+	/* Borra la carpeta creada después de haberla convertido en un archivo zip */
+	/*BorrarDirectorio bd = new BorrarDirectorio();
+	bd.borrarFicheros(directory);*/
 	
 }
 /**

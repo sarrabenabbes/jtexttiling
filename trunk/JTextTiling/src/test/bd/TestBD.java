@@ -9,7 +9,12 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.HashSet;
+import java.util.Hashtable;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Properties;
 import java.util.Set;
 import java.util.zip.ZipEntry;
@@ -18,6 +23,10 @@ import java.util.zip.ZipOutputStream;
 import javax.mail.MessagingException;
 
 import es.project.bd.objetos.Usuario;
+import es.project.blindLight.ArchivoATexto;
+import es.project.blindLight.FormateadorTexto;
+import es.project.blindLight.NGrama;
+import es.project.blindLight.NGramaException;
 import es.project.borrarDirectorios.BorrarDirectorio;
 import es.project.facade.FacadeBD;
 import es.project.mail.Mail;
@@ -28,7 +37,40 @@ import es.project.zip.CompresorZip;
 public class TestBD {
 	
 	public TestBD() {
-		this.extension();
+		this.trocear();
+	}
+	
+	private void trocear() {
+		File file = new File("C:\\pruebasFicheros\\pruebas\\prueba_1.txt");
+		File file2 = new File("C:\\pruebasFicheros\\pruebas\\prueba_2.txt");
+		String texto = ArchivoATexto.getTexto(file);
+		String texto2 = ArchivoATexto.getTexto(file2);
+		FormateadorTexto tt = new FormateadorTexto(texto);
+		FormateadorTexto tt2 = new FormateadorTexto(texto2);
+		
+		String[] lista = tt.getListaFrases();
+		String lista2[] = tt2.getListaFrases();
+		
+		try {
+			for (int i = 0; i < lista.length; i++) 
+				tt.calcularNGramas(lista[i], 4);
+			
+			for (int i = 0; i < lista2.length; i++) 
+				tt2.calcularNGramas(lista2[i], 4);
+			
+			List<NGrama> conjunto1 = tt.getConjuntoNGramas();
+			List<NGrama> conjunto2 = tt2.getConjuntoNGramas();
+			
+			List<NGrama> total = new LinkedList<NGrama>();
+			total.addAll(conjunto1);
+			total.addAll(conjunto2);
+			
+			System.out.println(total.toString());
+			
+		} catch (NGramaException nge) {
+			nge.printStackTrace();
+		}
+		
 	}
 	
 	private void extension() {
@@ -40,16 +82,22 @@ public class TestBD {
 		
 	}
 	private void conjuntos() {
-		Set<String> set = new HashSet<String>();
-		set.add("txt");
-		set.add("rtf");
-		set.add("doc");
-		
-		boolean bool = set.contains("bacalá");
-		boolean bul = set.contains("txt");
-		
-		System.out.print("bool: " + bool);
-		System.out.print("\nbul: " + bul);
+		try {
+			NGrama.setN(4);
+			Set<NGrama> set = new HashSet<NGrama>();
+			set.add(new NGrama("hola"));
+			set.add(new NGrama("_oli"));
+			set.add(new NGrama("baca"));
+			
+			boolean bool = set.contains("baca");
+			boolean bul = set.contains("txt");
+			
+			System.out.print("bool: " + bool);
+			System.out.print("\nbul: " + bul);
+			
+		} catch (NGramaException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	private void borrar() {
