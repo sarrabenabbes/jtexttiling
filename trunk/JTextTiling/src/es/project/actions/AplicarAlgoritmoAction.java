@@ -99,9 +99,9 @@ public class AplicarAlgoritmoAction extends Action{
 		String s = (step.compareTo("") != 0)?(step):(ConfigAlgoritmo.getStep());
 		String stopwords = ConfigAlgoritmo.getStopwordsPath();
 		String rutaArchivo = ConfigFicheros.getRutaBase() + nombreUsuario + separador + nombreArchivo;
-		String directorioSalida = ConfigFicheros.getRutaBase() + nombreUsuario + separador + nombreArchivo + "_JTT";
+		String directorioSalida = ConfigFicheros.getRutaBase() + nombreUsuario + separador + "salida";
 		
-		String args[] = new String[]{w, s, stopwords, directorioSalida, nombreUsuario};
+		String args[] = new String[]{w, s, stopwords, directorioSalida, nombreUsuario, nombreArchivo};
 		TextTiling.setNombreArchivo(nombreArchivo);
 		TextTiling.setRutaArchivo(rutaArchivo);
 		TextTiling.main(args);
