@@ -1,4 +1,4 @@
-package es.project.blindLight;
+package es.project.utilidades;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -9,6 +9,7 @@ import java.io.InputStreamReader;
 
 public class ArchivoATexto {
 	
+	//TODO documentar
 	public static String getTexto(File file) {
 		String texto = "";
 		try {

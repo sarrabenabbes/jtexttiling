@@ -22,16 +22,19 @@ import java.util.Set;
 public class FormateadorTexto {
 	
 	private String texto;
+	private List<NGrama> listaParcial;
+	private ListaNGramas listaNGramas;
 	private List<NGrama> conjuntoNGramas;
 	
 	public FormateadorTexto(String texto) {
 		this.texto = texto;
-		this.inicializarConjunto();
+		listaNGramas = ListaNGramas.getInstance();
+		conjuntoNGramas = listaNGramas.getLista();
 		this.formatearTexto();
 	}
 	
-	private void inicializarConjunto() {
-		conjuntoNGramas = new LinkedList<NGrama>();
+	private void inicializarLista() {
+		listaParcial = new LinkedList<NGrama>();
 	}
 	
 	private void formatearTexto() {
@@ -111,8 +114,10 @@ public class FormateadorTexto {
 	
 	private void addNGrama(NGrama ngrama) {
 		NGrama aux = modificarEspacios(ngrama);
-		if (!estaIncluidoNGrama(ngrama)) 
+		if (!estaIncluidoNGrama(ngrama)) {
 			conjuntoNGramas.add(aux);
+			listaParcial.add(aux);
+		}
 	}
 	
 	private boolean estaIncluidoNGrama(NGrama ngrama) {
@@ -134,6 +139,7 @@ public class FormateadorTexto {
 
 	public void calcularNGramas(String frase, int n) throws NGramaException {
 		NGrama.setN(n);
+		this.inicializarLista();
 		String textoNGrama;
 		NGrama aux;
 	
@@ -170,7 +176,15 @@ public class FormateadorTexto {
 		return conjuntoNGramas;
 	}
 
-	public void setConjuntoNGramas(List<NGrama> conjuntoNGramas) {
-		this.conjuntoNGramas = conjuntoNGramas;
+	public void setConjuntoNGramas(List<NGrama> conjunto) {
+		conjuntoNGramas = conjuntoNGramas;
+	}
+
+	public List<NGrama> getListaParcial() {
+		return listaParcial;
+	}
+
+	public void setListaParcial(List<NGrama> listaParcial) {
+		this.listaParcial = listaParcial;
 	}
 }
