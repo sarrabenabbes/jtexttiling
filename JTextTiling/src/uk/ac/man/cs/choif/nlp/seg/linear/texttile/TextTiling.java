@@ -259,8 +259,9 @@ protected void depthScore() {
  * Generate text output with topic boundary markers.
  * Creation date: (07/12/99 07:39:00)
  */
-protected static void genOutput(RawText c, Vector seg, String dirOutput, String nombreUsuario) 
-	throws IOException{
+protected static void genOutput(
+		RawText c, Vector seg, String dirOutput, String nombreUsuario, String nombreArchivo) 
+		throws IOException{
 	/* Declare variables */
 	Vector text = c.text; // The text
 	Vector sentence = c.boundaries; // Sentence boundaries
@@ -272,11 +273,11 @@ protected static void genOutput(RawText c, Vector seg, String dirOutput, String 
 	
 	if (!directory.exists())
 		directory.mkdir();
-	else {
+	/*else {
 		dirOutput = dirOutput + apendice;
 		directory = new File(dirOutput);
 		directory.mkdir();
-	}
+	}*/
 	
 	BufferedWriter bw;
 	String separador = ConfigFicheros.getSeparador();
@@ -286,7 +287,7 @@ protected static void genOutput(RawText c, Vector seg, String dirOutput, String 
 	aux = "==========";
 	int indice = 0;
 	System.out.println(aux);
-	bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(dirOutput + separador + "doc_" + indice + ".txt")));
+	bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(dirOutput + separador + nombreArchivo + "_" + indice + ".txt")));
 	
 	/* Print all the sentences */
 	for (int i=1; i<sentence.size(); i++) {
@@ -299,7 +300,7 @@ protected static void genOutput(RawText c, Vector seg, String dirOutput, String 
 			aux = "\n==========";
 			System.out.println(aux);
 			bw.close();
-			bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(dirOutput + separador + "doc_" + (++indice) + ".txt")));
+			bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(dirOutput + separador + nombreArchivo + "_" + (++indice) + ".txt")));
 		}
 
 		/* Print a sentence */
@@ -316,15 +317,9 @@ protected static void genOutput(RawText c, Vector seg, String dirOutput, String 
 	aux = "\n==========";
 	System.out.println(aux);
 	CompresorZip cz = new CompresorZip();
-	String nombreZip = directory.getName() + apendice + ".zip";
-	cz.comprimirArchivo(dirOutput, dirOutput + apendice + ".zip", nombreUsuario, nombreZip);
+	String nombreZip = "salida.zip";
+	cz.comprimirArchivo(dirOutput, dirOutput + "Comprimida.zip", nombreUsuario, nombreZip);
 	bw.close();
-	
-	//dirOutput es la ruta de la carpeta
-	/* Borra la carpeta creada después de haberla convertido en un archivo zip */
-	/*BorrarDirectorio bd = new BorrarDirectorio();
-	bd.borrarFicheros(directory);*/
-	
 }
 /**
  * Decide whether word i is worth using as feature for segmentation.
@@ -414,7 +409,7 @@ public static void main(String[] args) {
 		t.similarityDetermination();				// Compute similarity scores
 		t.depthScore();								// Compute depth scores using the similarity scores
 		t.boundaryIdentification();					// Identify the boundaries
-		t.genOutput(c, t.segmentation, args[3],args[4]);	// Generate segmented output
+		t.genOutput(c, t.segmentation, args[3],args[4], args[5]);	// Generate segmented output
 		logMensajes = "- La ejecución del algoritmo concluyó correctamente, puede ver un fichero con los " +
 				"resultados en su espacio personal";
 		extraerLog(logMensajes);
