@@ -25,6 +25,20 @@ public class NGrama {
 		this.frecuenciaAbsoluta = frecuenciaAbsoluta;
 	}
 	
+	public boolean equals(Object o) {
+		if (o instanceof NGrama) {
+			NGrama aux = (NGrama)o;
+			if(this.getTexto().compareTo(aux.getTexto()) == 0)
+				return true;
+			else return false;
+		} 
+		else return false;
+	}
+	
+	public int hashCode() {
+		return this.getTexto().hashCode();
+	}
+	
 	public String toString() {
 		return texto;
 	}
@@ -35,5 +49,13 @@ public class NGrama {
 
 	public static void setN(int valor) {
 		n = valor;
+	}
+
+	public String getTexto() {
+		return texto;
+	}
+
+	public void setTexto(String texto) {
+		this.texto = texto;
 	}
 }
