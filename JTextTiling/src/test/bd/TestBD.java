@@ -9,10 +9,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.util.Calendar;
-import java.util.Collection;
 import java.util.HashSet;
-import java.util.Hashtable;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Properties;
@@ -27,7 +24,7 @@ import es.project.blindLight.FormateadorTexto;
 import es.project.blindLight.ListaAArchivo;
 import es.project.blindLight.NGrama;
 import es.project.blindLight.NGramaException;
-import es.project.blindLight.TextoANGrama;
+import es.project.blindLight.OperacionesNGrama;
 import es.project.borrarDirectorios.BorrarDirectorio;
 import es.project.facade.FacadeBD;
 import es.project.mail.Mail;
@@ -44,45 +41,16 @@ public class TestBD {
 	
 	private void blindLight() {
 		try {
-			List<NGrama> lista = TextoANGrama.calcularNGramas("C:\\pruebasFicheros\\pruebas", 4);
-			ListaAArchivo.setFile(lista, "C:\\pruebasFicheros\\pruebas\\salida.txt");
+			OperacionesNGrama ong = new OperacionesNGrama();
+			ong.calcular("C:\\pruebasFicheros\\pruebas\\grupo", 4);
+			List<NGrama> lista = ong.getListaNGramas();
+			ListaAArchivo.setFile(lista, "C:\\pruebasFicheros\\pruebas\\grupo\\salida.txt");
 			
 		} catch (NGramaException e) {
 			e.printStackTrace();
 		} 
 	}
-	
-	private void trocear() {
-		File file = new File("C:\\pruebasFicheros\\pruebas\\prueba_1.txt");
-		File file2 = new File("C:\\pruebasFicheros\\pruebas\\prueba_2.txt");
-		String texto = ArchivoATexto.getTexto(file);
-		String texto2 = ArchivoATexto.getTexto(file2);
-		FormateadorTexto tt = new FormateadorTexto(texto);
-		FormateadorTexto tt2 = new FormateadorTexto(texto2);
-		
-		String[] lista = tt.getListaFrases();
-		String lista2[] = tt2.getListaFrases();
-		
-		try {
-			for (int i = 0; i < lista.length; i++) 
-				tt.calcularNGramas(lista[i], 4);
-			
-			for (int i = 0; i < lista2.length; i++) 
-				tt2.calcularNGramas(lista2[i], 4);
-			
-			List<NGrama> total = new LinkedList<NGrama>();
-			List<NGrama> conjunto1 = tt.getConjuntoNGramas();
-			total.addAll(conjunto1);
-			List<NGrama> conjunto2 = tt2.getConjuntoNGramas();
-			total.addAll(conjunto2);
-			
-			System.out.println(total.toString());
-			
-		} catch (NGramaException nge) {
-			nge.printStackTrace();
-		}
-		
-	}
+
 	
 	private void extension() {
 		String cadena = "cn.txt";
@@ -92,6 +60,7 @@ public class TestBD {
 		System.out.println(args[1]);
 		
 	}
+	
 	private void conjuntos() {
 		try {
 			NGrama.setN(4);

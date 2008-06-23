@@ -23,7 +23,7 @@ import es.project.blindLight.FormateadorTexto;
 import es.project.blindLight.ListaNGramas;
 import es.project.blindLight.NGrama;
 import es.project.blindLight.NGramaException;
-import es.project.blindLight.TextoANGrama;
+import es.project.blindLight.OperacionesNGrama;
 import es.project.ficheros.configuracion.ConfigFicheros;
 import es.project.forms.AlgoritmoForm;
 import es.project.utilidades.ArchivoATexto;

@@ -64,18 +64,17 @@ public class AlgoritmoForm extends ActionForm{
 		this.step = step;
 	}
 
-	//TODO documentar por aquí
 	/**
-	 *
-	 * @return
+	 * <p>Accede al atributo</p>
+	 * @return Devuelve el valor del atributo n, que determina la longitud de los n-gramas
 	 */
 	public int getN() {
 		return n;
 	}
 
 	/**
-	 * 
-	 * @param n
+	 * <p>Asigna un valor al atributo n, el cual determina la longitud de los n-gramas</p>
+	 * @param n Valor a asignar
 	 */
 	public void setN(int n) {
 		this.n = n;

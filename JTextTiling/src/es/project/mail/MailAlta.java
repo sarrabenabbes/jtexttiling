@@ -38,7 +38,7 @@ public class MailAlta extends Mail{
 	}
 	
 	protected void borrarArchivos() {
-		//TODO aquí voy
+		//TODO poco importante
 		//borrar mail.xml
 		//borrar mail.html si se puede
 	}

@@ -22,8 +22,8 @@ public class ArchivoALista {
 			while (br.ready()) {
 				String linea[] = br.readLine().split("\\|");
 				String texto = linea[0];
-				float frecRelativa = Float.valueOf(linea[1]);
-				float frecAbsoluta = Float.valueOf(linea[2]);
+				int frecAbsoluta = Integer.valueOf(linea[1]);
+				float frecRelativa = Float.valueOf(linea[2]);
 				
 				NGrama aux = new NGrama(texto, frecRelativa, frecAbsoluta);
 				lista.add(aux);

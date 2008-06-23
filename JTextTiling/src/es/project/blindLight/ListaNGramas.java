@@ -10,7 +10,6 @@ public class ListaNGramas {
 	private static ListaNGramas obj;
 	
 	private ListaNGramas() {
-		//TODO leer desde fichero
 		lista = new LinkedList<NGrama>();
 	}
 	
