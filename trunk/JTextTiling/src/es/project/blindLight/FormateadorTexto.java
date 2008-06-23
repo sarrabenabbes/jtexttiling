@@ -1,10 +1,8 @@
 package es.project.blindLight;
 
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Set;
 
 /**
  * <p>Recibe un texto y lo formatea según las siguientes premisas:
@@ -24,12 +22,10 @@ public class FormateadorTexto {
 	private String texto;
 	private List<NGrama> listaParcial;
 	private ListaNGramas listaNGramas;
-	private List<NGrama> conjuntoNGramas;
 	
 	public FormateadorTexto(String texto) {
 		this.texto = texto;
 		listaNGramas = ListaNGramas.getInstance();
-		conjuntoNGramas = listaNGramas.getLista();
 		this.formatearTexto();
 	}
 	
@@ -112,28 +108,26 @@ public class FormateadorTexto {
         }
 	}
 	
-	private void addNGrama(NGrama ngrama) {
-		NGrama aux = modificarEspacios(ngrama);
-		if (!estaIncluidoNGrama(ngrama)) {
-			conjuntoNGramas.add(aux);
+	private void addNGrama(NGrama ngrama, int n) {
+		if (esValido(ngrama, n)) {
+			NGrama aux = modificarEspacios(ngrama);
 			listaParcial.add(aux);
 		}
 	}
 	
-	private boolean estaIncluidoNGrama(NGrama ngrama) {
-		Iterator<NGrama> i = conjuntoNGramas.iterator();
-		
-		while (i.hasNext()) 
-			if (ngrama.equals(i.next()))
-				return true;
-
-		return false;
+	private boolean esValido(NGrama ngrama,int n) {
+		for (int i = n - 1; i >= 1; i--) {
+			if (ngrama.getTexto().charAt(i) == '>')
+				return false;
+		}
+		return true;
 	}
 	
 	private NGrama modificarEspacios (NGrama ngrama) {
 		String texto = ngrama.getTexto();
-		String modificado = texto.replace(' ', '_');
-		ngrama.setTexto(modificado);
+		String modificado1 = texto.replace(' ', '_');
+		String modificado2 = modificado1.replace('>', '_');
+		ngrama.setTexto(modificado2);
 		return ngrama;
 	}
 
@@ -155,9 +149,9 @@ public class FormateadorTexto {
 				if (tope <= frase.length()) {
 					textoNGrama += frase.charAt(inicio);
 					
-					if (textoNGrama.length() == n) {
+					if ((textoNGrama.length() == n)) {
 						aux = new NGrama(textoNGrama);
-						this.addNGrama(aux);
+						this.addNGrama(aux, n);
 					}
 				}
 			}
@@ -170,14 +164,6 @@ public class FormateadorTexto {
 
 	public void setTexto(String texto) {
 		this.texto = texto;
-	}
-
-	public List<NGrama> getConjuntoNGramas() {
-		return conjuntoNGramas;
-	}
-
-	public void setConjuntoNGramas(List<NGrama> conjunto) {
-		conjuntoNGramas = conjuntoNGramas;
 	}
 
 	public List<NGrama> getListaParcial() {

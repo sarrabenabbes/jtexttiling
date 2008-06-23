@@ -3,14 +3,17 @@ package es.project.blindLight;
 public class NGrama {
 	
 	private String texto;
-	private float frecuenciaAbsoluta, frecuenciaRelativa;
+	private float frecuenciaRelativa;
+	private int frecuenciaAbsoluta;
 	private static int n = -1;
 	
 	public NGrama(String texto) throws NGramaException {
 		if (texto.length() != this.getN()) 
 			throw new NGramaException(texto, n);
-		else
+		else {
 			this.texto = texto;
+			this.frecuenciaAbsoluta = 1;
+		}
 	}
 	
 	public NGrama(String texto, float frecuenciaRelativa) throws NGramaException{
@@ -18,11 +21,15 @@ public class NGrama {
 		this.frecuenciaRelativa = frecuenciaRelativa;
 	}
 	
-	public NGrama(String texto, float frecuenciaRelativa, float frecuenciaAbsoluta) 
+	public NGrama(String texto, float frecuenciaRelativa, int frecuenciaAbsoluta) 
 		throws NGramaException{
 		
 		this(texto, frecuenciaRelativa);
 		this.frecuenciaAbsoluta = frecuenciaAbsoluta;
+	}
+	
+	public void aumentarFrecuenciaAbsoluta() {
+		this.frecuenciaAbsoluta++;
 	}
 	
 	public boolean equals(Object o) {
@@ -40,7 +47,7 @@ public class NGrama {
 	}
 	
 	public String toString() {
-		return texto;
+		return this.getTexto() + "|" + this.getFrecuenciaAbsoluta() + "|" + this.getFrecuenciaRelativa();
 	}
 
 	public static int getN() {
@@ -57,5 +64,21 @@ public class NGrama {
 
 	public void setTexto(String texto) {
 		this.texto = texto;
+	}
+
+	public int getFrecuenciaAbsoluta() {
+		return frecuenciaAbsoluta;
+	}
+
+	public void setFrecuenciaAbsoluta(int frecuenciaAbsoluta) {
+		this.frecuenciaAbsoluta = frecuenciaAbsoluta;
+	}
+
+	public float getFrecuenciaRelativa() {
+		return frecuenciaRelativa;
+	}
+
+	public void setFrecuenciaRelativa(float frecuenciaRelativa) {
+		this.frecuenciaRelativa = frecuenciaRelativa;
 	}
 }

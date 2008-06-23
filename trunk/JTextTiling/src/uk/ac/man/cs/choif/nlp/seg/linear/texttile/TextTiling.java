@@ -315,6 +315,7 @@ protected static void genOutput(
 
 	/* The implicit boundary at the end of the file */
 	aux = "\n==========";
+	//bw.flush();
 	System.out.println(aux);
 	CompresorZip cz = new CompresorZip();
 	String nombreZip = "salida.zip";
