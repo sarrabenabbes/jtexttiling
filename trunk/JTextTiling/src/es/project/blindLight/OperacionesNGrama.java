@@ -34,33 +34,35 @@ public class OperacionesNGrama {
 		
 		ft = new FormateadorTexto(textoAux);
 		String listaFrases = ft.getTexto();
-		System.out.println(listaFrases);
 		ft.calcularNGramas(listaFrases, n);
 		listaNGramas.addAll(ft.getListaParcial());
-		this.setSizeInicialLista(listaNGramas.size());
+		sizeInicialLista = ft.getSizeLista();
 	}
 	
 	private void calcularFrecuenciasAbsolutas() {
 		List<NGrama> listaAuxiliar = new LinkedList<NGrama>();
-		Iterator<NGrama> i = this.getListaNGramas().iterator();
-		
-		while (i.hasNext()) {
-			NGrama aux = i.next();
-			if (!this.estaIncluidoNGrama(listaAuxiliar, aux))
-				listaAuxiliar.add(aux);
-			else {
-				listaAuxiliar.remove(aux);
-				aux.aumentarFrecuenciaAbsoluta();
-				listaAuxiliar.add(aux);
-			}
+	
+		for (int j = 0; j < listaNGramas.size(); j++) {
+			if (!this.estaIncluidoNGrama(listaAuxiliar, listaNGramas.get(j)))
+				listaAuxiliar.add(listaNGramas.get(j));
+			else
+				this.aumentarFrecuencia(listaAuxiliar, listaNGramas.get(j));
 		}
+		
 		this.setListaNGramas(listaAuxiliar);
+	}
+	
+	private void aumentarFrecuencia(List<NGrama> lista, NGrama ngrama) {
+		for (int i = 0; i < lista.size(); i++) {
+			if (lista.get(i).equals(ngrama))
+				lista.get(i).aumentarFrecuenciaAbsoluta();
+		}
 	}
 	
 	private void calcularFrecuenciasRelativas() {
 		List<NGrama> listaAuxiliar = new LinkedList<NGrama>();
-		Iterator<NGrama> i = this.getListaNGramas().iterator();
-		int size = this.getSizeInicialLista();
+		Iterator<NGrama> i = listaNGramas.iterator();
+		int size = sizeInicialLista;
 		
 		while (i.hasNext()) {
 			NGrama aux = i.next();
@@ -75,7 +77,7 @@ public class OperacionesNGrama {
 		Iterator<NGrama> i = lista.iterator();
 		
 		while (i.hasNext()) {
-			if (i.next().equals(ngrama))
+			if (i.next().getTexto().compareTo(ngrama.getTexto()) == 0)
 				return true;
 		}
 		

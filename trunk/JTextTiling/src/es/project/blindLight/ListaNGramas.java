@@ -3,6 +3,7 @@ package es.project.blindLight;
 import java.util.LinkedList;
 import java.util.List;
 
+//TODO documentar
 public class ListaNGramas {
 	
 	private List<NGrama> lista;
