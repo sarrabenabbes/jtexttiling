@@ -39,7 +39,8 @@ public class NGrama {
 				return true;
 			else return false;
 		} 
-		else return false;
+		else 
+			return false;
 	}
 	
 	public int hashCode() {

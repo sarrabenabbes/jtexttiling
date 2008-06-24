@@ -43,11 +43,19 @@ public class OperacionesNGrama {
 		List<NGrama> listaAuxiliar = new LinkedList<NGrama>();
 	
 		for (int j = 0; j < listaNGramas.size(); j++) {
-			if (!this.estaIncluidoNGrama(listaAuxiliar, listaNGramas.get(j)))
-				listaAuxiliar.add(listaNGramas.get(j));
-			else
+			NGrama aux = listaNGramas.get(j);
+			if (!listaAuxiliar.contains(aux))
+				listaAuxiliar.add(aux);
+			else 
 				this.aumentarFrecuencia(listaAuxiliar, listaNGramas.get(j));
 		}
+		/*for (int j = 0; j < listaNGramas.size(); j++) {
+			NGrama aux = listaNGramas.get(j);
+			if (!this.estaIncluidoNGrama(listaAuxiliar, aux))
+				listaAuxiliar.add(aux);
+			else
+				this.aumentarFrecuencia(listaAuxiliar, listaNGramas.get(j));
+		}*/
 		
 		this.setListaNGramas(listaAuxiliar);
 	}
