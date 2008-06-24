@@ -8,6 +8,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 import java.util.zip.ZipEntry;
@@ -32,12 +33,12 @@ import es.project.zip.CompresorZip;
 public class TestBD {
 	
 	public TestBD() {
-		/*long inicio = System.currentTimeMillis();
-		this.pruebaCompleta();
+		long inicio = System.currentTimeMillis();
+		this.blindLight();
 		long finale = System.currentTimeMillis();
 		
-		System.out.println("tiempo: " + (finale - inicio));*/
-		this.blindLight();
+		System.out.println("tiempo: " + (finale - inicio));
+		
 	}
 	
 	private void pruebaCompleta() {
@@ -85,13 +86,14 @@ public class TestBD {
 	private void conjuntos() {
 		try {
 			NGrama.setN(4);
-			Set<NGrama> set = new HashSet<NGrama>();
+			List<NGrama> set = new LinkedList<NGrama>();
 			set.add(new NGrama("hola"));
 			set.add(new NGrama("_oli"));
 			set.add(new NGrama("baca"));
 			
-			boolean bool = set.contains("baca");
-			boolean bul = set.contains("txt");
+			NGrama aux = new NGrama("baca");
+			boolean bool = set.contains(aux);
+			boolean bul = set.contains(new NGrama("_oli"));
 			
 			System.out.print("bool: " + bool);
 			System.out.print("\nbul: " + bul);
