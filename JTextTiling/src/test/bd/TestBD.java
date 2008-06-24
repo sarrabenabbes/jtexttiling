@@ -7,36 +7,58 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.util.Calendar;
 import java.util.HashSet;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Properties;
 import java.util.Set;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
 import javax.mail.MessagingException;
 
+import uk.ac.man.cs.choif.nlp.seg.linear.texttile.TextTiling;
+
+import es.project.algoritmo.configuracion.ConfigAlgoritmo;
 import es.project.bd.objetos.Usuario;
-import es.project.blindLight.FormateadorTexto;
 import es.project.blindLight.ListaAArchivo;
 import es.project.blindLight.NGrama;
 import es.project.blindLight.NGramaException;
 import es.project.blindLight.OperacionesNGrama;
 import es.project.borrarDirectorios.BorrarDirectorio;
-import es.project.facade.FacadeBD;
 import es.project.mail.Mail;
 import es.project.mail.MailAlta;
 import es.project.procesadorXSLT.ProcesadorXSLT;
-import es.project.utilidades.ArchivoATexto;
 import es.project.zip.CompresorZip;
 
 public class TestBD {
 	
 	public TestBD() {
+		/*long inicio = System.currentTimeMillis();
+		this.pruebaCompleta();
+		long finale = System.currentTimeMillis();
+		
+		System.out.println("tiempo: " + (finale - inicio));*/
 		this.blindLight();
+	}
+	
+	private void pruebaCompleta() {
+		String args[] = new String[]{"120", "20", 
+				ConfigAlgoritmo.getStopwordsPath(), 
+				"C:\\pruebasFicheros\\pruebas\\texttiling\\salida", 
+				"manuel", 
+				"cn.txt"};
+		TextTiling.setNombreArchivo("cn.txt");
+		TextTiling.setRutaArchivo("C:\\pruebasFicheros\\pruebas\\texttiling\\cn.txt");
+		TextTiling.main(args);
+		
+		try {
+			OperacionesNGrama ong = new OperacionesNGrama();
+			ong.calcular("C:\\pruebasFicheros\\pruebas\\texttiling\\salida", 4);
+			List<NGrama> lista = ong.getListaNGramas();
+			ListaAArchivo.setFile(lista, "C:\\pruebasFicheros\\pruebas\\texttiling\\salida\\salida.txt");
+			
+		} catch (NGramaException e) {
+			e.printStackTrace();
+		} 
 	}
 	
 	private void blindLight() {
@@ -51,7 +73,6 @@ public class TestBD {
 		} 
 	}
 
-	
 	private void extension() {
 		String cadena = "cn.txt";
 		String cadena2 = "knopfler.rtf";
@@ -137,26 +158,6 @@ public class TestBD {
 		}
 	}
 	
-	private void escribirAFichero() {
-		try {
-			OutputStreamWriter osw = new OutputStreamWriter
-						(new FileOutputStream("c:\\pruebasFicheros\\dani\\pruebaEsc.txt"));
-			osw.write("una bacalá infame");
-			osw.close();
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-	
-	private void pruebaSistema() {
-		Properties prop = System.getProperties();
-		System.out.println(prop.toString());
-		String os = System.getProperty("os.name");
-		System.out.print(os);
-	}
-	
 	private void pruebaEnvioMail() {
 		Mail enviaCorreo = new MailAlta();
 		Usuario usuario = new Usuario("dani","may","danimk@gmail.com");
@@ -164,40 +165,6 @@ public class TestBD {
 			enviaCorreo.enviarMail(usuario);
 		} catch (MessagingException e) {
 			e.printStackTrace();
-		}
-	}
-	
-	private void pruebaBD() {
-		FacadeBD facadeBD = new FacadeBD();
-		
-		facadeBD.borrarUsuarios();
-		Usuario usuario1 = new Usuario("nombre1", "pass1");
-		facadeBD.insertarUsuario(usuario1);
-		facadeBD.verUsuarios();
-		facadeBD.actualizarNombre(usuario1, "demonio");
-		facadeBD.verUsuarios();
-		
-		facadeBD.tearDown();
-	}
-	
-	private void pruebaCalendario() {
-		Calendar c = Calendar.getInstance();
-		String fecha = c.get(Calendar.YEAR) + "-" + (c.get(Calendar.MONTH) + 1) + "-" + c.get(Calendar.DAY_OF_MONTH);
-		System.out.println(fecha);
-	}
-	
-	private void pruebaRuntime() {
-		try {
-			Runtime rt = Runtime.getRuntime();
-			String cmd[] = new String[2];
-			cmd[0] = "C:\\Archivos de programa\\Mozilla Firefox\\firefox.exe";
-			cmd[1] = "C:\\pruebasFicheros\\brian\\lista doni.txt";
-			
-			String cmd2[] = new String[1];
-			cmd2[0] = "cmd";
-			rt.exec(cmd2);
-		} catch (IOException ioe) {
-			ioe.printStackTrace();
 		}
 	}
 	

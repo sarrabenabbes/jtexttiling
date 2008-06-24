@@ -1,6 +1,5 @@
 package es.project.blindLight;
 
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -21,11 +20,11 @@ public class FormateadorTexto {
 	
 	private String texto;
 	private List<NGrama> listaParcial;
-	private ListaNGramas listaNGramas;
+	private int sizeLista;
 	
 	public FormateadorTexto(String texto) {
 		this.texto = texto;
-		listaNGramas = ListaNGramas.getInstance();
+		sizeLista = 0;
 		this.formatearTexto();
 	}
 	
@@ -112,6 +111,7 @@ public class FormateadorTexto {
 		if (esValido(ngrama, n)) {
 			NGrama aux = modificarEspacios(ngrama);
 			listaParcial.add(aux);
+			this.aumentarSizeLista();
 		}
 	}
 	
@@ -168,6 +168,14 @@ public class FormateadorTexto {
 
 	public List<NGrama> getListaParcial() {
 		return listaParcial;
+	}
+	
+	public int getSizeLista() {
+		return sizeLista;
+	}
+	
+	public void aumentarSizeLista() {
+		sizeLista++;
 	}
 
 	public void setListaParcial(List<NGrama> listaParcial) {
