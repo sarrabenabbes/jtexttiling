@@ -1,15 +1,14 @@
 package es.project.blindLight;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
 
 import es.project.ficheros.configuracion.ConfigFicheros;
 import es.project.utilidades.ArchivoATexto;
 
 public class OperacionesNGrama {
-	private List<NGrama> listaNGramas;
+	private ArrayList<NGrama> listaNGramas;
 	private int sizeInicialLista;
 	
 	public void calcular(String ruta, int n) throws NGramaException {
@@ -25,7 +24,7 @@ public class OperacionesNGrama {
 		File aux = null;
 		String textoAux = "";
 		FormateadorTexto ft;
-		listaNGramas = new LinkedList<NGrama>();
+		listaNGramas = new ArrayList<NGrama>();
 		
 		for (int i = 0; i < listaHijos.length; i++) {
 			aux = new File(ruta + ConfigFicheros.getSeparador() + listaHijos[i]);
@@ -40,7 +39,7 @@ public class OperacionesNGrama {
 	}
 	
 	private void calcularFrecuenciasAbsolutas() {
-		List<NGrama> listaAuxiliar = new LinkedList<NGrama>();
+		ArrayList<NGrama> listaAuxiliar = new ArrayList<NGrama>();
 	
 		for (int j = 0; j < listaNGramas.size(); j++) {
 			NGrama aux = listaNGramas.get(j);
@@ -49,18 +48,11 @@ public class OperacionesNGrama {
 			else 
 				this.aumentarFrecuencia(listaAuxiliar, listaNGramas.get(j));
 		}
-		/*for (int j = 0; j < listaNGramas.size(); j++) {
-			NGrama aux = listaNGramas.get(j);
-			if (!this.estaIncluidoNGrama(listaAuxiliar, aux))
-				listaAuxiliar.add(aux);
-			else
-				this.aumentarFrecuencia(listaAuxiliar, listaNGramas.get(j));
-		}*/
 		
 		this.setListaNGramas(listaAuxiliar);
 	}
 	
-	private void aumentarFrecuencia(List<NGrama> lista, NGrama ngrama) {
+	private void aumentarFrecuencia(ArrayList<NGrama> lista, NGrama ngrama) {
 		for (int i = 0; i < lista.size(); i++) {
 			if (lista.get(i).equals(ngrama))
 				lista.get(i).aumentarFrecuenciaAbsoluta();
@@ -68,7 +60,7 @@ public class OperacionesNGrama {
 	}
 	
 	private void calcularFrecuenciasRelativas() {
-		List<NGrama> listaAuxiliar = new LinkedList<NGrama>();
+		ArrayList<NGrama> listaAuxiliar = new ArrayList<NGrama>();
 		Iterator<NGrama> i = listaNGramas.iterator();
 		int size = sizeInicialLista;
 		
@@ -80,23 +72,12 @@ public class OperacionesNGrama {
 		
 		this.setListaNGramas(listaAuxiliar);
 	}
-	
-	private boolean estaIncluidoNGrama(List<NGrama> lista, NGrama ngrama) {
-		Iterator<NGrama> i = lista.iterator();
-		
-		while (i.hasNext()) {
-			if (i.next().getTexto().compareTo(ngrama.getTexto()) == 0)
-				return true;
-		}
-		
-		return false;
-	}
 
-	public List<NGrama> getListaNGramas() {
+	public ArrayList<NGrama> getListaNGramas() {
 		return listaNGramas;
 	}
 
-	public void setListaNGramas(List<NGrama> listaNGramas) {
+	public void setListaNGramas(ArrayList<NGrama> listaNGramas) {
 		this.listaNGramas = listaNGramas;
 	}
 

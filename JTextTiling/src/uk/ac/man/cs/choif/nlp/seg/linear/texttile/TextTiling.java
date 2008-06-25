@@ -317,9 +317,13 @@ protected static void genOutput(
 	aux = "\n==========";
 	//bw.flush();
 	System.out.println(aux);
-	CompresorZip cz = new CompresorZip();
+	
+	/* las siguientes líneas comprimen la carpeta con la salida del algoritmo 
+	 * (NOTA: antes de calcular los n-gramas)*/
+	/*CompresorZip cz = new CompresorZip();
 	String nombreZip = "salida.zip";
-	cz.comprimirArchivo(dirOutput, dirOutput + "Comprimida.zip", nombreUsuario, nombreZip);
+	cz.comprimirArchivo(dirOutput, dirOutput + "Comprimida.zip", nombreUsuario, nombreZip);*/
+	
 	bw.close();
 }
 /**

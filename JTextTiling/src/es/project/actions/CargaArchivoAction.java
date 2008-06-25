@@ -1,9 +1,11 @@
 	package es.project.actions;
 
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.util.Calendar;
 import java.util.List;
 
@@ -126,14 +128,16 @@ public class CargaArchivoAction extends Action{
 			String rutaFinal = ruta_base + nombreUsuario + separador + nombreArchivo;
 			
 			if (insertarArchivo(nombreUsuario,nombreArchivo,rutaFinal)) {
-				FileOutputStream salida = new FileOutputStream(rutaFinal);
+				BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(rutaFinal)));
 				byte[] fileData = file.getFileData();
-			
+				
 				for (int i = 0; i < fileData.length; i++)
-					salida.write(fileData[i]);
-			
-				salida.close();
+					bw.write(fileData[i]);
+				
+				bw.write("\n-");
+				bw.close();
 				archivoCargado = true;
+				
 				listaMensajes.add("mensajes", new ActionMessage("correcto.ficheroUpload"));
 			}
 			else {

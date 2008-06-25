@@ -11,10 +11,10 @@
   <StrutsActivity path="/AltaUsuario.do" location="50,350" dimension="215,88" />
   <StrutsActivity path="/ComprobarUsuario.do" location="950,150" dimension="249,88" />
   <StrutsActivity path="/CargaArchivo.do" location="585,165" dimension="108,62" />
+  <StrutsActivity path="/errorDesconocido.jsp" location="1250,650" dimension="135,49" />
   <StrutsActivity path="/mensajes.jsp" location="50,150" dimension="96,49" />
   <StrutsActivity path="/verArchivo.jsp" location="350,750" dimension="103,49" />
   <StrutsActivity path="aplicarAlgoritmo.jsp" location="350,650" dimension="123,49" />
-  <StrutsActivity path="/errorDesconocido.jsp" location="1250,650" dimension="135,49" />
   <StrutsActivity path="/index.jsp" location="650,450" dimension="77,49" />
   <StrutsActivity path="eliminarArchivo.jsp" location="650,350" dimension="119,49" />
   <StrutsActivity path="index.jsp" location="350,50" dimension="73,49" />
