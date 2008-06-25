@@ -56,7 +56,7 @@ public class AplicarAlgoritmoAction extends Action{
 		String retorno = "exito";
 		listaMensajes = new ActionMessages();
 		AlgoritmoForm formulario = (AlgoritmoForm)form;
-		String nombre = formulario.getNombreArchivo();
+		String nombres[] = formulario.getNombreArchivos();
 		String window = formulario.getWindow();
 		String step = formulario.getStep();
 		this.n = formulario.getN();
@@ -67,14 +67,20 @@ public class AplicarAlgoritmoAction extends Action{
 			request.getSession().setAttribute("botonSalir",false);
 			
 		}
-		if (!this.extensionPermitida(this.obtenerExtension(nombre))) {
-			retorno = "error";
-			listaMensajes.add("errores", new ActionMessage("error.ExtensionArchivo"));
-			request.getSession().setAttribute("botonSalir",false);
-		}
-		else {
-			Usuario user = (Usuario)request.getSession().getAttribute("usuarioActual");
-			this.aplicarAlgoritmo(nombre, window, step, user.getNombre());
+		
+		String nombre = "";
+		for (int i = 0; i < nombres.length; i++) {
+			nombre = nombres[i];
+		
+			if (!this.extensionPermitida(this.obtenerExtension(nombre))) {
+				retorno = "error";
+				listaMensajes.add("errores", new ActionMessage("error.ExtensionArchivo", nombre));
+				request.getSession().setAttribute("botonSalir",false);
+			}
+			else {
+				Usuario user = (Usuario)request.getSession().getAttribute("usuarioActual");
+				this.aplicarAlgoritmo(nombre, window, step, user.getNombre());
+			}
 		}
 		
 		if (!listaMensajes.isEmpty())

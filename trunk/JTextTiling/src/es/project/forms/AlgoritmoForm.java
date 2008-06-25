@@ -13,23 +13,24 @@ public class AlgoritmoForm extends ActionForm{
 	 * <p>Nombre del archivo al que se va a aplicar el algoritmo, y valor de los parámetros
 	 * window y step</p>
 	 */
-	private String nombreArchivo, window, step;
+	private String[] nombreArchivos;
+	private String window, step;
 	private int n;
 	
 	/**
 	 * <p>Accede al atributo</p>
-	 * @return Devuelve el nombre del archivo
+	 * @return Devuelve la lista de los nombres de archivo
 	 */
-	public String getNombreArchivo() {
-		return nombreArchivo;
+	public String[] getNombreArchivos() {
+		return nombreArchivos;
 	}
 	
 	/**
-	 * <p>Asigna un valor al nombre del archivo</p>
-	 * @param nombreArchivo Nombre a asignar
+	 * <p>Asigna un valor a la lista de nombres de archivo</p>
+	 * @param nombreArchivo Lista de nombres a asignar
 	 */
-	public void setNombreArchivo(String nombreArchivo) {
-		this.nombreArchivo = nombreArchivo;
+	public void setNombreArchivos(String[] nombreArchivos) {
+		this.nombreArchivos = nombreArchivos;
 	}
 	
 	/**

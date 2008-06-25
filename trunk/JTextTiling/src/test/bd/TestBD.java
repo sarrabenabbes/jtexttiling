@@ -1,16 +1,20 @@
 package test.bd;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
+import java.util.Vector;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
@@ -34,11 +38,10 @@ public class TestBD {
 	
 	public TestBD() {
 		long inicio = System.currentTimeMillis();
-		this.blindLight();
+		this.pruebaCompleta();
 		long finale = System.currentTimeMillis();
 		
 		System.out.println("tiempo: " + (finale - inicio));
-		
 	}
 	
 	private void pruebaCompleta() {
@@ -46,27 +49,27 @@ public class TestBD {
 				ConfigAlgoritmo.getStopwordsPath(), 
 				"C:\\pruebasFicheros\\pruebas\\texttiling\\salida", 
 				"manuel", 
-				"cn.txt"};
+				"cn_2.txt"};
 		TextTiling.setNombreArchivo("cn.txt");
-		TextTiling.setRutaArchivo("C:\\pruebasFicheros\\pruebas\\texttiling\\cn.txt");
+		TextTiling.setRutaArchivo("C:\\pruebasFicheros\\pruebas\\texttiling\\cn_2.txt");
 		TextTiling.main(args);
 		
 		try {
 			OperacionesNGrama ong = new OperacionesNGrama();
 			ong.calcular("C:\\pruebasFicheros\\pruebas\\texttiling\\salida", 4);
-			List<NGrama> lista = ong.getListaNGramas();
+			ArrayList<NGrama> lista = ong.getListaNGramas();
 			ListaAArchivo.setFile(lista, "C:\\pruebasFicheros\\pruebas\\texttiling\\salida\\salida.txt");
 			
 		} catch (NGramaException e) {
 			e.printStackTrace();
-		} 
+		}
 	}
 	
 	private void blindLight() {
 		try {
 			OperacionesNGrama ong = new OperacionesNGrama();
 			ong.calcular("C:\\pruebasFicheros\\pruebas\\grupo", 4);
-			List<NGrama> lista = ong.getListaNGramas();
+			ArrayList<NGrama> lista = ong.getListaNGramas();
 			ListaAArchivo.setFile(lista, "C:\\pruebasFicheros\\pruebas\\grupo\\salida.txt");
 			
 		} catch (NGramaException e) {
