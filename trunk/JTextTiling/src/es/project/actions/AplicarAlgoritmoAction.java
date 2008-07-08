@@ -1,8 +1,5 @@
 package es.project.actions;
 
-import java.io.File;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,14 +16,8 @@ import uk.ac.man.cs.choif.nlp.seg.linear.texttile.TextTiling;
 
 import es.project.algoritmo.configuracion.ConfigAlgoritmo;
 import es.project.bd.objetos.Usuario;
-import es.project.blindLight.FormateadorTexto;
-import es.project.blindLight.ListaNGramas;
-import es.project.blindLight.NGrama;
-import es.project.blindLight.NGramaException;
-import es.project.blindLight.OperacionesNGrama;
 import es.project.ficheros.configuracion.ConfigFicheros;
 import es.project.forms.AlgoritmoForm;
-import es.project.utilidades.ArchivoATexto;
 
 /**
  * <p>Aplica el algoritmo JTextTiling a los archivos elegidos desde la página jsp.</p>

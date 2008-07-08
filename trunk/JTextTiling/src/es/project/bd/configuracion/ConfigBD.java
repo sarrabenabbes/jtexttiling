@@ -35,13 +35,19 @@ public class ConfigBD {
 	}
 	
 	/**
-	 * <p>Accede a la propiedad "esquema"</p>
+	 * <p>Accede a la propiedad "esquema", el cual contiene el nombre del esquema de la base de datos
+	 * utilizado en labores de explotación del servicio</p>
 	 * @return Devuelve una cadena con el nombre del esquema de la base de datos
 	 */
 	public static String getEsquema() {
 		return propiedades.getString("esquema");
 	}
 	
+	/**
+	 * <p>Accede a la propiedad "esquema_2", el cual contiene el nombre del esquema de la base de datos
+	 * utilizado en labores de pruebas</p>
+	 * @return Devuelve una cadena con el nombre del esquema de la base de datos
+	 */
 	public static String getEsquema_2() {
 		return propiedades.getString("esquema_2");
 	}

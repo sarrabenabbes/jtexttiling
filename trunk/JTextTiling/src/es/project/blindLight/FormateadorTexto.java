@@ -1,8 +1,6 @@
 package es.project.blindLight;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
 
 /**
  * <p>Recibe un texto y lo formatea según las siguientes premisas:
