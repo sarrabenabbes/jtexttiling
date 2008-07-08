@@ -112,7 +112,7 @@ public class BorraArchivoAction extends Action {
 			
 			borrarEnLista(archivoAuxiliar.getNombreArchivo(), listaAuxiliar, request);
 			
-			if (!borrarFisicamente(archivoAuxiliar.getNombreArchivo(), nombrePropietario, request))
+			if (!borrarFisicamente(archivoAuxiliar.getNombreArchivo(), nombrePropietario))
 				correcto = false; 
 			else correcto = true;
 		}
@@ -153,13 +153,11 @@ public class BorraArchivoAction extends Action {
 	 * se recibe como parámetro, y el nombre de usuario se averigua gracias al atributo de
 	 * sesión "usuarioActual".</p>
 	 * @param nombreArchivo <p>Nombre del archivo a borrar</p>
-	 * @param request <p>Petición mediante la cual accedemos al atributo de sesión</p>
+	 * @param propietario <p>Nombre del propietario del archivo a borrar</p>
 	 * @return <p>Verdadero si la operación de borrado fue bien, falso en caso contrario</p>
 	 */
-	private boolean borrarFisicamente(String nombreArchivo, String propietario, HttpServletRequest request) {
-		Usuario usuario = (Usuario)request.getSession().getAttribute("usuarioActual");
+	private boolean borrarFisicamente(String nombreArchivo, String propietario) {
 		String separador = ConfigFicheros.getSeparador();
-		
 		File borrado = new File(ConfigFicheros.getRutaBase() + propietario + separador + nombreArchivo);
 		return borrado.delete();
 	}
