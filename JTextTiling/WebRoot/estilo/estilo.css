@@ -1,0 +1,138 @@
+body.bodyClass {
+	width:85%;
+	background-image: url("../includes/images/Marca2.jpg");
+  	/*background-repeat: no-repeat;*/
+	/*background-position: 12% 0%;*/
+	background-attachment:fixed;
+}
+
+div.divPrincipal {
+	background-color:#DDDDDD;
+	margin-left:10%;
+	border-left:3px;
+	width:85%;
+	border: thin dotted blue;
+	_border: thin none blue;
+	_border_left:5px;
+}
+
+div.divPrincipalRoot {
+	background-color:#669966;
+	margin-left:10%;
+	border-left:3px;
+	width:85%;
+	border: thin dotted blue;
+	_border: thin none blue;
+	_border_left:5px;
+}
+
+/* cerrar las ventanas de avisos */
+a.aCerrar {
+	margin-left:10%;
+	border-left:3px;
+}
+
+#divAlineadoIzquierda {
+	float: left;
+}
+
+#divAlineadoDerecha {
+	float:right;
+}
+
+div.divSalir {
+	margin-left:10%;
+}
+
+div.table {
+	margin-left:8%;
+	margin-bottom: .5em;	
+}
+
+div.table table td.actual {
+	color:#0099CC;
+}
+
+p.pImagen {
+	margin-left:10%;
+	width:85%;
+}
+
+p.pHeader {
+	margin-left:10%;
+	font-weight: bold;
+}
+
+p.pHeader:hover {
+	color:#000080;
+}
+
+p.pEnlace {
+	border: thin dotted blue;
+	_border: thin none blue;
+	margin-left:10%;
+	width:30%;
+	background-color:#DDDDDD;
+}
+
+div.divPrincipal p.nombreUsuario, p.password, p.email, p.window, p.step {
+	font-weight: bold;
+}
+
+div.divPrincipal p, div.divPrincipalRoot p {
+	margin-left:1em;
+	font-size: 20px;
+}
+
+ul.ulClass {
+	font-weight:bold;
+	font-size:17px;
+}
+
+div.divPrincipal table tr td, div.divPrincipalRoot table tr td {
+	font-size:20px;
+}
+
+body.bodyClass h1 {
+	color:black;
+	margin-left:10%;
+}
+
+a {
+	color: #000099;
+	margin-top:2em;
+	margin-left:1em;
+	font-size:18px;
+	text-decoration:none;
+}
+
+a:hover {
+	color:#0099CC;
+}
+
+div.displayTag {
+	margin-left:1em;
+	margin-right:1em;
+	margin-bottom:1em;
+}
+
+table.displayArchivos, table.displayUsuarios{
+	border: thin solid black;
+}
+
+table.displayArchivos th, table.displayUsuarios th{
+	background-color: #669999;
+	width:20em;
+}
+
+table.displayArchivos td, table.displayUsuarios td {
+	text-align: center;
+}
+
+table.displayArchivos tr.even, table.displayUsuarios tr.even{
+	background-color: #999999;
+}
+
+table.displayArchivos tr.odd, table.displayUsuarios tr.odd {
+	background-color: white;
+}
