@@ -23,10 +23,11 @@
 				EstadisticasUsuarios estU = new EstadisticasUsuarios();
 				request.setAttribute("lista",estU.getLista());
 				request.setAttribute("numUsuarios", estU.getNum());
+				System.out.println("usuarios: " + estU.getLista().size());
 			 %>
 			 
 			 <c:choose>
-				<c:when test="${numUsuarios > 0}">
+				<c:when test="${requestScope.numUsuarios > 0}">
 					<div class="divPrincipalRoot">
 						<p id="listArchivosMensaje">
 							Lista de usuarios:

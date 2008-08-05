@@ -28,7 +28,7 @@
 		</div>
 		
 		<c:choose>
-		<c:when test="${numArchivos > 0}">
+		<c:when test="${requestScope.numArchivos > 0}">
 		<div class="divPrincipalRoot">
 			<p id="listArchivosMensaje">
 				Lista de archivos:
