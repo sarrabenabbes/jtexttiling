@@ -24,6 +24,7 @@ import es.project.blindLight.NGrama;
 import es.project.blindLight.NGramaException;
 import es.project.blindLight.OperacionesNGrama;
 import es.project.borrarDirectorios.BorrarDirectorio;
+import es.project.ficheros.filtros.FiltroDirectorios;
 import es.project.mail.Mail;
 import es.project.mail.MailAlta;
 import es.project.procesadorXSLT.ProcesadorXSLT;
@@ -35,22 +36,28 @@ public class TestBD {
 		long inicio = System.currentTimeMillis();
 		this.pruebaCompleta();
 		//this.blindLight();
+		//this.pruebaFiltro();
 		long finale = System.currentTimeMillis();
 		
 		System.out.println("tiempo: " + (finale - inicio) + " ms");
 	}
 	
 	private void pruebaCompleta() {
-		TextTiling.setNombreArchivo("cn.txt");
-		TextTiling.setRutaArchivo("F:\\pruebasPFC\\blindlight\\grupo\\cn_2.txt");
+		File directorio = new File("F:\\pruebasPFC\\blindlight\\grupo");
+		String files[] = directorio.list(new FiltroDirectorios());
 		
-		String args[] = new String[]{"120", "20", 
-				ConfigAlgoritmo.getStopwordsPath(), 
-				"F:\\pruebasPFC\\blindlight\\grupo\\texttiling", 
-				"manuel", 
-				"cn_2.txt"};
+		for (int i = 0; i < files.length; i++) {
+			TextTiling.setNombreArchivo(files[i]);
+			TextTiling.setRutaArchivo("F:\\pruebasPFC\\blindlight\\grupo\\" + files[i]);
 		
-		TextTiling.main(args);
+			String args[] = new String[]{"100", "20", 
+					ConfigAlgoritmo.getStopwordsPath(), 
+					"F:\\pruebasPFC\\blindlight\\grupo\\texttiling", 
+					"manuel", 
+					files[i]};
+		
+			TextTiling.main(args);
+		}
 		
 		try {
 			OperacionesNGrama ong = new OperacionesNGrama();
@@ -66,13 +73,19 @@ public class TestBD {
 	private void blindLight() {
 		try {
 			OperacionesNGrama ong = new OperacionesNGrama();
-			ong.calcular("F:\\pruebasPFC\\blindlight\\unitaria\\crede.txt", 4);
+			ong.calcular("F:\\pruebasPFC\\blindlight\\unitaria\\gilmour.txt", 4);
 			ArrayList<NGrama> lista = ong.getListaNGramas();
 			ListaAArchivo.setFile(lista, "F:\\pruebasPFC\\blindlight\\unitaria\\salida\\salida.txt");
 			
 		} catch (NGramaException e) {
 			e.printStackTrace();
 		} 
+	}
+	
+	private void pruebaFiltro(){
+		File directorio = new File("F:\\pruebasPFC\\blindlight\\grupo");
+		String files[] = directorio.list(new FiltroDirectorios());
+		System.out.println(files.length);
 	}
 
 	private void extension() {
