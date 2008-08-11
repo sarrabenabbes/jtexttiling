@@ -34,26 +34,29 @@ public class TestBD {
 	public TestBD() {
 		long inicio = System.currentTimeMillis();
 		this.pruebaCompleta();
+		//this.blindLight();
 		long finale = System.currentTimeMillis();
 		
-		System.out.println("tiempo: " + (finale - inicio));
+		System.out.println("tiempo: " + (finale - inicio) + " ms");
 	}
 	
 	private void pruebaCompleta() {
+		TextTiling.setNombreArchivo("cn.txt");
+		TextTiling.setRutaArchivo("F:\\pruebasPFC\\blindlight\\grupo\\cn_2.txt");
+		
 		String args[] = new String[]{"120", "20", 
 				ConfigAlgoritmo.getStopwordsPath(), 
-				"C:\\pruebasFicheros\\pruebas\\texttiling\\salida", 
+				"F:\\pruebasPFC\\blindlight\\grupo\\texttiling", 
 				"manuel", 
 				"cn_2.txt"};
-		TextTiling.setNombreArchivo("cn.txt");
-		TextTiling.setRutaArchivo("C:\\pruebasFicheros\\pruebas\\texttiling\\cn_2.txt");
+		
 		TextTiling.main(args);
 		
 		try {
 			OperacionesNGrama ong = new OperacionesNGrama();
-			ong.calcular("C:\\pruebasFicheros\\pruebas\\texttiling\\salida", 4);
+			ong.calcular("F:\\pruebasPFC\\blindlight\\grupo\\texttiling", 4);
 			ArrayList<NGrama> lista = ong.getListaNGramas();
-			ListaAArchivo.setFile(lista, "C:\\pruebasFicheros\\pruebas\\texttiling\\salida\\salida.txt");
+			ListaAArchivo.setFile(lista, "F:\\pruebasPFC\\blindlight\\grupo\\salida\\salida.txt");
 			
 		} catch (NGramaException e) {
 			e.printStackTrace();
@@ -63,9 +66,9 @@ public class TestBD {
 	private void blindLight() {
 		try {
 			OperacionesNGrama ong = new OperacionesNGrama();
-			ong.calcular("C:\\pruebasFicheros\\pruebas\\grupo", 4);
+			ong.calcular("F:\\pruebasPFC\\blindlight\\unitaria\\crede.txt", 4);
 			ArrayList<NGrama> lista = ong.getListaNGramas();
-			ListaAArchivo.setFile(lista, "C:\\pruebasFicheros\\pruebas\\grupo\\salida.txt");
+			ListaAArchivo.setFile(lista, "F:\\pruebasPFC\\blindlight\\unitaria\\salida\\salida.txt");
 			
 		} catch (NGramaException e) {
 			e.printStackTrace();

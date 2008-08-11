@@ -26,10 +26,13 @@ public class OperacionesNGrama {
 		FormateadorTexto ft;
 		listaNGramas = new ArrayList<NGrama>();
 		
-		for (int i = 0; i < listaHijos.length; i++) {
-			aux = new File(ruta + ConfigFicheros.getSeparador() + listaHijos[i]);
-			textoAux += ArchivoATexto.getTexto(aux);
-		}
+		if (listaHijos != null) {
+			for (int i = 0; i < listaHijos.length; i++) {
+				aux = new File(ruta + ConfigFicheros.getSeparador() + listaHijos[i]);
+				textoAux += ArchivoATexto.getTexto(aux);
+			}
+		} else
+			textoAux = ArchivoATexto.getTexto(directorio);
 		
 		ft = new FormateadorTexto(textoAux);
 		String listaFrases = ft.getTexto();
