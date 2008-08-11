@@ -34,6 +34,7 @@ public class TestBD {
 	
 	public TestBD() {
 		long inicio = System.currentTimeMillis();
+		//this.pruebaTextTiling();
 		this.pruebaCompleta();
 		//this.blindLight();
 		//this.pruebaFiltro();
@@ -50,7 +51,7 @@ public class TestBD {
 			TextTiling.setNombreArchivo(files[i]);
 			TextTiling.setRutaArchivo("F:\\pruebasPFC\\blindlight\\grupo\\" + files[i]);
 		
-			String args[] = new String[]{"100", "20", 
+			String args[] = new String[]{"80", "20", 
 					ConfigAlgoritmo.getStopwordsPath(), 
 					"F:\\pruebasPFC\\blindlight\\grupo\\texttiling", 
 					"manuel", 
@@ -68,6 +69,19 @@ public class TestBD {
 		} catch (NGramaException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	private void pruebaTextTiling() {
+		TextTiling.setNombreArchivo("gilmour");
+		TextTiling.setRutaArchivo("F:\\pruebasPFC\\blindlight\\grupo\\gilmour.txt");
+	
+		String args[] = new String[]{"90", "20", 
+				ConfigAlgoritmo.getStopwordsPath(), 
+				"F:\\pruebasPFC\\blindlight\\grupo\\texttiling", 
+				"manuel", 
+				"gilmour"};
+	
+		TextTiling.main(args);
 	}
 	
 	private void blindLight() {
