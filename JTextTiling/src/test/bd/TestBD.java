@@ -86,6 +86,7 @@ public class TestBD {
 	}
 	
 	private void blindLight() {
+		//bucle infinito por el quicksort
 		try {
 			OperacionesNGrama ong = new OperacionesNGrama();
 			ong.calcular("F:\\pruebasPFC\\blindlight\\unitaria\\gilmour.txt", 4);

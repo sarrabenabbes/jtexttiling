@@ -3,6 +3,8 @@ package es.project.blindLight;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import es.project.utilidades.QuickSort;
+
 public class GoodTuring {
 	private int[][] arrayFrecuenciasInicial, arrayFrecuenciasFinal;
 	private int indiceR = 0;
@@ -53,7 +55,9 @@ public class GoodTuring {
 	}
 	
 	private void ordenarArray() {
-		//pues a ello
+		QuickSort qs = new QuickSort(arrayFrecuenciasFinal);
+		qs.ordenar(0, (arrayFrecuenciasFinal.length - 1));
+		arrayFrecuenciasFinal = qs.getArray();
 	}
 
 	private void aumentarValorN(int indiceAuxiliar) {
