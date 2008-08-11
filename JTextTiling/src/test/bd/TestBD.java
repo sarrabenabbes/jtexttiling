@@ -19,6 +19,7 @@ import uk.ac.man.cs.choif.nlp.seg.linear.texttile.TextTiling;
 
 import es.project.algoritmo.configuracion.ConfigAlgoritmo;
 import es.project.bd.objetos.Usuario;
+import es.project.blindLight.GoodTuring;
 import es.project.blindLight.ListaAArchivo;
 import es.project.blindLight.NGrama;
 import es.project.blindLight.NGramaException;
@@ -35,8 +36,8 @@ public class TestBD {
 	public TestBD() {
 		long inicio = System.currentTimeMillis();
 		//this.pruebaTextTiling();
-		this.pruebaCompleta();
-		//this.blindLight();
+		//this.pruebaCompleta();
+		this.blindLight();
 		//this.pruebaFiltro();
 		long finale = System.currentTimeMillis();
 		
@@ -87,9 +88,11 @@ public class TestBD {
 	private void blindLight() {
 		try {
 			OperacionesNGrama ong = new OperacionesNGrama();
-			ong.calcular("F:\\pruebasPFC\\blindlight\\unitaria\\gilmour.txt", 4);
+			ong.calcular("F:\\pruebasPFC\\blindlight\\unitaria\\crede.txt", 4);
 			ArrayList<NGrama> lista = ong.getListaNGramas();
-			ListaAArchivo.setFile(lista, "F:\\pruebasPFC\\blindlight\\unitaria\\salida\\salida.txt");
+			GoodTuring gt = new GoodTuring(lista);
+			System.out.println(gt.toString());
+			//ListaAArchivo.setFile(lista, "F:\\pruebasPFC\\blindlight\\unitaria\\salida\\salida.txt");
 			
 		} catch (NGramaException e) {
 			e.printStackTrace();

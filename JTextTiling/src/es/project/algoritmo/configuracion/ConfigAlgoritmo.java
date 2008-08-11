@@ -50,7 +50,7 @@ public class ConfigAlgoritmo {
 			conjunto.add("txt");
 			conjunto.add("rtf");
 			conjunto.add("doc");
-			
+
 			conjuntoCargado = true;
 		}
 		return conjunto;
