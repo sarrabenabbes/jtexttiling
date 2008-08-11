@@ -4,12 +4,12 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 public class GoodTuring {
-	private int[][] arrayFrecuencias;
+	private int[][] arrayFrecuenciasInicial, arrayFrecuenciasFinal;
 	private int indiceR = 0;
 	
 	public GoodTuring(ArrayList<NGrama> listaNGramas) {
 		int size = listaNGramas.size();
-		arrayFrecuencias = new int[size][2];
+		arrayFrecuenciasInicial = new int[size][2];
 		rellenarArray(listaNGramas);
 	}
 	
@@ -32,24 +32,44 @@ public class GoodTuring {
 			else {
 				aumentarValorN(indiceAuxiliar);
 			}
-				                                
 		}
+		recortarArray();
+	}
+	
+	private void recortarArray() {
+		int size = 0;
+		for (int i = 0; i < arrayFrecuenciasInicial.length; i++)
+			if (arrayFrecuenciasInicial[i][0] == 0) {
+				size = i;
+				i = arrayFrecuenciasInicial.length;
+			}
+		
+		arrayFrecuenciasFinal = new int[size][2];
+		for (int i = 0; i < arrayFrecuenciasFinal.length; i++)
+			for (int j = 0; j < arrayFrecuenciasFinal[0].length; j++)
+				arrayFrecuenciasFinal[i][j] = arrayFrecuenciasInicial[i][j];
+		
+		ordenarArray();
+	}
+	
+	private void ordenarArray() {
+		//pues a ello
 	}
 
 	private void aumentarValorN(int indiceAuxiliar) {
-		int valorAnterior = arrayFrecuencias[indiceAuxiliar][1];
-		arrayFrecuencias[indiceAuxiliar][1] = valorAnterior++;
+		int valorAnterior = arrayFrecuenciasInicial[indiceAuxiliar][1];
+		arrayFrecuenciasInicial[indiceAuxiliar][1] = ++valorAnterior;
 	}
 
 	private void insertarNuevaFrecuencia(int frecuenciaAbsoluta) {
-		arrayFrecuencias[indiceR][0] = frecuenciaAbsoluta;
-		arrayFrecuencias[indiceR][1] = 1;
+		arrayFrecuenciasInicial[indiceR][0] = frecuenciaAbsoluta;
+		arrayFrecuenciasInicial[indiceR][1] = 1;
 		indiceR++;
 	}
 	
 	private int buscarIndiceFrecuencia(int frecuencia){
 		for (int i = 0; i < indiceR; i++)
-			if (arrayFrecuencias[i][0] == frecuencia)
+			if (arrayFrecuenciasInicial[i][0] == frecuencia)
 				return i;
 		
 		return -1;
@@ -57,10 +77,10 @@ public class GoodTuring {
 	
 	public String toString() {
 		String retorno = "r\tn";
-		for (int i = 0; i < arrayFrecuencias.length; i++) {
+		for (int i = 0; i < arrayFrecuenciasFinal.length; i++) {
 			retorno += "\n";
-			for (int j = 0; j < arrayFrecuencias[0].length; j++)
-				retorno += arrayFrecuencias[i][j] + "\t";
+			for (int j = 0; j < arrayFrecuenciasFinal[0].length; j++)
+				retorno += arrayFrecuenciasFinal[i][j] + "\t";
 		}
 				
 		return retorno;

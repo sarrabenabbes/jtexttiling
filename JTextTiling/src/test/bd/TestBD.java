@@ -88,11 +88,11 @@ public class TestBD {
 	private void blindLight() {
 		try {
 			OperacionesNGrama ong = new OperacionesNGrama();
-			ong.calcular("F:\\pruebasPFC\\blindlight\\unitaria\\crede.txt", 4);
+			ong.calcular("F:\\pruebasPFC\\blindlight\\unitaria\\gilmour.txt", 4);
 			ArrayList<NGrama> lista = ong.getListaNGramas();
 			GoodTuring gt = new GoodTuring(lista);
 			System.out.println(gt.toString());
-			//ListaAArchivo.setFile(lista, "F:\\pruebasPFC\\blindlight\\unitaria\\salida\\salida.txt");
+			ListaAArchivo.setFile(lista, "F:\\pruebasPFC\\blindlight\\unitaria\\salida\\salida.txt");
 			
 		} catch (NGramaException e) {
 			e.printStackTrace();
