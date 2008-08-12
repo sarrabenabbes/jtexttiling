@@ -56,7 +56,11 @@ public class GoodTuring {
 	
 	private void ordenarArray() {
 		QuickSort qs = new QuickSort(arrayFrecuenciasFinal);
-		qs.ordenar(0, (arrayFrecuenciasFinal.length - 1));
+		
+		if (arrayFrecuenciasFinal.length >= 20)
+			qs.quicksort(0, (arrayFrecuenciasFinal.length - 1));
+		else qs.insercionDirecta();
+		
 		arrayFrecuenciasFinal = qs.getArray();
 	}
 

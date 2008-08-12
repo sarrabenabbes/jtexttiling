@@ -29,6 +29,7 @@ import es.project.ficheros.filtros.FiltroDirectorios;
 import es.project.mail.Mail;
 import es.project.mail.MailAlta;
 import es.project.procesadorXSLT.ProcesadorXSLT;
+import es.project.utilidades.QuickSort;
 import es.project.zip.CompresorZip;
 
 public class TestBD {
@@ -36,12 +37,29 @@ public class TestBD {
 	public TestBD() {
 		long inicio = System.currentTimeMillis();
 		//this.pruebaTextTiling();
-		//this.pruebaCompleta();
-		this.blindLight();
-		//this.pruebaFiltro();
+		this.pruebaCompleta();
+		//this.blindLight();
+		//this.pruebaQuickSort();
 		long finale = System.currentTimeMillis();
 		
 		System.out.println("tiempo: " + (finale - inicio) + " ms");
+	}
+	
+	private void pruebaQuickSort() {
+		int[][] arrayUno = new int[][]{{5,3},{6,4},{7,1},{1,4},{2,1},{23,15},{4,6},{42,10}};
+		
+		String retorno = "r\tn";
+		for (int i = 0; i < arrayUno.length; i++) {
+			retorno += "\n";
+			for (int j = 0; j < arrayUno[0].length; j++)
+				retorno += arrayUno[i][j] + "\t";
+		}
+		System.out.println(retorno);
+		
+		QuickSort qs = new QuickSort(arrayUno);
+		//qs.ordenar(0, (arrayUno.length - 1));
+		qs.quicksort(0, (arrayUno.length - 1));
+		qs.getArray();
 	}
 	
 	private void pruebaCompleta() {
@@ -65,6 +83,7 @@ public class TestBD {
 			OperacionesNGrama ong = new OperacionesNGrama();
 			ong.calcular("F:\\pruebasPFC\\blindlight\\grupo\\texttiling", 4);
 			ArrayList<NGrama> lista = ong.getListaNGramas();
+			GoodTuring gt = new GoodTuring(lista);
 			ListaAArchivo.setFile(lista, "F:\\pruebasPFC\\blindlight\\grupo\\salida\\salida.txt");
 			
 		} catch (NGramaException e) {
@@ -89,10 +108,10 @@ public class TestBD {
 		//bucle infinito por el quicksort
 		try {
 			OperacionesNGrama ong = new OperacionesNGrama();
-			ong.calcular("F:\\pruebasPFC\\blindlight\\unitaria\\gilmour.txt", 4);
+			ong.calcular("F:\\pruebasPFC\\blindlight\\unitaria\\cn_2.txt", 4);
 			ArrayList<NGrama> lista = ong.getListaNGramas();
 			GoodTuring gt = new GoodTuring(lista);
-			System.out.println(gt.toString());
+			//System.out.println(gt.toString());
 			ListaAArchivo.setFile(lista, "F:\\pruebasPFC\\blindlight\\unitaria\\salida\\salida.txt");
 			
 		} catch (NGramaException e) {

@@ -15,49 +15,53 @@ public class QuickSort {
 				arrayOrdenable[i][j] = array[i][j];
 	}
 	
-	public void ordenar(int inicio, int fin) {
-		if (arrayOrdenable.length < 1 /* 20 */) {
-			//utilizar inserción directa
-		}
-		else {
-			int elementoCentral = (0 + (arrayOrdenable.length - 1))/2;
-			
-			if (arrayOrdenable[elementoCentral][0] < arrayOrdenable[inicio][0])
-				this.intercambiar(arrayOrdenable[inicio][0], arrayOrdenable[elementoCentral][0]);
-			if (arrayOrdenable[fin][0] < arrayOrdenable[inicio][0])
-				this.intercambiar(arrayOrdenable[inicio][0], arrayOrdenable[fin][0]);
-			if (arrayOrdenable[fin][0] < arrayOrdenable[elementoCentral][0])
-				this.intercambiar(arrayOrdenable[elementoCentral][0], 
-						arrayOrdenable[fin][0]);
-			
-			this.intercambiar(arrayOrdenable[elementoCentral][0], 
-					arrayOrdenable[fin][0]);
-			int pivote = arrayOrdenable[fin - 1][0];
-			
-			int i, j = 0;
-			for (i = inicio + 1; j <= fin - 2; ) {
-				while (arrayOrdenable[i][0] < pivote)
-					i++;
-				while (pivote < arrayOrdenable[j][0])
-					j--;
-				
-				if (i < j)
-					this.intercambiar(arrayOrdenable[i][0], arrayOrdenable[j][0]);
-			}
-			
-			this.ordenar(inicio, (i + 1));
-			this.ordenar((i + 1), fin);
-		}
+	public void quicksort(int izq, int der) {
+		int i = izq;
+	    int j = der;
+	    int pivote = arrayOrdenable[ (izq + der) / 2][0];
+	    do {
+	      while (arrayOrdenable[i][0] < pivote) {
+	        i++;
+	      }
+	      while (arrayOrdenable[j][0] > pivote) {
+	        j--;
+	      }
+	      if (i <= j) {
+	        int auxR = arrayOrdenable[i][0];
+	        int auxN = arrayOrdenable [i][1];
+	        arrayOrdenable[i][0] = arrayOrdenable[j][0];
+	        arrayOrdenable[i][1] = arrayOrdenable[j][1];
+	        arrayOrdenable[j][0] = auxR;
+	        arrayOrdenable[j][1] = auxN;
+	        i++;
+	        j--;
+	      }
+	    }
+	    while (i <= j);
+	    if (izq < j) {
+	      quicksort(izq, j);
+	    }
+	    if (i < der) {
+	      quicksort(i, der);
+	    }
+
 	}
 	
-	private void intercambiar(int r1, int r2) {
-		int auxR = r1;
-		int auxN = arrayOrdenable[r1][1];
-		
-		arrayOrdenable[r1][0] = r2;
-		arrayOrdenable[r1][1] = arrayOrdenable[r2][1];
-		arrayOrdenable[r2][0] = auxR;
-		arrayOrdenable[r2][1] = auxN;
+	public void insercionDirecta() {
+		int pivote, j, segundaColumna;
+		for (int i = 1; i < arrayOrdenable.length; i++) {
+			pivote = arrayOrdenable[i][0];
+			segundaColumna = arrayOrdenable[i][1];
+			j = i - 1;
+			
+			while (j >= 0 && pivote < arrayOrdenable[j][0]) {
+				arrayOrdenable[j+1][0] = arrayOrdenable[j][0];
+				arrayOrdenable[j+1][1] = arrayOrdenable[j][1];
+				j--;
+			}
+			arrayOrdenable[j+1][0] = pivote;
+			arrayOrdenable[j+1][1] = segundaColumna;
+		}
 	}
 	
 	public int[][] getArray() {
