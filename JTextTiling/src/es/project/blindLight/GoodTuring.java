@@ -111,7 +111,9 @@ public class GoodTuring {
 	/* </OPERACIONES PARA COMPONER EL PRIMER VECTOR DEL MÉTODO BLINDLIGHT> */
 	
 	/* <SEGUNDO VECTOR DEL MÉTODO BLINDLIGHT> */
-	
+	public void componerSegundoVector() {
+		//TODO CONTINUAMOS POR AQUÍ
+	}
 	/* </SEGUNDO VECTOR DEL MÉTODO BLINDLIGHT> */
 	
 	public int getN() {
