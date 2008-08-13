@@ -37,8 +37,8 @@ public class TestBD {
 	public TestBD() {
 		long inicio = System.currentTimeMillis();
 		//this.pruebaTextTiling();
-		this.pruebaCompleta();
-		//this.blindLight();
+		//this.pruebaCompleta();
+		this.blindLight();
 		//this.pruebaQuickSort();
 		long finale = System.currentTimeMillis();
 		
@@ -84,7 +84,10 @@ public class TestBD {
 			ong.calcular("F:\\pruebasPFC\\blindlight\\grupo\\texttiling", 4);
 			ArrayList<NGrama> lista = ong.getListaNGramas();
 			GoodTuring gt = new GoodTuring(lista);
+			gt.componerPrimerVector();
 			ListaAArchivo.setFile(lista, "F:\\pruebasPFC\\blindlight\\grupo\\salida\\salida.txt");
+			System.out.println("N: " + gt.getN());
+			System.out.println("P0: " + gt.getP0());
 			
 		} catch (NGramaException e) {
 			e.printStackTrace();
@@ -111,8 +114,11 @@ public class TestBD {
 			ong.calcular("F:\\pruebasPFC\\blindlight\\unitaria\\cn_2.txt", 4);
 			ArrayList<NGrama> lista = ong.getListaNGramas();
 			GoodTuring gt = new GoodTuring(lista);
+			gt.componerPrimerVector();
 			//System.out.println(gt.toString());
 			ListaAArchivo.setFile(lista, "F:\\pruebasPFC\\blindlight\\unitaria\\salida\\salida.txt");
+			System.out.println("N: " + gt.getN());
+			System.out.println("P0: " + gt.getP0());
 			
 		} catch (NGramaException e) {
 			e.printStackTrace();

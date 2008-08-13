@@ -8,11 +8,22 @@ import es.project.utilidades.QuickSort;
 public class GoodTuring {
 	private int[][] arrayFrecuenciasInicial, arrayFrecuenciasFinal;
 	private int indiceR = 0;
+	private ArrayList<NGrama> lista;
+	
+	private double[][] arrayReales;
+	private int N;
+	private double P0;
 	
 	public GoodTuring(ArrayList<NGrama> listaNGramas) {
+		this.lista = listaNGramas;
 		int size = listaNGramas.size();
 		arrayFrecuenciasInicial = new int[size][2];
-		rellenarArray(listaNGramas);
+		arrayReales = new double[size][5];
+	}
+	
+	/* <OPERACIONES PARA COMPONER EL PRIMER VECTOR DEL MÉTODO BLINDLIGHT> */
+	public void componerPrimerVector() {
+		this.rellenarArray(lista);
 	}
 	
 	private void rellenarArray(ArrayList<NGrama> lista) {
@@ -52,6 +63,20 @@ public class GoodTuring {
 				arrayFrecuenciasFinal[i][j] = arrayFrecuenciasInicial[i][j];
 		
 		ordenarArray();
+		calcularN();
+		calcularP0();
+	}
+	
+	/**
+	 * P0 = n1/N, donde n1 es el valor n correspondiente a la primera fila del array
+	 */
+	private void calcularP0() {
+		P0 = (arrayFrecuenciasFinal[0][1]/(double)N);
+	}
+	
+	private void calcularN() {
+		for (int i = 0; i < arrayFrecuenciasFinal.length; i++)
+				N += (arrayFrecuenciasFinal[i][0] * arrayFrecuenciasFinal[i][1]);
 	}
 	
 	private void ordenarArray() {
@@ -83,6 +108,20 @@ public class GoodTuring {
 		return -1;
 	}
 	
+	/* </OPERACIONES PARA COMPONER EL PRIMER VECTOR DEL MÉTODO BLINDLIGHT> */
+	
+	/* <SEGUNDO VECTOR DEL MÉTODO BLINDLIGHT> */
+	
+	/* </SEGUNDO VECTOR DEL MÉTODO BLINDLIGHT> */
+	
+	public int getN() {
+		return N;
+	}
+	
+	public double getP0() {
+		return P0;
+	}
+	
 	public String toString() {
 		String retorno = "r\tn";
 		for (int i = 0; i < arrayFrecuenciasFinal.length; i++) {
@@ -90,7 +129,6 @@ public class GoodTuring {
 			for (int j = 0; j < arrayFrecuenciasFinal[0].length; j++)
 				retorno += arrayFrecuenciasFinal[i][j] + "\t";
 		}
-				
 		return retorno;
 	}
 }
