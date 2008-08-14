@@ -142,7 +142,46 @@ public class GoodTuring {
 				arrayReales[j][0] = 0;
 			}
 		}
+		
+		calcularRAproximada();
+	}
+	
+	private void calcularRAproximada() {
+		boolean cumpleInecuacion = true;
+		float x, y, valorInecuacion = 0.0f;
+		float valorFinal = 0.0f;
+		
+		for (int i = 0; i < arrayFrecuenciasFinal.length; i++) {
+			int r = arrayFrecuenciasFinal[i][0];
+			y = this.calcularY(r);
 			
+			if (cumpleInecuacion) {
+				x = this.calcularX(r);
+				if (Math.abs(x - y) > this.calcularValorInecuacion(r))
+					valorFinal = x;
+				else {
+					valorFinal = y;
+					cumpleInecuacion = false;
+				}
+			} 
+			else valorFinal = y;
+			
+			arrayReales[i][3] = valorFinal;
+		}
+	}
+	
+	private float calcularX(int r) {
+		return (r + 1) * (arrayFrecuenciasFinal[(r+1)][1]/arrayFrecuenciasFinal[r][1]);
+	}
+	
+	private float calcularY(int r) {
+		return 0.0f;
+	}
+	
+	private float calcularValorInecuacion(int r) {
+		return (float)(1.96 * Math.sqrt(((r+1)*(r+1))*
+				(arrayFrecuenciasFinal[r+1][1]/(arrayFrecuenciasFinal[r][1] * arrayFrecuenciasFinal[r][1]))*
+				(1 +(arrayFrecuenciasInicial[r+1][1]/arrayFrecuenciasFinal[r][0]))));
 	}
 	/* </SEGUNDO VECTOR DEL MÉTODO BLINDLIGHT> */
 	

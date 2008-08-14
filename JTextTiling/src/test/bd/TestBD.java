@@ -30,6 +30,8 @@ import es.project.mail.Mail;
 import es.project.mail.MailAlta;
 import es.project.procesadorXSLT.ProcesadorXSLT;
 import es.project.utilidades.QuickSort;
+import es.project.utilidades.RectaRegresion;
+import es.project.utilidades.RectaRegresionException;
 import es.project.zip.CompresorZip;
 
 public class TestBD {
@@ -37,12 +39,33 @@ public class TestBD {
 	public TestBD() {
 		long inicio = System.currentTimeMillis();
 		//this.pruebaTextTiling();
-		this.pruebaCompleta();
+		//this.pruebaCompleta();
 		//this.blindLight();
 		//this.pruebaQuickSort();
+		//this.pruebaRectaRegresion();
+		System.out.println(Math.abs(3-6));
 		long finale = System.currentTimeMillis();
 		
 		System.out.println("tiempo: " + (finale - inicio) + " ms");
+	}
+	
+	private void pruebaRectaRegresion() {
+		float []x = new float[]{398,390,410,502,590,305,210,252,395,410,281,502};
+		float []y = new float[]{40,38,42,50,60,30,20,25,40,42,30,50};
+		
+		try {
+			RectaRegresion rr = new RectaRegresion(x,y);
+			rr.calcularRectaRegresion();
+			float b0 = rr.getB0();
+			float b1 = rr.getB1();
+			
+			System.out.println("y = " + b0 + " + " + b1 + "x");
+			float x0 = 250;
+			System.out.println("y(" + x0 +") = " + (b0 + (b1*x0)));
+			
+		} catch (RectaRegresionException e) {
+			System.out.println(e.getMessage());
+		}
 	}
 	
 	private void pruebaQuickSort() {
@@ -57,7 +80,6 @@ public class TestBD {
 		System.out.println(retorno);
 		
 		QuickSort qs = new QuickSort(arrayUno);
-		//qs.ordenar(0, (arrayUno.length - 1));
 		qs.quicksort(0, (arrayUno.length - 1));
 		qs.getArray();
 	}

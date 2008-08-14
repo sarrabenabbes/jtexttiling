@@ -4,9 +4,13 @@ public class RectaRegresion {
 	private float[] x, y;
 	private float xMedia, yMedia, b0, b1;
 	
-	public RectaRegresion(float[] x, float[] y) {
-		this.x = x;
-		this.y = y;
+	public RectaRegresion(float[] x, float[] y) throws RectaRegresionException{
+		if (x.length != y.length)
+			throw new RectaRegresionException(x.length, y.length);
+		else {
+			this.x = x;
+			this.y = y;
+		}
 	}
 	
 	public void calcularRectaRegresion() {
@@ -20,7 +24,8 @@ public class RectaRegresion {
 		aux3 = sumatorioVariables(x, x);
 		aux4 = sumatorioConMedia(x, xMedia);
 		
-		return ((aux1 - aux2)/(aux3 - aux4));
+		b1 = ((aux1 - aux2)/(aux3 - aux4));
+		return b1;
 	}
 	
 	private void calcularB0() {
@@ -57,15 +62,7 @@ public class RectaRegresion {
 		return b0;
 	}
 
-	public void setB0(float b0) {
-		this.b0 = b0;
-	}
-
 	public float getB1() {
 		return b1;
-	}
-
-	public void setB1(float b1) {
-		this.b1 = b1;
 	}
 }
