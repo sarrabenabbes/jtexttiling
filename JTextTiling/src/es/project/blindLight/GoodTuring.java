@@ -6,11 +6,18 @@ import java.util.Iterator;
 import es.project.utilidades.QuickSort;
 
 public class GoodTuring {
+	/**
+	 * 1ª columna: r. Frecuencias observadas en la muestra
+	 * 2ª columna: n. Número de especies observadas con frecuencia r
+	 */
 	private int[][] arrayFrecuenciasInicial, arrayFrecuenciasFinal;
 	private int indiceR = 0;
 	private ArrayList<NGrama> lista;
 	
-	private double[][] arrayReales;
+	/**
+	 * Z, log r, log Z, r*, p
+	 */
+	private float[][] arrayReales;
 	private int N;
 	private double P0;
 	
@@ -18,7 +25,6 @@ public class GoodTuring {
 		this.lista = listaNGramas;
 		int size = listaNGramas.size();
 		arrayFrecuenciasInicial = new int[size][2];
-		arrayReales = new double[size][5];
 	}
 	
 	/* <OPERACIONES PARA COMPONER EL PRIMER VECTOR DEL MÉTODO BLINDLIGHT> */
@@ -65,6 +71,8 @@ public class GoodTuring {
 		ordenarArray();
 		calcularN();
 		calcularP0();
+		
+		arrayReales = new float[arrayFrecuenciasFinal.length][5];
 	}
 	
 	/**
@@ -112,7 +120,25 @@ public class GoodTuring {
 	
 	/* <SEGUNDO VECTOR DEL MÉTODO BLINDLIGHT> */
 	public void componerSegundoVector() {
-		//TODO CONTINUAMOS POR AQUÍ
+		int i, k = 0;
+		for (int j = 0; j < arrayReales.length; j++) {
+			if (j == 0)
+				i = 0;
+			else i = arrayFrecuenciasFinal[j-1][0];
+			
+			if (j == (arrayReales.length - 1))
+				k = (2*j) - i;
+			else k = arrayFrecuenciasFinal[j+1][0];
+			
+			try {
+				arrayReales[j][0] = (2*arrayFrecuenciasFinal[j][1])/(k-i);
+				arrayReales[j][1] = (float)Math.log10(arrayFrecuenciasFinal[j][0]);
+				arrayReales[j][2] = (float)Math.log10(arrayReales[j][0]);
+			} catch (ArithmeticException ae) {
+				arrayReales[j][0] = 0;
+			}
+		}
+			
 	}
 	/* </SEGUNDO VECTOR DEL MÉTODO BLINDLIGHT> */
 	
@@ -124,12 +150,30 @@ public class GoodTuring {
 		return P0;
 	}
 	
-	public String toString() {
+	public int[][] getArrayFrecuencias() {
+		return arrayFrecuenciasFinal;
+	}
+	
+	public float[][] getArrayReales() {
+		return arrayReales;
+	}
+	
+	public String verArrayFrecuencias() {
 		String retorno = "r\tn";
 		for (int i = 0; i < arrayFrecuenciasFinal.length; i++) {
 			retorno += "\n";
 			for (int j = 0; j < arrayFrecuenciasFinal[0].length; j++)
 				retorno += arrayFrecuenciasFinal[i][j] + "\t";
+		}
+		return retorno;
+	}
+	
+	public String verArrayReales() {
+		String retorno = "Z\t\tlog r\t\tlog Z\t\tr*\t\tp";
+		for (int i = 0; i < arrayReales.length; i++) {
+			retorno += "\n";
+			for (int j = 0; j < arrayReales[0].length; j++)
+				retorno += arrayReales[i][j] + "\t\t";
 		}
 		return retorno;
 	}

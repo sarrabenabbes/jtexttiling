@@ -37,8 +37,8 @@ public class TestBD {
 	public TestBD() {
 		long inicio = System.currentTimeMillis();
 		//this.pruebaTextTiling();
-		//this.pruebaCompleta();
-		this.blindLight();
+		this.pruebaCompleta();
+		//this.blindLight();
 		//this.pruebaQuickSort();
 		long finale = System.currentTimeMillis();
 		
@@ -85,6 +85,8 @@ public class TestBD {
 			ArrayList<NGrama> lista = ong.getListaNGramas();
 			GoodTuring gt = new GoodTuring(lista);
 			gt.componerPrimerVector();
+			gt.componerSegundoVector();
+			System.out.println(gt.verArrayReales());
 			ListaAArchivo.setFile(lista, "F:\\pruebasPFC\\blindlight\\grupo\\salida\\salida.txt");
 			System.out.println("N: " + gt.getN());
 			System.out.println("P0: " + gt.getP0());
@@ -111,14 +113,16 @@ public class TestBD {
 		//bucle infinito por el quicksort
 		try {
 			OperacionesNGrama ong = new OperacionesNGrama();
-			ong.calcular("F:\\pruebasPFC\\blindlight\\unitaria\\cn_2.txt", 4);
+			ong.calcular("F:\\pruebasPFC\\blindlight\\unitaria\\gilmour.txt", 4);
 			ArrayList<NGrama> lista = ong.getListaNGramas();
 			GoodTuring gt = new GoodTuring(lista);
 			gt.componerPrimerVector();
-			//System.out.println(gt.toString());
+			gt.componerSegundoVector();
+			//System.out.println(gt.verArrayFrecuencias());
+			System.out.println(gt.verArrayReales());
 			ListaAArchivo.setFile(lista, "F:\\pruebasPFC\\blindlight\\unitaria\\salida\\salida.txt");
-			System.out.println("N: " + gt.getN());
-			System.out.println("P0: " + gt.getP0());
+			//System.out.println("N: " + gt.getN());
+			//System.out.println("P0: " + gt.getP0());
 			
 		} catch (NGramaException e) {
 			e.printStackTrace();
