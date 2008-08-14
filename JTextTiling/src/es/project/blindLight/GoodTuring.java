@@ -135,6 +135,10 @@ public class GoodTuring {
 				arrayReales[j][1] = (float)Math.log10(arrayFrecuenciasFinal[j][0]);
 				arrayReales[j][2] = (float)Math.log10(arrayReales[j][0]);
 			} catch (ArithmeticException ae) {
+				/*
+				 * ¿Qué hago cuando haya divisiones por 0?
+				 * ¿...y qué hago cuando tenga que calcular el logaritmo de 0? 
+				 */
 				arrayReales[j][0] = 0;
 			}
 		}
