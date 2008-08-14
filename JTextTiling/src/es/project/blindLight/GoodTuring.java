@@ -18,7 +18,7 @@ public class GoodTuring {
 	 * Z, log r, log Z, r*, p
 	 */
 	private float[][] arrayReales;
-	private int N;
+	private int N, NPrima;
 	private double P0;
 	
 	public GoodTuring(ArrayList<NGrama> listaNGramas) {
@@ -168,6 +168,9 @@ public class GoodTuring {
 			
 			arrayReales[i][3] = valorFinal;
 		}
+		
+		this.calcularNPrima();
+		this.calcularEstimadorFinal();
 	}
 	
 	private float calcularX(int r) {
@@ -175,6 +178,7 @@ public class GoodTuring {
 	}
 	
 	private float calcularY(int r) {
+		//TODO sólo falta esto
 		return 0.0f;
 	}
 	
@@ -183,10 +187,27 @@ public class GoodTuring {
 				(arrayFrecuenciasFinal[r+1][1]/(arrayFrecuenciasFinal[r][1] * arrayFrecuenciasFinal[r][1]))*
 				(1 +(arrayFrecuenciasInicial[r+1][1]/arrayFrecuenciasFinal[r][0]))));
 	}
+	
+	private void calcularNPrima() {
+		for (int i = 0; i < arrayFrecuenciasFinal.length; i++)
+			NPrima += arrayFrecuenciasFinal[i][1]*arrayReales[i][3];
+	}
+	
+	private float calcularEstimadorFinal() {
+		float aux = 0.0f;
+		for (int i = 0; i < arrayFrecuenciasFinal.length; i++)
+			arrayReales[i][4] = (float)((1 - this.getP0())*(arrayReales[i][3]/this.getNPrima()));
+		
+		return aux;
+	}
 	/* </SEGUNDO VECTOR DEL MÉTODO BLINDLIGHT> */
 	
 	public int getN() {
 		return N;
+	}
+	
+	public float getNPrima() {
+		return NPrima;
 	}
 	
 	public double getP0() {
