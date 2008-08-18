@@ -137,6 +137,11 @@ public class GoodTuring {
 			
 			try {
 				arrayReales[j][0] = (2*arrayFrecuenciasFinal[j][1])/(k-i);
+				
+				/* más soluciones de emergencia */
+				if (arrayReales[j][0] == 0)
+					arrayReales[j][0] = 1;
+				
 				arrayReales[j][1] = (float)Math.log10(arrayFrecuenciasFinal[j][0]);
 				arrayReales[j][2] = (float)Math.log10(arrayReales[j][0]);
 			} catch (ArithmeticException ae) {
@@ -144,7 +149,9 @@ public class GoodTuring {
 				 * ¿Qué hago cuando haya divisiones por 0?
 				 * ¿...y qué hago cuando tenga que calcular el logaritmo de 0? 
 				 */
-				arrayReales[j][0] = 0;
+				//arrayReales[j][0] = 0;
+				/* solución de emergencia */
+				arrayReales[j][0] = 1;
 			}
 		}
 		
@@ -200,7 +207,9 @@ public class GoodTuring {
 	}
 	
 	private float calcularX(int r) {
-		return (r + 1) * (arrayFrecuenciasFinal[(r+1)][1]/arrayFrecuenciasFinal[r][1]);
+		float numerador = arrayFrecuenciasFinal[r][1];
+		float denominador = arrayFrecuenciasFinal[(r-1)][1];
+		return (r + 1) * (numerador/denominador);
 	}
 	
 	private float calcularY(int r) {
@@ -213,9 +222,12 @@ public class GoodTuring {
 	}
 	
 	private float calcularValorInecuacion(int r) {
-		return (float)(1.96 * Math.sqrt(((r+1)*(r+1))*
-				(arrayFrecuenciasFinal[r+1][1]/(arrayFrecuenciasFinal[r][1] * arrayFrecuenciasFinal[r][1]))*
-				(1 +(arrayFrecuenciasInicial[r+1][1]/arrayFrecuenciasFinal[r][0]))));
+		float numerador1 = arrayFrecuenciasFinal[r][1];
+		float denominador1 = arrayFrecuenciasFinal[(r-1)][1];
+		float numerador2 = numerador1;
+		float denominador2 = denominador1;
+		
+		return (float)(1.96 * Math.sqrt(Math.pow((r+1), 2) * (numerador1/Math.pow(denominador1, 2)) * (1 + (numerador2/denominador2))));
 	}
 	
 	private void calcularNPrima() {

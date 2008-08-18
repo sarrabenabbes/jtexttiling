@@ -39,11 +39,10 @@ public class TestBD {
 	public TestBD() {
 		long inicio = System.currentTimeMillis();
 		//this.pruebaTextTiling();
-		//this.pruebaCompleta();
+		this.pruebaCompleta();
 		//this.blindLight();
 		//this.pruebaQuickSort();
 		//this.pruebaRectaRegresion();
-		System.out.println(Math.pow(2, 2));
 		long finale = System.currentTimeMillis();
 		
 		System.out.println("tiempo: " + (finale - inicio) + " ms");
