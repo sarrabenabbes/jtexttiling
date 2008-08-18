@@ -135,6 +135,7 @@ public class GoodTuring {
 				k = (2*j) - i;
 			else k = arrayFrecuenciasFinal[j+1][0];
 			
+			//TODO revisar esto: AQUÍ ESTÁ LA CLAVE
 			try {
 				arrayReales[j][0] = (2*arrayFrecuenciasFinal[j][1])/(k-i);
 				
