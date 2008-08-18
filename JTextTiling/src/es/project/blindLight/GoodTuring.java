@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import es.project.utilidades.QuickSort;
+import es.project.utilidades.RectaRegresion;
+import es.project.utilidades.RectaRegresionException;
 
 public class GoodTuring {
 	/**
@@ -20,6 +22,9 @@ public class GoodTuring {
 	private float[][] arrayReales;
 	private int N, NPrima;
 	private double P0;
+	
+	/* coeficientes para la recta de regresión */
+	private float a, b;
 	
 	public GoodTuring(ArrayList<NGrama> listaNGramas) {
 		this.lista = listaNGramas;
@@ -143,12 +148,33 @@ public class GoodTuring {
 			}
 		}
 		
+		calcularCoeficientesRecta();
 		calcularRAproximada();
+	}
+	
+	private void calcularCoeficientesRecta() {
+		int size = arrayReales[1].length;
+		float[] x = new float[size];
+		float[] y = new float[size];
+		
+		for (int i = 0; i < size; i++) {
+			x[i] = arrayReales[1][i];
+			y[i] = arrayReales[2][i];
+		}
+
+		try {
+			RectaRegresion rr = new RectaRegresion(x,y);
+			rr.calcularRectaRegresion();
+			this.a = rr.getB0();
+			this.b = rr.getB1();
+		} catch (RectaRegresionException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	private void calcularRAproximada() {
 		boolean cumpleInecuacion = true;
-		float x, y, valorInecuacion = 0.0f;
+		float x, y = 0.0f;
 		float valorFinal = 0.0f;
 		
 		for (int i = 0; i < arrayFrecuenciasFinal.length; i++) {
@@ -178,8 +204,12 @@ public class GoodTuring {
 	}
 	
 	private float calcularY(int r) {
-		//TODO sólo falta esto
-		return 0.0f;
+		return (r+1)*(antilog(r+1)/antilog(r));
+	}
+	
+	private float antilog (int r) {
+		float exponente = (float)(this.a + (this.b * Math.log10(r)));
+		return (float)Math.pow(10, exponente);
 	}
 	
 	private float calcularValorInecuacion(int r) {

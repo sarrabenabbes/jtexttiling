@@ -43,7 +43,7 @@ public class TestBD {
 		//this.blindLight();
 		//this.pruebaQuickSort();
 		//this.pruebaRectaRegresion();
-		System.out.println(Math.abs(3-6));
+		System.out.println(Math.pow(2, 2));
 		long finale = System.currentTimeMillis();
 		
 		System.out.println("tiempo: " + (finale - inicio) + " ms");
