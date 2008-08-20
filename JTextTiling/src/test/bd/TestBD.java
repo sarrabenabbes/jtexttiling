@@ -42,6 +42,8 @@ public class TestBD {
 		this.blindLight();
 		//this.pruebaQuickSort();
 		//this.pruebaRectaRegresion();
+		//float[][]p =  new float[][]{{5,1,5,4,1},{3,2,4,5,6}};
+		//System.out.println(p[0].length);
 		long finale = System.currentTimeMillis();
 		
 		System.out.println("tiempo: " + (finale - inicio) + " ms");

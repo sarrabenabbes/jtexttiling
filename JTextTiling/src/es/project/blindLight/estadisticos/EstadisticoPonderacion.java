@@ -11,22 +11,22 @@ public abstract class EstadisticoPonderacion {
 	
 	public abstract void calcularEstadistico(float[][] array);
 	
-	private EstadisticoPonderacion getEstadistico(int estadistico) {
+	public EstadisticoPonderacion getEstadistico(int estadistico) {
 		switch (estadistico) {
 			case SI:
 				return new EstadisticoSI();
 		
 			case SCP:
-				return null;
+				return new EstadisticoSCP();
 		
 			case chi2:
-				return null;
+				return new EstadisticoCHI2();
 			
 			case Dice:
-				return null;
+				return new EstadisticoDice();
 			
 			case infogain:
-				return null;
+				return new EstadisticoInfoGain();
 		}
 		return null;
 	}

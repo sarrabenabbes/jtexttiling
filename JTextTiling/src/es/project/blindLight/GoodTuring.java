@@ -149,13 +149,13 @@ public class GoodTuring {
 	}
 	
 	private void calcularCoeficientesRecta() {
-		int size = arrayReales[0].length;
-		float[] x = new float[size];
-		float[] y = new float[size];
+		int size = arrayReales.length;
+		float[] x = new float[(size-1)];
+		float[] y = new float[(size-1)];
 		
-		for (int i = 0; i < size; i++) {
-			x[i] = arrayReales[1][i];
-			y[i] = arrayReales[2][i];
+		for (int i = 0; i < (size-1); i++) {
+			x[i] = arrayReales[i][1];
+			y[i] = arrayReales[i][2];
 		}
 
 		try {
@@ -264,10 +264,11 @@ public class GoodTuring {
 	}
 	
 	public String verArrayReales() {
-		String retorno = "Z\t\tlog r\t\tlog Z\t\tr*\t\tp";
+		//String retorno = "Z\t\tlog r\t\tlog Z\t\tr*\t\tp";
+		String retorno = "r*\t\tp";
 		for (int i = 0; i < arrayReales.length; i++) {
 			retorno += "\n";
-			for (int j = 0; j < arrayReales[0].length; j++)
+			for (int j = 3; j < arrayReales[0].length; j++)
 				retorno += arrayReales[i][j] + "\t\t";
 		}
 		return retorno;
