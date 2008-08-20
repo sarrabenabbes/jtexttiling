@@ -35,12 +35,11 @@ import es.project.utilidades.RectaRegresionException;
 import es.project.zip.CompresorZip;
 
 public class TestBD {
-	
 	public TestBD() {
 		long inicio = System.currentTimeMillis();
 		//this.pruebaTextTiling();
-		this.pruebaCompleta();
-		//this.blindLight();
+		//this.pruebaCompleta();
+		this.blindLight();
 		//this.pruebaQuickSort();
 		//this.pruebaRectaRegresion();
 		long finale = System.currentTimeMillis();
@@ -134,7 +133,7 @@ public class TestBD {
 		//bucle infinito por el quicksort
 		try {
 			OperacionesNGrama ong = new OperacionesNGrama();
-			ong.calcular("F:\\pruebasPFC\\blindlight\\unitaria\\gilmour.txt", 4);
+			ong.calcular("F:\\pruebasPFC\\blindlight\\unitaria\\crede.txt", 4);
 			ArrayList<NGrama> lista = ong.getListaNGramas();
 			GoodTuring gt = new GoodTuring(lista);
 			gt.componerPrimerVector();

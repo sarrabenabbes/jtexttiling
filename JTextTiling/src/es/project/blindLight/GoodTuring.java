@@ -129,32 +129,19 @@ public class GoodTuring {
 		for (int j = 0; j < arrayReales.length; j++) {
 			if (j == 0)
 				i = 0;
-			else i = arrayFrecuenciasFinal[j-1][0];
+			else i = arrayFrecuenciasFinal[(j-1)][0];
 			
 			if (j == (arrayReales.length - 1))
 				k = (2*j) - i;
-			else k = arrayFrecuenciasFinal[j+1][0];
+				//k = (2*j) - 1;
+			else k = arrayFrecuenciasFinal[(j+1)][0];
 			
-			//TODO revisar esto: AQUÍ ESTÁ LA CLAVE
-			try {
-				arrayReales[j][0] = (2*arrayFrecuenciasFinal[j][1])/(k-i);
-				
-				/* más soluciones de emergencia */
-				if (arrayReales[j][0] == 0)
-					arrayReales[j][0] = 1;
-				
-				arrayReales[j][1] = (float)Math.log10(arrayFrecuenciasFinal[j][0]);
-				arrayReales[j][2] = (float)Math.log10(arrayReales[j][0]);
-			} catch (ArithmeticException ae) {
-				ae.printStackTrace();
-				/*
-				 * ¿Qué hago cuando haya divisiones por 0?
-				 * ¿...y qué hago cuando tenga que calcular el logaritmo de 0? 
-				 */
-				//arrayReales[j][0] = 0;
-				/* solución de emergencia */
-				arrayReales[j][0] = 1;
-			}
+			int nj = arrayFrecuenciasFinal[j][1];
+			float numerador = (2 * nj);
+			float denominador = (k-i);
+			arrayReales[j][0] = (numerador/denominador);
+			arrayReales[j][1] = (float)Math.log10(arrayFrecuenciasFinal[j][0]);
+			arrayReales[j][2] = (float)Math.log10(arrayReales[j][0]);
 		}
 		
 		calcularCoeficientesRecta();
@@ -162,7 +149,7 @@ public class GoodTuring {
 	}
 	
 	private void calcularCoeficientesRecta() {
-		int size = arrayReales[1].length;
+		int size = arrayReales[0].length;
 		float[] x = new float[size];
 		float[] y = new float[size];
 		
