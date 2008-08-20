@@ -1,5 +1,7 @@
 package es.project.blindLight.estadisticos;
 
+import es.project.blindLight.NGrama;
+
 public abstract class EstadisticoPonderacion {
 	public static final int SI = 1;
 	public static final int SCP = 2;
@@ -10,6 +12,12 @@ public abstract class EstadisticoPonderacion {
 	protected EstadisticoPonderacion() {}
 	
 	public abstract void calcularEstadistico(float[][] array);
+	
+	public float calcularAvp(NGrama ngrama) {
+		float avp = 0.0f;
+		
+		return avp;
+	}
 	
 	public EstadisticoPonderacion getEstadistico(int estadistico) {
 		switch (estadistico) {

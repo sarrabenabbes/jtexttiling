@@ -38,7 +38,8 @@ public class TestBD {
 	public TestBD() {
 		long inicio = System.currentTimeMillis();
 		//this.pruebaTextTiling();
-		this.pruebaCompleta();
+		//this.pruebaCompleta();
+		this.descomponerNGramas();
 		//this.blindLight();
 		//this.pruebaQuickSort();
 		//this.pruebaRectaRegresion();
@@ -135,7 +136,6 @@ public class TestBD {
 	}
 	
 	private void blindLight() {
-		//bucle infinito por el quicksort
 		try {
 			OperacionesNGrama ong = new OperacionesNGrama();
 			ong.calcular("F:\\pruebasPFC\\blindlight\\unitaria\\pink-floyd-award.txt", 4);
@@ -150,6 +150,21 @@ public class TestBD {
 			ListaAArchivo.setFile(lista, "F:\\pruebasPFC\\blindlight\\unitaria\\salida\\salida.txt");
 			//System.out.println("N: " + gt.getN());
 			//System.out.println("P0: " + gt.getP0());
+			
+		} catch (NGramaException e) {
+			e.printStackTrace();
+		} 
+	}
+	
+	private void descomponerNGramas() {
+		try {
+			OperacionesNGrama ong = new OperacionesNGrama();
+			ong.calcular("F:\\pruebasPFC\\blindlight\\unitaria\\crede.txt", 4);
+			ArrayList<NGrama> lista = ong.getListaNGramas();
+			ong.descomponerLista(lista);
+			System.out.println(ong.getListaNGramas());
+			System.out.println("\n" + ong.getListaDescomposiciones());
+			ListaAArchivo.setFile(lista, "F:\\pruebasPFC\\blindlight\\unitaria\\salida\\salida.txt");
 			
 		} catch (NGramaException e) {
 			e.printStackTrace();

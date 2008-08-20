@@ -10,6 +10,7 @@ import es.project.utilidades.ArchivoATexto;
 public class OperacionesNGrama {
 	private ArrayList<NGrama> listaNGramas;
 	private int sizeInicialLista;
+	private ArrayList<String> listaDescomposiciones;
 	
 	public void calcular(String ruta, int n) throws NGramaException {
 		this.calcularNGramas(ruta, n);
@@ -75,6 +76,29 @@ public class OperacionesNGrama {
 		
 		this.setListaNGramas(listaAuxiliar);
 	}
+	
+	public void descomponerLista(ArrayList<NGrama> lista) {
+		listaDescomposiciones = new ArrayList<String>();
+		Iterator<NGrama> i = lista.iterator();
+		
+		while (i.hasNext()) 
+			this.descomponerNGrama(i.next());
+		
+		//TODO falta calcular la frecuencia relativa de cada fragmento
+	}
+	
+	private void descomponerNGrama(NGrama ngrama) {
+		int longitud = ngrama.getLongitud();
+		String texto = ngrama.getTexto();
+		String fragmentoInicial, fragmentoFinal = "";
+		
+		for (int i = 1; i < longitud; i++) {
+			fragmentoInicial = texto.substring(0, i);
+			fragmentoFinal = texto.substring(i, (longitud));
+			listaDescomposiciones.add(fragmentoInicial);
+			listaDescomposiciones.add(fragmentoFinal);
+		}
+	}
 
 	public ArrayList<NGrama> getListaNGramas() {
 		return listaNGramas;
@@ -90,5 +114,13 @@ public class OperacionesNGrama {
 
 	public void setSizeInicialLista(int sizeInicialLista) {
 		this.sizeInicialLista = sizeInicialLista;
+	}
+	
+	public ArrayList<String> getListaDescomposiciones() {
+		return listaDescomposiciones;
+	}
+	
+	public void setListaDescomposiciones(ArrayList<String> listaDescomposiciones) {
+		this.listaDescomposiciones = listaDescomposiciones;
 	}
 }

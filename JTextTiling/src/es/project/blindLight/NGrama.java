@@ -64,6 +64,10 @@ public class NGrama {
 	public static void setN(int valor) {
 		n = valor;
 	}
+	
+	public int getLongitud() {
+		return this.getTexto().length();
+	}
 
 	public String getTexto() {
 		return texto;
