@@ -233,6 +233,38 @@ public class GoodTuring {
 	}
 	/* </SEGUNDO VECTOR DEL MÉTODO BLINDLIGHT> */
 	
+	/**
+	 * asigna a cada ngrama del texto su probabilidad, una vez calculado el estimador
+	 * SGT
+	 */
+	public ArrayList<NGrama> cruzarListas(ArrayList<NGrama> lista) throws NGramaException{
+		Iterator<NGrama> i = lista.iterator();
+		ArrayList<NGrama> listaNueva = new ArrayList<NGrama>();
+		NGrama nuevo;
+		
+		while (i.hasNext()) {
+			NGrama aux = i.next();
+			float f = buscarProbabilidad(aux);
+			nuevo = new NGrama(aux.getTexto(),f);
+			listaNueva.add(nuevo);
+		}
+		
+		return listaNueva;
+	}
+	
+	private float buscarProbabilidad(NGrama aux) {
+		int frecuenciaAbsoluta = aux.getFrecuenciaAbsoluta();
+		float probabilidadEstimada = 0.0f;
+		
+		for (int i = 0; i < arrayFrecuenciasFinal.length; i++)
+			if (arrayFrecuenciasFinal[i][0] == frecuenciaAbsoluta) {
+				probabilidadEstimada = arrayReales[i][4];
+				i = (arrayFrecuenciasFinal.length + 1);
+			}
+		
+		return probabilidadEstimada;
+	}
+	
 	public int getN() {
 		return N;
 	}

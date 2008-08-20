@@ -38,8 +38,8 @@ public class TestBD {
 	public TestBD() {
 		long inicio = System.currentTimeMillis();
 		//this.pruebaTextTiling();
-		//this.pruebaCompleta();
-		this.blindLight();
+		this.pruebaCompleta();
+		//this.blindLight();
 		//this.pruebaQuickSort();
 		//this.pruebaRectaRegresion();
 		//float[][]p =  new float[][]{{5,1,5,4,1},{3,2,4,5,6}};
@@ -108,7 +108,10 @@ public class TestBD {
 			GoodTuring gt = new GoodTuring(lista);
 			gt.componerPrimerVector();
 			gt.componerSegundoVector();
+			//System.out.println(gt.verArrayFrecuencias());
 			System.out.println(gt.verArrayReales());
+			ArrayList<NGrama> listaNueva = gt.cruzarListas(lista);
+			//System.out.println(listaNueva);
 			ListaAArchivo.setFile(lista, "F:\\pruebasPFC\\blindlight\\grupo\\salida\\salida.txt");
 			System.out.println("N: " + gt.getN());
 			System.out.println("P0: " + gt.getP0());
@@ -135,13 +138,15 @@ public class TestBD {
 		//bucle infinito por el quicksort
 		try {
 			OperacionesNGrama ong = new OperacionesNGrama();
-			ong.calcular("F:\\pruebasPFC\\blindlight\\unitaria\\crede.txt", 4);
+			ong.calcular("F:\\pruebasPFC\\blindlight\\unitaria\\pink-floyd-award.txt", 4);
 			ArrayList<NGrama> lista = ong.getListaNGramas();
 			GoodTuring gt = new GoodTuring(lista);
 			gt.componerPrimerVector();
 			gt.componerSegundoVector();
 			//System.out.println(gt.verArrayFrecuencias());
 			System.out.println(gt.verArrayReales());
+			ArrayList<NGrama> listaNueva = gt.cruzarListas(lista);
+			System.out.println("\n" + listaNueva);
 			ListaAArchivo.setFile(lista, "F:\\pruebasPFC\\blindlight\\unitaria\\salida\\salida.txt");
 			//System.out.println("N: " + gt.getN());
 			//System.out.println("P0: " + gt.getP0());

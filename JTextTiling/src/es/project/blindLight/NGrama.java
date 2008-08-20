@@ -3,7 +3,7 @@ package es.project.blindLight;
 public class NGrama {
 	
 	private String texto;
-	private float frecuenciaRelativa;
+	private float frecuenciaRelativa, probabilidadEstimada;
 	private int frecuenciaAbsoluta;
 	private static int n = -1;
 	
@@ -16,16 +16,21 @@ public class NGrama {
 		}
 	}
 	
-	public NGrama(String texto, float frecuenciaRelativa) throws NGramaException{
+	/*public NGrama(String texto, float frecuenciaRelativa) throws NGramaException{
 		this(texto);
 		this.frecuenciaRelativa = frecuenciaRelativa;
-	}
+	}*/
 	
 	public NGrama(String texto, float frecuenciaRelativa, int frecuenciaAbsoluta) 
 		throws NGramaException{
 		
 		this(texto, frecuenciaRelativa);
 		this.frecuenciaAbsoluta = frecuenciaAbsoluta;
+	}
+	
+	public NGrama(String texto, float probabilidadEstimada) throws NGramaException {
+		this(texto);
+		this.probabilidadEstimada = probabilidadEstimada;
 	}
 	
 	public void aumentarFrecuenciaAbsoluta() {
@@ -48,7 +53,8 @@ public class NGrama {
 	}
 	
 	public String toString() {
-		return this.getTexto() + "|" + this.getFrecuenciaAbsoluta() + "|" + this.getFrecuenciaRelativa();
+		return this.getTexto() + "|" + this.getFrecuenciaAbsoluta() + "|" + this.getFrecuenciaRelativa() +
+		"|" + this.getProbabilidadEstimada();
 	}
 
 	public static int getN() {
@@ -81,5 +87,13 @@ public class NGrama {
 
 	public void setFrecuenciaRelativa(float frecuenciaRelativa) {
 		this.frecuenciaRelativa = frecuenciaRelativa;
+	}
+
+	public float getProbabilidadEstimada() {
+		return probabilidadEstimada;
+	}
+
+	public void setProbabilidadEstimada(float probabilidadEstimada) {
+		this.probabilidadEstimada = probabilidadEstimada;
 	}
 }
