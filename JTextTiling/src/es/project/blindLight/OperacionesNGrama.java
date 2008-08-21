@@ -9,14 +9,18 @@ import es.project.utilidades.ArchivoATexto;
 
 public class OperacionesNGrama {
 	private ArrayList<NGrama> listaNGramas;
-	private int sizeInicialLista;
-	private ArrayList<String> listaDescomposiciones;
+	private int sizeInicialLista, sizeInicialDescomposiciones;
+	private ArrayList<DescomposicionNGrama> listaDescomposiciones;
 	
 	public void calcular(String ruta, int n) throws NGramaException {
 		this.calcularNGramas(ruta, n);
 		this.calcularFrecuenciasAbsolutas();
 		this.calcularFrecuenciasRelativas();
+		this.descomponerLista(listaNGramas);
+		this.calcularFrecuenciasAbsolutasDescomposiciones();
+		this.calcularFrecuenciasRelativasDescomposiciones();
 	}
+	
 	//TODO documentar
 	private void calcularNGramas(String ruta, int n) throws NGramaException {
 		NGrama.setN(n);
@@ -78,23 +82,59 @@ public class OperacionesNGrama {
 	}
 	
 	public void descomponerLista(ArrayList<NGrama> lista) {
-		listaDescomposiciones = new ArrayList<String>();
+		listaDescomposiciones = new ArrayList<DescomposicionNGrama>();
 		Iterator<NGrama> i = lista.iterator();
 		
 		while (i.hasNext()) 
 			this.descomponerNGrama(i.next());
+	
+		sizeInicialDescomposiciones = listaDescomposiciones.size();
+	}
+	
+	private void calcularFrecuenciasAbsolutasDescomposiciones() {
+		ArrayList<DescomposicionNGrama> listaAuxiliar = new ArrayList<DescomposicionNGrama>();
 		
-		//TODO falta calcular la frecuencia relativa de cada fragmento
+		for (int i = 0; i < listaDescomposiciones.size(); i++) {
+			DescomposicionNGrama aux = listaDescomposiciones.get(i);
+			if (!listaAuxiliar.contains(aux))
+				listaAuxiliar.add(aux);
+			else 
+				this.aumentarFrecuenciaDescomposicion(listaAuxiliar, listaDescomposiciones.get(i));
+		}
+		
+		this.setListaDescomposiciones(listaAuxiliar);
+	}
+	
+	private void aumentarFrecuenciaDescomposicion(ArrayList<DescomposicionNGrama> lista, 
+			DescomposicionNGrama descNgrama) {
+		
+		for (int i = 0; i < lista.size(); i++) 
+			if (lista.get(i).equals(descNgrama))
+				lista.get(i).aumentarFrecuenciaAbsoluta();
+	}
+	
+	private void calcularFrecuenciasRelativasDescomposiciones() {
+		ArrayList<DescomposicionNGrama> listaAuxiliar = new ArrayList<DescomposicionNGrama>();
+		Iterator<DescomposicionNGrama> i = listaDescomposiciones.iterator();
+		int size = sizeInicialDescomposiciones;
+		
+		while (i.hasNext()) {
+			DescomposicionNGrama aux = i.next();
+			aux.setFrecuenciaRelativa(aux.getFrecuenciaAbsoluta()/(float)size);
+			listaAuxiliar.add(aux);
+		}
+		
+		this.setListaDescomposiciones(listaAuxiliar);
 	}
 	
 	private void descomponerNGrama(NGrama ngrama) {
 		int longitud = ngrama.getLongitud();
 		String texto = ngrama.getTexto();
-		String fragmentoInicial, fragmentoFinal = "";
+		DescomposicionNGrama fragmentoInicial, fragmentoFinal;
 		
 		for (int i = 1; i < longitud; i++) {
-			fragmentoInicial = texto.substring(0, i);
-			fragmentoFinal = texto.substring(i, (longitud));
+			fragmentoInicial = new DescomposicionNGrama(texto.substring(0, i));
+			fragmentoFinal = new DescomposicionNGrama(texto.substring(i, (longitud)));
 			listaDescomposiciones.add(fragmentoInicial);
 			listaDescomposiciones.add(fragmentoFinal);
 		}
@@ -116,11 +156,11 @@ public class OperacionesNGrama {
 		this.sizeInicialLista = sizeInicialLista;
 	}
 	
-	public ArrayList<String> getListaDescomposiciones() {
+	public ArrayList<DescomposicionNGrama> getListaDescomposiciones() {
 		return listaDescomposiciones;
 	}
 	
-	public void setListaDescomposiciones(ArrayList<String> listaDescomposiciones) {
+	public void setListaDescomposiciones(ArrayList<DescomposicionNGrama> listaDescomposiciones) {
 		this.listaDescomposiciones = listaDescomposiciones;
 	}
 }
