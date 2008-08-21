@@ -19,11 +19,14 @@ import uk.ac.man.cs.choif.nlp.seg.linear.texttile.TextTiling;
 
 import es.project.algoritmo.configuracion.ConfigAlgoritmo;
 import es.project.bd.objetos.Usuario;
+import es.project.blindLight.DescomposicionNGrama;
 import es.project.blindLight.GoodTuring;
 import es.project.blindLight.ListaAArchivo;
 import es.project.blindLight.NGrama;
 import es.project.blindLight.NGramaException;
 import es.project.blindLight.OperacionesNGrama;
+import es.project.blindLight.estadisticos.EstadisticoPonderacion;
+import es.project.blindLight.estadisticos.EstadisticoSI;
 import es.project.borrarDirectorios.BorrarDirectorio;
 import es.project.ficheros.filtros.FiltroDirectorios;
 import es.project.mail.Mail;
@@ -39,8 +42,8 @@ public class TestBD {
 		long inicio = System.currentTimeMillis();
 		//this.pruebaTextTiling();
 		//this.pruebaCompleta();
-		this.descomponerNGramas();
-		//this.blindLight();
+		//this.descomponerNGramas();
+		this.blindLight();
 		//this.pruebaQuickSort();
 		//this.pruebaRectaRegresion();
 		//float[][]p =  new float[][]{{5,1,5,4,1},{3,2,4,5,6}};
@@ -138,16 +141,35 @@ public class TestBD {
 	private void blindLight() {
 		try {
 			OperacionesNGrama ong = new OperacionesNGrama();
-			ong.calcular("F:\\pruebasPFC\\blindlight\\unitaria\\pink-floyd-award.txt", 4);
+			ong.calcular("F:\\pruebasPFC\\blindlight\\unitaria\\gilmour.txt", 4);
 			ArrayList<NGrama> lista = ong.getListaNGramas();
+			ArrayList<DescomposicionNGrama> listaDesc = ong.getListaDescomposiciones();
+			
 			GoodTuring gt = new GoodTuring(lista);
 			gt.componerPrimerVector();
 			gt.componerSegundoVector();
-			//System.out.println(gt.verArrayFrecuencias());
-			System.out.println(gt.verArrayReales());
+			
 			ArrayList<NGrama> listaNueva = gt.cruzarListas(lista);
-			System.out.println("\n" + listaNueva);
-			ListaAArchivo.setFile(lista, "F:\\pruebasPFC\\blindlight\\unitaria\\salida\\salida.txt");
+			NGrama davi = lista.get(0);
+			int[][] arrayFrecuencias = gt.getArrayFrecuencias();
+			float[][] arrayReales = gt.getArrayReales();
+			int frecAbs = davi.getFrecuenciaAbsoluta();
+			float probabilidad = 0.0f;
+			
+			for (int i = 0; i < arrayFrecuencias.length; i++)
+				if (arrayFrecuencias[i][0] == frecAbs) {
+					probabilidad = arrayReales[i][4];
+					i = (arrayFrecuencias.length + 1);
+				}
+			
+			System.out.println("prob estimada: " + probabilidad);
+			EstadisticoPonderacion ep = new EstadisticoSI();
+			
+			//CALCULA LA SIGNIFICATIVIDAD DEL NGRAMA QUE RECIBE COMO PARÁMETRO
+			System.out.println("avp: " + ep.calcularAvp(davi, listaDesc));
+			System.out.println("SI_f: " + ep.calcularEstadistico(davi, probabilidad, listaDesc));
+			
+			ListaAArchivo.setFile(listaNueva, "F:\\pruebasPFC\\blindlight\\unitaria\\salida\\salida.txt");
 			//System.out.println("N: " + gt.getN());
 			//System.out.println("P0: " + gt.getP0());
 			
@@ -160,11 +182,13 @@ public class TestBD {
 		try {
 			OperacionesNGrama ong = new OperacionesNGrama();
 			ong.calcular("F:\\pruebasPFC\\blindlight\\unitaria\\crede.txt", 4);
-			ArrayList<NGrama> lista = ong.getListaNGramas();
-			ong.descomponerLista(lista);
-			System.out.println(ong.getListaNGramas());
-			System.out.println("\n" + ong.getListaDescomposiciones());
-			ListaAArchivo.setFile(lista, "F:\\pruebasPFC\\blindlight\\unitaria\\salida\\salida.txt");
+			ArrayList<DescomposicionNGrama> listaDesc = ong.getListaDescomposiciones();
+			System.out.println(listaDesc);
+		
+			EstadisticoPonderacion ep = new EstadisticoSI();
+			NGrama.setN(4);
+			NGrama crede = new NGrama("Cred");
+			System.out.println(ep.calcularAvp(crede, listaDesc));
 			
 		} catch (NGramaException e) {
 			e.printStackTrace();

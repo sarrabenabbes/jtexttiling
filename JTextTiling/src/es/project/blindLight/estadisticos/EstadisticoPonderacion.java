@@ -15,7 +15,8 @@ public abstract class EstadisticoPonderacion {
 
 	protected EstadisticoPonderacion() {}
 	
-	public abstract void calcularEstadistico(NGrama ngrama, float probabilidad);
+	public abstract float calcularEstadistico(NGrama ngrama, 
+			float probabilidad, ArrayList<DescomposicionNGrama> listaDesc);
 	
 	public float calcularAvp(NGrama ngrama, ArrayList<DescomposicionNGrama> listaDesc) {
 		float avp = 0.0f;
