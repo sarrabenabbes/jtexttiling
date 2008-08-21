@@ -18,7 +18,7 @@ public abstract class EstadisticoPonderacion {
 	public abstract float calcularEstadistico(NGrama ngrama, 
 			float probabilidad, ArrayList<DescomposicionNGrama> listaDesc);
 	
-	public float calcularAvp(NGrama ngrama, ArrayList<DescomposicionNGrama> listaDesc) {
+	protected float calcularAvp(NGrama ngrama, ArrayList<DescomposicionNGrama> listaDesc) {
 		float avp = 0.0f;
 		int longitud = (ngrama.getLongitud() - 1);
 		LinkedList<Float> listaParesProbabilidad = getParesProbabilidad(ngrama, listaDesc);
@@ -61,7 +61,7 @@ public abstract class EstadisticoPonderacion {
 		return retorno;
 	}
 	
-	public EstadisticoPonderacion getEstadistico(int estadistico) {
+	public static EstadisticoPonderacion getEstadistico(int estadistico) {
 		switch (estadistico) {
 			case SI:
 				return new EstadisticoSI();

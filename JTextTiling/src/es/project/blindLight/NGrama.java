@@ -3,7 +3,7 @@ package es.project.blindLight;
 public class NGrama {
 	
 	private String texto;
-	private float frecuenciaRelativa, probabilidadEstimada;
+	private float frecuenciaRelativa, probabilidadEstimada, significatividad;
 	private int frecuenciaAbsoluta;
 	private static int n = -1;
 	
@@ -15,11 +15,6 @@ public class NGrama {
 			this.frecuenciaAbsoluta = 1;
 		}
 	}
-	
-	/*public NGrama(String texto, float frecuenciaRelativa) throws NGramaException{
-		this(texto);
-		this.frecuenciaRelativa = frecuenciaRelativa;
-	}*/
 	
 	public NGrama(String texto, float frecuenciaRelativa, int frecuenciaAbsoluta) 
 		throws NGramaException{
@@ -52,9 +47,13 @@ public class NGrama {
 		return this.getTexto().hashCode();
 	}
 	
-	public String toString() {
+	public String verFrecuencias() {
 		return this.getTexto() + "|" + this.getFrecuenciaAbsoluta() + "|" + this.getFrecuenciaRelativa() +
 		"|" + this.getProbabilidadEstimada();
+	}
+	
+	public String toString() {
+		return this.getTexto() + "|" + this.getSignificatividad();
 	}
 
 	public static int getN() {
@@ -99,5 +98,13 @@ public class NGrama {
 
 	public void setProbabilidadEstimada(float probabilidadEstimada) {
 		this.probabilidadEstimada = probabilidadEstimada;
+	}
+
+	public float getSignificatividad() {
+		return significatividad;
+	}
+
+	public void setSignificatividad(float significatividad) {
+		this.significatividad = significatividad;
 	}
 }

@@ -8,6 +8,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.zip.ZipEntry;
@@ -19,6 +20,7 @@ import uk.ac.man.cs.choif.nlp.seg.linear.texttile.TextTiling;
 
 import es.project.algoritmo.configuracion.ConfigAlgoritmo;
 import es.project.bd.objetos.Usuario;
+import es.project.blindLight.AlgoritmoBlindLight;
 import es.project.blindLight.DescomposicionNGrama;
 import es.project.blindLight.GoodTuring;
 import es.project.blindLight.ListaAArchivo;
@@ -43,7 +45,8 @@ public class TestBD {
 		//this.pruebaTextTiling();
 		//this.pruebaCompleta();
 		//this.descomponerNGramas();
-		this.blindLight();
+		//this.blindLight();
+		this.pruebaAlgoritmo();
 		//this.pruebaQuickSort();
 		//this.pruebaRectaRegresion();
 		//float[][]p =  new float[][]{{5,1,5,4,1},{3,2,4,5,6}};
@@ -51,6 +54,29 @@ public class TestBD {
 		long finale = System.currentTimeMillis();
 		
 		System.out.println("tiempo: " + (finale - inicio) + " ms");
+	}
+	
+	private void pruebaAlgoritmo() {
+		AlgoritmoBlindLight abl = new AlgoritmoBlindLight("F:\\pruebasPFC\\blindlight\\unitaria\\gilmour.txt"
+				,4,EstadisticoPonderacion.SI);
+		
+		try {
+			abl.iniciarAlgoritmo();
+			LinkedList<NGrama> lista = abl.getListaSalida();
+			/*Iterator<NGrama> i = lista.iterator();
+			NGrama aux;
+			
+			while (i.hasNext()) {
+				aux = i.next();
+				System.out.println(aux.getTexto() + "|" + aux.getSignificatividad());
+			}*/
+			
+			ListaAArchivo.setFile(lista, "F:\\pruebasPFC\\blindlight\\unitaria\\salida\\signif.txt");
+				
+		} catch (NGramaException e) {
+			e.printStackTrace();
+		}
+		
 	}
 	
 	private void pruebaRectaRegresion() {
@@ -150,28 +176,16 @@ public class TestBD {
 			gt.componerSegundoVector();
 			
 			ArrayList<NGrama> listaNueva = gt.cruzarListas(lista);
-			NGrama davi = lista.get(0);
-			int[][] arrayFrecuencias = gt.getArrayFrecuencias();
-			float[][] arrayReales = gt.getArrayReales();
-			int frecAbs = davi.getFrecuenciaAbsoluta();
-			float probabilidad = 0.0f;
-			
-			for (int i = 0; i < arrayFrecuencias.length; i++)
-				if (arrayFrecuencias[i][0] == frecAbs) {
-					probabilidad = arrayReales[i][4];
-					i = (arrayFrecuencias.length + 1);
-				}
+			NGrama davi = listaNueva.get(0);
+			float probabilidad = davi.getProbabilidadEstimada();
 			
 			System.out.println("prob estimada: " + probabilidad);
 			EstadisticoPonderacion ep = new EstadisticoSI();
 			
 			//CALCULA LA SIGNIFICATIVIDAD DEL NGRAMA QUE RECIBE COMO PARÁMETRO
-			System.out.println("avp: " + ep.calcularAvp(davi, listaDesc));
 			System.out.println("SI_f: " + ep.calcularEstadistico(davi, probabilidad, listaDesc));
 			
-			ListaAArchivo.setFile(listaNueva, "F:\\pruebasPFC\\blindlight\\unitaria\\salida\\salida.txt");
-			//System.out.println("N: " + gt.getN());
-			//System.out.println("P0: " + gt.getP0());
+			ListaAArchivo.setFile(lista, "F:\\pruebasPFC\\blindlight\\unitaria\\salida\\salida.txt");
 			
 		} catch (NGramaException e) {
 			e.printStackTrace();
@@ -187,8 +201,7 @@ public class TestBD {
 		
 			EstadisticoPonderacion ep = new EstadisticoSI();
 			NGrama.setN(4);
-			NGrama crede = new NGrama("Cred");
-			System.out.println(ep.calcularAvp(crede, listaDesc));
+			NGrama crede = new NGrama("Cred");;
 			
 		} catch (NGramaException e) {
 			e.printStackTrace();
