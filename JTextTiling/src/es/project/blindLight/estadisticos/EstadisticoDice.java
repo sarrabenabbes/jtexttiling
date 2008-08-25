@@ -7,7 +7,7 @@ import es.project.blindLight.NGrama;
 
 public class EstadisticoDice extends EstadisticoPonderacion {
 	
-	public EstadisticoDice () {
+	protected EstadisticoDice () {
 		super();
 	}
 	

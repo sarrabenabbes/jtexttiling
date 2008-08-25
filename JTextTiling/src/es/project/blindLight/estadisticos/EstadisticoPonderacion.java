@@ -86,7 +86,6 @@ public abstract class EstadisticoPonderacion {
 	
 	public float getSumaFrecuencias (NGrama ngrama, ArrayList<DescomposicionNGrama> listaDesc, boolean esAvx) {
 		float sumaFrecuencias = 0;
-		int inicio;
 		int longitud = ngrama.getLongitud();
 		String texto = ngrama.getTexto();
 		DescomposicionNGrama desc;
@@ -116,7 +115,7 @@ public abstract class EstadisticoPonderacion {
 				return new EstadisticoDice();
 			
 			case infogain:
-				return null;
+				return new EstadisticoInfoGain();
 		}
 		return null;
 	}
