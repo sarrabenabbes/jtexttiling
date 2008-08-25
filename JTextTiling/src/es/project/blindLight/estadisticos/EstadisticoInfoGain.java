@@ -14,8 +14,8 @@ public class EstadisticoInfoGain extends EstadisticoPonderacion {
 	public float calcularEstadistico(NGrama ngrama, 
 			float probabilidad, ArrayList<DescomposicionNGrama> listaDesc) {
 		
-		//TODO por aquí!!
 		float retorno = 0.0f;
+		int longitud = (ngrama.getLongitud() - 1);
 		return retorno;
 	}
 }
