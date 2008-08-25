@@ -113,7 +113,7 @@ public abstract class EstadisticoPonderacion {
 				return new EstadisticoCHI2();
 			
 			case Dice:
-				return null;
+				return new EstadisticoDice();
 			
 			case infogain:
 				return null;

@@ -57,7 +57,7 @@ public class TestBD {
 	}
 	
 	private void pruebaAlgoritmo() {
-		EstadisticoPonderacion ep = EstadisticoPonderacion.getEstadistico(EstadisticoPonderacion.chi2);
+		EstadisticoPonderacion ep = EstadisticoPonderacion.getEstadistico(EstadisticoPonderacion.Dice);
 		AlgoritmoBlindLight abl = new AlgoritmoBlindLight("F:\\pruebasPFC\\blindlight\\unitaria\\gilmour.txt"
 				,4,ep);
 		
@@ -72,7 +72,7 @@ public class TestBD {
 				System.out.println(aux.getTexto() + "|" + aux.getSignificatividad());
 			}*/
 			
-			ListaAArchivo.setFile(lista, "F:\\pruebasPFC\\blindlight\\unitaria\\salida\\signif_CHI2.txt");
+			ListaAArchivo.setFile(lista, "F:\\pruebasPFC\\blindlight\\unitaria\\salida\\signif_Dice.txt");
 				
 		} catch (NGramaException e) {
 			e.printStackTrace();
