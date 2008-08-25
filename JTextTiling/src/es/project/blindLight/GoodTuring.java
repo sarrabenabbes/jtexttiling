@@ -245,7 +245,8 @@ public class GoodTuring {
 		while (i.hasNext()) {
 			NGrama aux = i.next();
 			float f = buscarProbabilidad(aux);
-			nuevo = new NGrama(aux.getTexto(),f);
+			nuevo = aux;
+			nuevo.setProbabilidadEstimada(f);
 			listaNueva.add(nuevo);
 		}
 		

@@ -57,8 +57,9 @@ public class TestBD {
 	}
 	
 	private void pruebaAlgoritmo() {
+		EstadisticoPonderacion ep = EstadisticoPonderacion.getEstadistico(EstadisticoPonderacion.chi2);
 		AlgoritmoBlindLight abl = new AlgoritmoBlindLight("F:\\pruebasPFC\\blindlight\\unitaria\\gilmour.txt"
-				,4,EstadisticoPonderacion.SI);
+				,4,ep);
 		
 		try {
 			abl.iniciarAlgoritmo();
@@ -71,7 +72,7 @@ public class TestBD {
 				System.out.println(aux.getTexto() + "|" + aux.getSignificatividad());
 			}*/
 			
-			ListaAArchivo.setFile(lista, "F:\\pruebasPFC\\blindlight\\unitaria\\salida\\signif.txt");
+			ListaAArchivo.setFile(lista, "F:\\pruebasPFC\\blindlight\\unitaria\\salida\\signif_CHI2.txt");
 				
 		} catch (NGramaException e) {
 			e.printStackTrace();
@@ -180,7 +181,7 @@ public class TestBD {
 			float probabilidad = davi.getProbabilidadEstimada();
 			
 			System.out.println("prob estimada: " + probabilidad);
-			EstadisticoPonderacion ep = new EstadisticoSI();
+			EstadisticoPonderacion ep = EstadisticoPonderacion.getEstadistico(EstadisticoPonderacion.SI);
 			
 			//CALCULA LA SIGNIFICATIVIDAD DEL NGRAMA QUE RECIBE COMO PARÁMETRO
 			System.out.println("SI_f: " + ep.calcularEstadistico(davi, probabilidad, listaDesc));
@@ -199,7 +200,7 @@ public class TestBD {
 			ArrayList<DescomposicionNGrama> listaDesc = ong.getListaDescomposiciones();
 			System.out.println(listaDesc);
 		
-			EstadisticoPonderacion ep = new EstadisticoSI();
+			EstadisticoPonderacion ep = EstadisticoPonderacion.getEstadistico(EstadisticoPonderacion.SI);
 			NGrama.setN(4);
 			NGrama crede = new NGrama("Cred");;
 			

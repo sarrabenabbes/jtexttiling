@@ -19,15 +19,15 @@ public class AlgoritmoBlindLight {
 	private ArrayList<DescomposicionNGrama> listaDescomposiciones;
 	private LinkedList<NGrama> listaSalida;
 	
-	public AlgoritmoBlindLight(String rutaDirectorio, int sizeNGrama, int estadistico) {
+	public AlgoritmoBlindLight(String rutaDirectorio, int sizeNGrama, EstadisticoPonderacion ep) {
 		this.ruta = rutaDirectorio;
 		this.sizeNGrama = sizeNGrama;
 		ong = new OperacionesNGrama();
-		ep = EstadisticoPonderacion.getEstadistico(estadistico);
+		this.ep = ep;
 	}
 	
 	/**
-	 * supuestamente aquí ya tenemos una lista de los ngramas con sus probabilidades estimadas
+	 * al acabar aquí ya tenemos una lista de los ngramas con sus probabilidades estimadas
 	 * mediante Simple Good-Turing
 	 * @throws NGramaException
 	 */
@@ -39,6 +39,7 @@ public class AlgoritmoBlindLight {
 		gt.componerSegundoVector();
 		
 		listaNGramas = gt.cruzarListas(ong.getListaNGramas());
+		ep.setN(listaNGramas.size());
 		this.aplicarEstadistico();
 	}
 	
