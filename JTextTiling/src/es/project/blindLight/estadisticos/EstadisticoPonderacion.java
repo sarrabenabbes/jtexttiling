@@ -51,7 +51,7 @@ public abstract class EstadisticoPonderacion {
 		return retorno;
 	}
 	
-	private float buscarCaracteristica(DescomposicionNGrama desc, ArrayList<DescomposicionNGrama> listaDesc,
+	protected float buscarCaracteristica(DescomposicionNGrama desc, ArrayList<DescomposicionNGrama> listaDesc,
 			boolean frecRelativa) {
 		float retorno = 0.0f;
 		for (int i = 0; i < listaDesc.size(); i++) {

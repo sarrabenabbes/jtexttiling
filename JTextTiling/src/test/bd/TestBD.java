@@ -43,10 +43,10 @@ public class TestBD {
 	public TestBD() {
 		long inicio = System.currentTimeMillis();
 		//this.pruebaTextTiling();
-		//this.pruebaCompleta();
+		this.pruebaCompleta();
 		//this.descomponerNGramas();
 		//this.blindLight();
-		this.pruebaAlgoritmo();
+		//this.pruebaAlgoritmo();
 		//this.pruebaQuickSort();
 		//this.pruebaRectaRegresion();
 		//float[][]p =  new float[][]{{5,1,5,4,1},{3,2,4,5,6}};
@@ -57,7 +57,7 @@ public class TestBD {
 	}
 	
 	private void pruebaAlgoritmo() {
-		EstadisticoPonderacion ep = EstadisticoPonderacion.getEstadistico(EstadisticoPonderacion.Dice);
+		EstadisticoPonderacion ep = EstadisticoPonderacion.getEstadistico(EstadisticoPonderacion.infogain);
 		AlgoritmoBlindLight abl = new AlgoritmoBlindLight("F:\\pruebasPFC\\blindlight\\unitaria\\gilmour.txt"
 				,4,ep);
 		
@@ -72,7 +72,7 @@ public class TestBD {
 				System.out.println(aux.getTexto() + "|" + aux.getSignificatividad());
 			}*/
 			
-			ListaAArchivo.setFile(lista, "F:\\pruebasPFC\\blindlight\\unitaria\\salida\\signif_Dice.txt");
+			ListaAArchivo.setFile(lista, "F:\\pruebasPFC\\blindlight\\unitaria\\salida\\signif_Info_1.txt");
 				
 		} catch (NGramaException e) {
 			e.printStackTrace();
@@ -132,21 +132,24 @@ public class TestBD {
 			TextTiling.main(args);
 		}
 		
+		EstadisticoPonderacion ep = EstadisticoPonderacion.getEstadistico(EstadisticoPonderacion.SI);
+		AlgoritmoBlindLight abl = new AlgoritmoBlindLight("F:\\pruebasPFC\\blindlight\\grupo\\texttiling\\"
+				,4,ep);
+		
+		//int count = 5;
 		try {
-			OperacionesNGrama ong = new OperacionesNGrama();
-			ong.calcular("F:\\pruebasPFC\\blindlight\\grupo\\texttiling", 4);
-			ArrayList<NGrama> lista = ong.getListaNGramas();
-			GoodTuring gt = new GoodTuring(lista);
-			gt.componerPrimerVector();
-			gt.componerSegundoVector();
-			//System.out.println(gt.verArrayFrecuencias());
-			System.out.println(gt.verArrayReales());
-			ArrayList<NGrama> listaNueva = gt.cruzarListas(lista);
-			//System.out.println(listaNueva);
-			ListaAArchivo.setFile(lista, "F:\\pruebasPFC\\blindlight\\grupo\\salida\\salida.txt");
-			System.out.println("N: " + gt.getN());
-			System.out.println("P0: " + gt.getP0());
+			abl.iniciarAlgoritmo();
+			LinkedList<NGrama> lista = abl.getListaSalida();
+			/*Iterator<NGrama> i = lista.iterator();
+			NGrama aux;
 			
+			while (i.hasNext()) {
+				aux = i.next();
+				System.out.println(aux.getTexto() + "|" + aux.getSignificatividad());
+			}*/
+			
+			//ListaAArchivo.setFile(lista, "F:\\pruebasPFC\\blindlight\\grupo\\salida\\signif_CHI2_" +  count + ".txt");
+				
 		} catch (NGramaException e) {
 			e.printStackTrace();
 		}
