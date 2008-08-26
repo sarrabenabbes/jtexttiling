@@ -47,10 +47,10 @@ public class OperacionesNGrama {
 		sizeInicialLista = ft.getSizeLista();
 	}
 	
-	public LinkedList<NGrama> asignarPesoAPasaje(ArrayList<NGrama> listaPesos, ArrayList<NGrama> nGramasPasaje) {
+	public ArrayList<NGrama> asignarPesoAPasaje(ArrayList<NGrama> listaPesos, ArrayList<NGrama> nGramasPasaje) {
 		Iterator<NGrama> i = nGramasPasaje.iterator();
 		NGrama aux;
-		LinkedList<NGrama> listaSalida = new LinkedList<NGrama>();
+		ArrayList<NGrama> listaSalida = new ArrayList<NGrama>();
 		
 		while (i.hasNext()) {
 			aux = i.next();

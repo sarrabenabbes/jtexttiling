@@ -2,6 +2,7 @@ package es.project.blindLight;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.LinkedList;
 
 import es.project.blindLight.estadisticos.EstadisticoPonderacion;
 
@@ -40,6 +41,50 @@ public class AlgoritmoBlindLight {
 		listaNGramas = gt.cruzarListas(ong.getListaNGramas());
 		ep.setN(listaNGramas.size());
 		this.aplicarEstadistico();
+	}
+	
+	public float calcularSignificatividadTotal(ArrayList<NGrama> lista) {
+		float significatividad = 0.0f;
+		Iterator<NGrama> i = lista.iterator();
+		
+		while (i.hasNext())
+			significatividad += i.next().getSignificatividad();
+		
+		return significatividad;
+	}
+	
+	public ArrayList<NGrama> interseccionDocumentos(ArrayList<NGrama> lista1, ArrayList<NGrama> lista2) {
+		ArrayList<NGrama> listaSalida = new ArrayList<NGrama>();
+		Iterator<NGrama> i = lista1.iterator();
+		NGrama aux;
+		NGrama nuevo;
+		
+		while (i.hasNext()) {
+			aux = i.next();
+			nuevo = this.buscarCoincidencia(aux, lista2);
+			if (nuevo != null)
+				listaSalida.add(nuevo);	
+		}
+		
+		return listaSalida;
+	}
+	
+	//TODO falla aquí
+	private NGrama buscarCoincidencia(NGrama aux, ArrayList<NGrama> lista) {
+		NGrama nuevo = null;
+		Iterator<NGrama> i = lista.iterator();
+		float significatividad = 0.0f;
+		boolean seguirIterando = true;
+		
+		while (i.hasNext() && seguirIterando) {
+			nuevo = i.next();
+			if (nuevo.equals(aux)) {
+				significatividad = Math.min(aux.getSignificatividad(), nuevo.getSignificatividad());
+				nuevo.setSignificatividad(significatividad);
+				seguirIterando = false;
+			} else nuevo = null;
+		}
+		return nuevo;
 	}
 	
 	private void aplicarEstadistico() throws NGramaException {

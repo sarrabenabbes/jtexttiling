@@ -52,7 +52,7 @@ public class TestBD {
 		//this.pruebaRectaRegresion();
 		//float[][]p =  new float[][]{{5,1,5,4,1},{3,2,4,5,6}};
 		//System.out.println(p[0].length);
-		this.pruebaCompletaGrupo();
+		this.pruebaCompletaUnitaria();
 		long finale = System.currentTimeMillis();
 		
 		System.out.println("tiempo: " + (finale - inicio) + " ms");
@@ -96,7 +96,7 @@ public class TestBD {
 				rutaFinal = ruta + ConfigFicheros.getSeparador() + nombreFichero;
 				ong.calcular(rutaFinal, 4);
 				listaNGramas = ong.getListaNGramas();
-				LinkedList<NGrama> listaSalida = ong.asignarPesoAPasaje(lista, listaNGramas);
+				ArrayList<NGrama> listaSalida = ong.asignarPesoAPasaje(lista, listaNGramas);
 				ListaAArchivo.setFile(listaSalida, "F:\\pruebasPFC\\completa\\grupo\\pasajes-pesos\\" + nombreFichero + ".txt");
 			}
 			
@@ -130,6 +130,8 @@ public class TestBD {
 			String ruta = "F:\\pruebasPFC\\completa\\unitaria\\texttiling"; 
 			File directorio = new File(ruta);
 			String[] listaHijos = directorio.list();
+			ArrayList<NGrama> listaSignificatividades[] = new ArrayList[listaHijos.length];
+			float significatividadTotal[] = new float[listaHijos.length];
 			String rutaFinal;
 			ArrayList<NGrama> listaNGramas;
 			String nombreFichero = "";
@@ -139,10 +141,22 @@ public class TestBD {
 				rutaFinal = ruta + ConfigFicheros.getSeparador() + nombreFichero;
 				ong.calcular(rutaFinal, 4);
 				listaNGramas = ong.getListaNGramas();
-				LinkedList<NGrama> listaSalida = ong.asignarPesoAPasaje(lista, listaNGramas);
-				ListaAArchivo.setFile(listaSalida, "F:\\pruebasPFC\\completa\\unitaria\\pasajes-pesos\\" + nombreFichero + ".txt");
+				listaSignificatividades[i] = ong.asignarPesoAPasaje(lista, listaNGramas);
+				significatividadTotal[i] = abl.calcularSignificatividadTotal(listaSignificatividades[i]);
+				ListaAArchivo.setFile(listaSignificatividades[i], "F:\\pruebasPFC\\completa\\unitaria\\pasajes-pesos\\" + nombreFichero + ".txt");
 			}
 			
+			ArrayList<NGrama> interseccion = 
+				abl.interseccionDocumentos(listaSignificatividades[0], listaSignificatividades[2]);
+			ListaAArchivo.setFile(interseccion, "F:\\pruebasPFC\\completa\\unitaria\\pasajes-pesos\\interseccion1-3.txt");
+
+		
+			float significatividadTotalInterseccion = abl.calcularSignificatividadTotal(interseccion);
+			float precision = significatividadTotalInterseccion/significatividadTotal[0];
+			float recall = significatividadTotalInterseccion/significatividadTotal[2];
+			
+			System.out.println("precisión: " + precision);
+			System.out.println("recall: " + recall);
 		} catch (NGramaException e) {
 			e.printStackTrace();
 		}
