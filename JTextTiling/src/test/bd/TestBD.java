@@ -30,6 +30,7 @@ import es.project.blindLight.OperacionesNGrama;
 import es.project.blindLight.estadisticos.EstadisticoPonderacion;
 import es.project.blindLight.estadisticos.EstadisticoSI;
 import es.project.borrarDirectorios.BorrarDirectorio;
+import es.project.ficheros.configuracion.ConfigFicheros;
 import es.project.ficheros.filtros.FiltroDirectorios;
 import es.project.mail.Mail;
 import es.project.mail.MailAlta;
@@ -43,7 +44,7 @@ public class TestBD {
 	public TestBD() {
 		long inicio = System.currentTimeMillis();
 		//this.pruebaTextTiling();
-		this.pruebaCompleta();
+		//this.pruebaCompleta();
 		//this.descomponerNGramas();
 		//this.blindLight();
 		//this.pruebaAlgoritmo();
@@ -51,9 +52,100 @@ public class TestBD {
 		//this.pruebaRectaRegresion();
 		//float[][]p =  new float[][]{{5,1,5,4,1},{3,2,4,5,6}};
 		//System.out.println(p[0].length);
+		this.pruebaCompletaGrupo();
 		long finale = System.currentTimeMillis();
 		
 		System.out.println("tiempo: " + (finale - inicio) + " ms");
+	}
+	
+	private void pruebaCompletaGrupo() {
+		File directorio = new File("F:\\pruebasPFC\\completa\\grupo");
+		String files[] = directorio.list(new FiltroDirectorios());
+		
+		for (int i = 0; i < files.length; i++) {
+			TextTiling.setNombreArchivo(files[i]);
+			TextTiling.setRutaArchivo("F:\\pruebasPFC\\completa\\grupo\\" + files[i]);
+		
+			String args[] = new String[]{"80", "20", 
+					ConfigAlgoritmo.getStopwordsPath(), 
+					"F:\\pruebasPFC\\completa\\grupo\\texttiling", 
+					"manuel", 
+					files[i]};
+		
+			TextTiling.main(args);
+		}
+		
+		EstadisticoPonderacion ep = EstadisticoPonderacion.getEstadistico(EstadisticoPonderacion.SI);
+		AlgoritmoBlindLight abl = new AlgoritmoBlindLight("F:\\pruebasPFC\\completa\\grupo\\texttiling\\",4,ep);
+		
+		try {
+			abl.iniciarAlgoritmo();
+			ArrayList<NGrama> lista = abl.getListaSalida();
+			ListaAArchivo.setFile(lista, "F:\\pruebasPFC\\completa\\grupo\\salida\\signif_SI.txt");
+			
+			OperacionesNGrama ong = new OperacionesNGrama();
+			String ruta = "F:\\pruebasPFC\\completa\\grupo\\texttiling"; 
+			File directorio2 = new File(ruta);
+			String[] listaHijos = directorio2.list();
+			String rutaFinal;
+			ArrayList<NGrama> listaNGramas;
+			String nombreFichero = "";
+			
+			for (int i = 0; i < listaHijos.length; i++) {
+				nombreFichero = listaHijos[i];
+				rutaFinal = ruta + ConfigFicheros.getSeparador() + nombreFichero;
+				ong.calcular(rutaFinal, 4);
+				listaNGramas = ong.getListaNGramas();
+				LinkedList<NGrama> listaSalida = ong.asignarPesoAPasaje(lista, listaNGramas);
+				ListaAArchivo.setFile(listaSalida, "F:\\pruebasPFC\\completa\\grupo\\pasajes-pesos\\" + nombreFichero + ".txt");
+			}
+			
+		} catch (NGramaException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private void pruebaCompletaUnitaria() {
+		TextTiling.setNombreArchivo("gilmour");
+		TextTiling.setRutaArchivo("F:\\pruebasPFC\\completa\\unitaria\\gilmour.txt");
+	
+		String args[] = new String[]{"70", "20", 
+				ConfigAlgoritmo.getStopwordsPath(), 
+				"F:\\pruebasPFC\\completa\\unitaria\\texttiling", 
+				"manuel", 
+				"gilmour"};
+	
+		TextTiling.main(args);
+		
+		EstadisticoPonderacion ep = EstadisticoPonderacion.getEstadistico(EstadisticoPonderacion.SI);
+		AlgoritmoBlindLight abl = new AlgoritmoBlindLight("F:\\pruebasPFC\\completa\\unitaria\\gilmour.txt"
+				,4,ep);
+		
+		try {
+			abl.iniciarAlgoritmo();
+			ArrayList<NGrama> lista = abl.getListaSalida();
+			ListaAArchivo.setFile(lista, "F:\\pruebasPFC\\completa\\unitaria\\salida\\signif_SI.txt");
+			
+			OperacionesNGrama ong = new OperacionesNGrama();
+			String ruta = "F:\\pruebasPFC\\completa\\unitaria\\texttiling"; 
+			File directorio = new File(ruta);
+			String[] listaHijos = directorio.list();
+			String rutaFinal;
+			ArrayList<NGrama> listaNGramas;
+			String nombreFichero = "";
+			
+			for (int i = 0; i < listaHijos.length; i++) {
+				nombreFichero = listaHijos[i];
+				rutaFinal = ruta + ConfigFicheros.getSeparador() + nombreFichero;
+				ong.calcular(rutaFinal, 4);
+				listaNGramas = ong.getListaNGramas();
+				LinkedList<NGrama> listaSalida = ong.asignarPesoAPasaje(lista, listaNGramas);
+				ListaAArchivo.setFile(listaSalida, "F:\\pruebasPFC\\completa\\unitaria\\pasajes-pesos\\" + nombreFichero + ".txt");
+			}
+			
+		} catch (NGramaException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	private void pruebaAlgoritmo() {
@@ -63,7 +155,7 @@ public class TestBD {
 		
 		try {
 			abl.iniciarAlgoritmo();
-			LinkedList<NGrama> lista = abl.getListaSalida();
+			ArrayList<NGrama> lista = abl.getListaSalida();
 			/*Iterator<NGrama> i = lista.iterator();
 			NGrama aux;
 			
@@ -132,14 +224,14 @@ public class TestBD {
 			TextTiling.main(args);
 		}
 		
-		EstadisticoPonderacion ep = EstadisticoPonderacion.getEstadistico(EstadisticoPonderacion.SI);
+		EstadisticoPonderacion ep = EstadisticoPonderacion.getEstadistico(EstadisticoPonderacion.infogain);
 		AlgoritmoBlindLight abl = new AlgoritmoBlindLight("F:\\pruebasPFC\\blindlight\\grupo\\texttiling\\"
 				,4,ep);
 		
-		//int count = 5;
+		int count = 1;
 		try {
 			abl.iniciarAlgoritmo();
-			LinkedList<NGrama> lista = abl.getListaSalida();
+			ArrayList<NGrama> lista = abl.getListaSalida();
 			/*Iterator<NGrama> i = lista.iterator();
 			NGrama aux;
 			
@@ -148,7 +240,7 @@ public class TestBD {
 				System.out.println(aux.getTexto() + "|" + aux.getSignificatividad());
 			}*/
 			
-			//ListaAArchivo.setFile(lista, "F:\\pruebasPFC\\blindlight\\grupo\\salida\\signif_CHI2_" +  count + ".txt");
+			ListaAArchivo.setFile(lista, "F:\\pruebasPFC\\blindlight\\grupo\\salida\\signif_InfoGain_" +  count + ".txt");
 				
 		} catch (NGramaException e) {
 			e.printStackTrace();

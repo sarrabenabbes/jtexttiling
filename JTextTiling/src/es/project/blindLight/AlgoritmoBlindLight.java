@@ -2,7 +2,6 @@ package es.project.blindLight;
 
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.LinkedList;
 
 import es.project.blindLight.estadisticos.EstadisticoPonderacion;
 
@@ -17,7 +16,7 @@ public class AlgoritmoBlindLight {
 	
 	private ArrayList<NGrama> listaNGramas;
 	private ArrayList<DescomposicionNGrama> listaDescomposiciones;
-	private LinkedList<NGrama> listaSalida;
+	private ArrayList<NGrama> listaSalida;
 	
 	public AlgoritmoBlindLight(String rutaDirectorio, int sizeNGrama, EstadisticoPonderacion ep) {
 		this.ruta = rutaDirectorio;
@@ -47,7 +46,7 @@ public class AlgoritmoBlindLight {
 		listaDescomposiciones = ong.getListaDescomposiciones();
 		Iterator<NGrama> i = listaNGramas.iterator();
 		NGrama aux, nuevo;
-		listaSalida = new LinkedList<NGrama>();
+		listaSalida = new ArrayList<NGrama>();
 		
 		while (i.hasNext()) {
 			aux = i.next();
@@ -59,11 +58,11 @@ public class AlgoritmoBlindLight {
 		}
 	}
 
-	public LinkedList<NGrama> getListaSalida() {
+	public ArrayList<NGrama> getListaSalida() {
 		return listaSalida;
 	}
 
-	public void setListaSalida(LinkedList<NGrama> listaSalida) {
+	public void setListaSalida(ArrayList<NGrama> listaSalida) {
 		this.listaSalida = listaSalida;
 	}
 

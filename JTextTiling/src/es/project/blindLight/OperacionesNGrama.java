@@ -3,6 +3,7 @@ package es.project.blindLight;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.LinkedList;
 
 import es.project.ficheros.configuracion.ConfigFicheros;
 import es.project.utilidades.ArchivoATexto;
@@ -22,7 +23,7 @@ public class OperacionesNGrama {
 	}
 	
 	//TODO documentar
-	private void calcularNGramas(String ruta, int n) throws NGramaException {
+	public void calcularNGramas(String ruta, int n) throws NGramaException {
 		NGrama.setN(n);
 		File directorio = new File(ruta);
 		String listaHijos[] = directorio.list();
@@ -44,6 +45,35 @@ public class OperacionesNGrama {
 		ft.calcularNGramas(listaFrases, n);
 		listaNGramas.addAll(ft.getListaParcial());
 		sizeInicialLista = ft.getSizeLista();
+	}
+	
+	public LinkedList<NGrama> asignarPesoAPasaje(ArrayList<NGrama> listaPesos, ArrayList<NGrama> nGramasPasaje) {
+		Iterator<NGrama> i = nGramasPasaje.iterator();
+		NGrama aux;
+		LinkedList<NGrama> listaSalida = new LinkedList<NGrama>();
+		
+		while (i.hasNext()) {
+			aux = i.next();
+			aux.setSignificatividad(this.buscarSignificatividad(aux, listaPesos));
+			listaSalida.add(aux);
+		}
+		return listaSalida;
+	}
+	
+	private float buscarSignificatividad(NGrama ngrama, ArrayList<NGrama> listaPesos) {
+		float retorno = 0.0f;
+		Iterator<NGrama> i = listaPesos.iterator();
+		NGrama aux;
+		
+		while (i.hasNext()) {
+			aux = i.next();
+			if (aux.equals(ngrama)) {
+				retorno = aux.getSignificatividad();
+				break;
+			}
+		}
+		
+		return retorno;
 	}
 	
 	private void calcularFrecuenciasAbsolutas() {
