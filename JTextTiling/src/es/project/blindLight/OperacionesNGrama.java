@@ -25,21 +25,12 @@ public class OperacionesNGrama {
 	//TODO documentar
 	public void calcularNGramas(String ruta, int n) throws NGramaException {
 		NGrama.setN(n);
-		File directorio = new File(ruta);
-		String listaHijos[] = directorio.list();
-		File aux = null;
+		File file = new File(ruta);
 		String textoAux = "";
 		FormateadorTexto ft;
 		listaNGramas = new ArrayList<NGrama>();
 		
-		if (listaHijos != null) {
-			for (int i = 0; i < listaHijos.length; i++) {
-				aux = new File(ruta + ConfigFicheros.getSeparador() + listaHijos[i]);
-				textoAux += ArchivoATexto.getTexto(aux);
-			}
-		} else
-			textoAux = ArchivoATexto.getTexto(directorio);
-		
+		textoAux += ArchivoATexto.getTexto(file);
 		ft = new FormateadorTexto(textoAux);
 		String listaFrases = ft.getTexto();
 		ft.calcularNGramas(listaFrases, n);

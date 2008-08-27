@@ -69,7 +69,6 @@ public class AlgoritmoBlindLight {
 		return listaSalida;
 	}
 	
-	//TODO falla aquí
 	private NGrama buscarCoincidencia(NGrama aux, ArrayList<NGrama> lista) {
 		NGrama nuevo = null;
 		Iterator<NGrama> i = lista.iterator();

@@ -35,6 +35,7 @@ import es.project.ficheros.filtros.FiltroDirectorios;
 import es.project.mail.Mail;
 import es.project.mail.MailAlta;
 import es.project.procesadorXSLT.ProcesadorXSLT;
+import es.project.utilidades.ArchivoATexto;
 import es.project.utilidades.QuickSort;
 import es.project.utilidades.RectaRegresion;
 import es.project.utilidades.RectaRegresionException;
@@ -52,53 +53,95 @@ public class TestBD {
 		//this.pruebaRectaRegresion();
 		//float[][]p =  new float[][]{{5,1,5,4,1},{3,2,4,5,6}};
 		//System.out.println(p[0].length);
-		this.pruebaCompletaUnitaria();
+		this.pruebaCompletaGrupo();
 		long finale = System.currentTimeMillis();
 		
 		System.out.println("tiempo: " + (finale - inicio) + " ms");
 	}
 	
 	private void pruebaCompletaGrupo() {
-		File directorio = new File("F:\\pruebasPFC\\completa\\grupo");
-		String files[] = directorio.list(new FiltroDirectorios());
-		
-		for (int i = 0; i < files.length; i++) {
-			TextTiling.setNombreArchivo(files[i]);
-			TextTiling.setRutaArchivo("F:\\pruebasPFC\\completa\\grupo\\" + files[i]);
-		
-			String args[] = new String[]{"80", "20", 
-					ConfigAlgoritmo.getStopwordsPath(), 
-					"F:\\pruebasPFC\\completa\\grupo\\texttiling", 
-					"manuel", 
-					files[i]};
-		
-			TextTiling.main(args);
-		}
-		
+		/**
+		 * Obtenemos aquí la lista de ngramas de cada texto (por separado) con sus pesos/significatividades
+		 * y los guardamos dentro de la carpeta \salida
+		 */
 		EstadisticoPonderacion ep = EstadisticoPonderacion.getEstadistico(EstadisticoPonderacion.SI);
-		AlgoritmoBlindLight abl = new AlgoritmoBlindLight("F:\\pruebasPFC\\completa\\grupo\\texttiling\\",4,ep);
+		String rutaBaseDocumentos = "F:\\pruebasPFC\\completa\\grupo\\";
+		File directorioBase = new File(rutaBaseDocumentos);
+		String[] listaRutasDocumentos = directorioBase.list(new FiltroDirectorios());
+		AlgoritmoBlindLight abl = null;
+		ArrayList<NGrama> listasSalida[] = new ArrayList[listaRutasDocumentos.length];
 		
 		try {
-			abl.iniciarAlgoritmo();
-			ArrayList<NGrama> lista = abl.getListaSalida();
-			ListaAArchivo.setFile(lista, "F:\\pruebasPFC\\completa\\grupo\\salida\\signif_SI.txt");
+			
+			for (int i = 0; i < listaRutasDocumentos.length; i++) {
+				String rutaHijos = rutaBaseDocumentos + ConfigFicheros.getSeparador() + listaRutasDocumentos[i];
+				abl = new AlgoritmoBlindLight(rutaHijos,4,ep);
+				abl.iniciarAlgoritmo();
+				listasSalida[i] = abl.getListaSalida();
+				ListaAArchivo.setFile(listasSalida[i], "F:\\pruebasPFC\\completa\\grupo\\salida\\signif_SI_" + i + ".txt");
+			}
+		
+		/**
+		 * ahora, mediante el algoritmo JTextTiling, descompondremos cada texto en sus correspondientes
+		 * pasajes, que se guardarán en la carpeta \texttiling
+		 */
+			File directorio = new File("F:\\pruebasPFC\\completa\\grupo");
+			String files[] = directorio.list(new FiltroDirectorios());
+			
+			for (int i = 0; i < files.length; i++) {
+				TextTiling.setNombreArchivo(files[i]);
+				TextTiling.setRutaArchivo("F:\\pruebasPFC\\completa\\grupo\\" + files[i]);
+			
+				String args[] = new String[]{"80", "20", 
+						ConfigAlgoritmo.getStopwordsPath(), 
+						"F:\\pruebasPFC\\completa\\grupo\\texttiling", 
+						"manuel", 
+						files[i]};
+			
+				TextTiling.main(args);
+			}
+			
+			/**
+			 * hasta el momento tenemos los tres documentos, cada uno con su lista de ngramas y los
+			 * pesos de estos. También hemos troceado cada documento en pasajes. A partir de aquí ya
+			 * se pueden comparar entre sí cualquier par de pasajes
+			 */
+			
+			/**
+			 * ahora compararemos dos pasajes al azar entre sí, basándonos en los pesos obtenidos
+			 * para sus ngramas (que recordamos que están en la carpeta \salida). Los pasajes a
+			 * comparar serán: cn_2.txt_8 y pink-floyd-award.txt_0.txt. Para obtener la lista de pesos de ngramas
+			 * del primer pasaje es necesario trabajar con el fichero, obtenido previamente, signif_SI_0.txt.
+			 * Para obtener la lista de pasajes del segundo debemos trabajar con signif_SI_0.txt
+			 */
 			
 			OperacionesNGrama ong = new OperacionesNGrama();
-			String ruta = "F:\\pruebasPFC\\completa\\grupo\\texttiling"; 
-			File directorio2 = new File(ruta);
-			String[] listaHijos = directorio2.list();
-			String rutaFinal;
-			ArrayList<NGrama> listaNGramas;
-			String nombreFichero = "";
+			String ruta1 = "F:\\pruebasPFC\\completa\\grupo\\texttiling\\cn_2.txt_8.txt";
+			String ruta2 = "F:\\pruebasPFC\\completa\\grupo\\texttiling\\pink-floyd-award.txt_0.txt";
+			ong.calcular(ruta1, 4);
+			ArrayList<NGrama> lista1 = ong.getListaNGramas();
+			ong.calcular(ruta2, 4);
+			ArrayList<NGrama> lista2 = ong.getListaNGramas();
 			
-			for (int i = 0; i < listaHijos.length; i++) {
-				nombreFichero = listaHijos[i];
-				rutaFinal = ruta + ConfigFicheros.getSeparador() + nombreFichero;
-				ong.calcular(rutaFinal, 4);
-				listaNGramas = ong.getListaNGramas();
-				ArrayList<NGrama> listaSalida = ong.asignarPesoAPasaje(lista, listaNGramas);
-				ListaAArchivo.setFile(listaSalida, "F:\\pruebasPFC\\completa\\grupo\\pasajes-pesos\\" + nombreFichero + ".txt");
-			}
+			ArrayList<NGrama> pesosPasaje1 = ong.asignarPesoAPasaje(listasSalida[0], lista1);
+			ListaAArchivo.setFile(pesosPasaje1, "F:\\pruebasPFC\\completa\\grupo\\salida\\documentoT.txt");
+			ArrayList<NGrama> pesosPasaje2 = ong.asignarPesoAPasaje(listasSalida[2], lista2);
+			ListaAArchivo.setFile(pesosPasaje2, "F:\\pruebasPFC\\completa\\grupo\\salida\\consultaQ.txt");
+			
+			ArrayList<NGrama> interseccion = abl.interseccionDocumentos(pesosPasaje1, pesosPasaje2);
+			float significatividadTotal1 = abl.calcularSignificatividadTotal(pesosPasaje1);
+			float significatividadTotal2 = abl.calcularSignificatividadTotal(pesosPasaje2);
+			float significatividadInter = abl.calcularSignificatividadTotal(interseccion);
+			
+			/**
+			 * la consulta Q es el texto 2, y el documento T es el texto 1
+			 */
+			float pi = significatividadInter/significatividadTotal2;
+			float ro = significatividadInter/significatividadTotal1;
+			
+			System.out.println("PI: " + pi);
+			System.out.println("RO: " + ro);
+			ListaAArchivo.setFile(interseccion, "F:\\pruebasPFC\\completa\\grupo\\pasajes-pesos\\intersec1.8-3.0.txt");
 			
 		} catch (NGramaException e) {
 			e.printStackTrace();
