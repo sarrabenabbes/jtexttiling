@@ -54,6 +54,11 @@ public class MySqlFactoriaDAO extends FactoriaDAO {
 		    }
 	}
 	
+	/**
+	 * <p>Método estático que se ocupa de crear la conexión con la base de datos, sólo si esta
+	 * no ha sido creada previamente, para lo cual hace una llamada al constructor de la clase.</p>
+	 * @return Devuelve una única instancia de la clase
+	 */
 	public static MySqlFactoriaDAO getInstance() {
 		return new MySqlFactoriaDAO();
 	}

@@ -53,10 +53,20 @@ public abstract class FactoriaDAO {
 		}
 	}
 
+	/**
+	 * <p>Accede al atributo</p>
+	 * @return Devuelve el valor de la variable booleana "esTest", que indica si la acción que se
+	 * está realizando es perteneciente a las baterías de pruebas de la aplicación
+	 */
 	public boolean isEsTest() {
 		return esTest;
 	}
 
+	/**
+	 * <p>Da valor al atributo</p>
+	 * @param esTest Valor que indica si la acción que se está realizando es perteneciente a las 
+	 * baterías de pruebas de la aplicación
+	 */
 	public void setEsTest(boolean esTest) {
 		this.esTest = esTest;
 	}
