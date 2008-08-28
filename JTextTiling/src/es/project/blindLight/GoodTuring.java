@@ -7,6 +7,10 @@ import es.project.utilidades.QuickSort;
 import es.project.utilidades.RectaRegresion;
 import es.project.utilidades.RectaRegresionException;
 
+/**
+ * <p>Clase que encapsula las operaciones del estimador Simple Good-Turing</p>
+ * @author Daniel Fernández Aller
+ */
 public class GoodTuring {
 	/**
 	 * 1ª columna: r. Frecuencias observadas en la muestra
@@ -23,9 +27,16 @@ public class GoodTuring {
 	private int N, NPrima;
 	private double P0;
 	
-	/* coeficientes para la recta de regresión */
+	/**
+	 * coeficientes para la recta de regresión
+	 */
 	private float a, b;
 	
+	/**
+	 * <p>Constructor de la clase: inicializa los atributos necesarios</p>
+	 * @param listaNGramas Lista de n-gramas a la que se van a aplicar las operaciones del
+	 * estimador Simple Good-Turing
+	 */
 	public GoodTuring(ArrayList<NGrama> listaNGramas) {
 		this.lista = listaNGramas;
 		int size = listaNGramas.size();
@@ -33,10 +44,23 @@ public class GoodTuring {
 	}
 	
 	/* <OPERACIONES PARA COMPONER EL PRIMER VECTOR DEL MÉTODO BLINDLIGHT> */
+	
+	/**
+	 * <p>Inicia el estimador, para lo cual necesitamos rellenar el array de frecuencias
+	 * y "frecuencias de frecuencias"</p>
+	 */
 	public void componerPrimerVector() {
 		this.rellenarArray(lista);
 	}
 	
+	/**
+	 * <p>Recorre la lista de n-gramas para ir calculando su frecuencia absoluta e ir
+	 * insertándolas en el array que almacenará las frecuencias de los n-gramas, y el
+	 * número de n-gramas que comparten esa frecuencia ("frecuencias de frecuencias"):
+	 * si la frecuencia es nueva, se inserta, si está repetida, se aumenta su frecuencia
+	 * de frecuencia.</p>
+	 * @param lista Lista de n-gramas con la que vamos a trabajar
+	 */
 	private void rellenarArray(ArrayList<NGrama> lista) {
 		Iterator<NGrama> i = lista.iterator();
 		NGrama aux = null;
@@ -60,6 +84,47 @@ public class GoodTuring {
 		recortarArray();
 	}
 	
+	/**
+	 * <p>Si una frecuencia ya estaba incluida en el array, hay que aumentar el
+	 * valor de su "frecuencia de frecuencia" (esto es, el valor de la n para un
+	 * r dado)</p>
+	 * @param indiceAuxiliar Índice donde se encuentra la frecuencia en cuestión
+	 */
+	private void aumentarValorN(int indiceAuxiliar) {
+		int valorAnterior = arrayFrecuenciasInicial[indiceAuxiliar][1];
+		arrayFrecuenciasInicial[indiceAuxiliar][1] = ++valorAnterior;
+	}
+
+	/**
+	 * <p>Se inserta una nueva frecuencia (con lo cual su frecuencia de frecuencia
+	 * será 1)</p>
+	 * @param frecuenciaAbsoluta Frecuencia a insertar
+	 */
+	private void insertarNuevaFrecuencia(int frecuenciaAbsoluta) {
+		arrayFrecuenciasInicial[indiceR][0] = frecuenciaAbsoluta;
+		arrayFrecuenciasInicial[indiceR][1] = 1;
+		indiceR++;
+	}
+	
+	/**
+	 * <p>Buscamos si la frecuencia ya estaba incluida en el array, en cuyo
+	 * caso nos quedamos con su posición. Si no estaba, se devuelve -1.</p>
+	 * @param frecuencia Frecuencia a buscar en el array
+	 * @return Devuelve la posición de la frecuencia buscada, y -1 si no existe
+	 */
+	private int buscarIndiceFrecuencia(int frecuencia){
+		for (int i = 0; i < indiceR; i++)
+			if (arrayFrecuenciasInicial[i][0] == frecuencia)
+				return i;
+		
+		return -1;
+	}
+	
+	/**
+	 * <p>Como el array se inicializa con el tamaño de la lista, siempre van a quedar
+	 * muchas posiciones vacías, por lo tanto hay que recortarlo: se copian los elementos
+	 * en otro array con el tamaño exacto.</p>
+	 */
 	private void recortarArray() {
 		int size = 0;
 		for (int i = 0; i < arrayFrecuenciasInicial.length; i++)
@@ -81,17 +146,27 @@ public class GoodTuring {
 	}
 	
 	/**
-	 * P0 = n1/N, donde n1 es el valor n correspondiente a la primera fila del array
+	 * <p>P0 = n1/N, donde n1 es el valor n correspondiente a la primera fila del array</p>
 	 */
 	private void calcularP0() {
 		P0 = (arrayFrecuenciasFinal[0][1]/(double)N);
 	}
 	
+	/**
+	 * <p>N es el sumatorio de cada ri * ni (donde i va desde 0 hasta la última fila
+	 * del array)</p>
+	 */
 	private void calcularN() {
 		for (int i = 0; i < arrayFrecuenciasFinal.length; i++)
 				N += (arrayFrecuenciasFinal[i][0] * arrayFrecuenciasFinal[i][1]);
 	}
 	
+	/**
+	 * <p>Para poder aplicar el método Simple Good-Turing, las frecuencias tienen que
+	 * estar ordenadas ascendentemente, pero a la hora de calcularlas a partir de la
+	 * lista de n-gramas puede que se encuentren desordenadas: se aplica el método de
+	 * ordenación QuickSort al array.</p>
+	 */
 	private void ordenarArray() {
 		QuickSort qs = new QuickSort(arrayFrecuenciasFinal);
 		
@@ -101,26 +176,6 @@ public class GoodTuring {
 		
 		arrayFrecuenciasFinal = qs.getArray();
 	}
-
-	private void aumentarValorN(int indiceAuxiliar) {
-		int valorAnterior = arrayFrecuenciasInicial[indiceAuxiliar][1];
-		arrayFrecuenciasInicial[indiceAuxiliar][1] = ++valorAnterior;
-	}
-
-	private void insertarNuevaFrecuencia(int frecuenciaAbsoluta) {
-		arrayFrecuenciasInicial[indiceR][0] = frecuenciaAbsoluta;
-		arrayFrecuenciasInicial[indiceR][1] = 1;
-		indiceR++;
-	}
-	
-	private int buscarIndiceFrecuencia(int frecuencia){
-		for (int i = 0; i < indiceR; i++)
-			if (arrayFrecuenciasInicial[i][0] == frecuencia)
-				return i;
-		
-		return -1;
-	}
-	
 	/* </OPERACIONES PARA COMPONER EL PRIMER VECTOR DEL MÉTODO BLINDLIGHT> */
 	
 	/* <SEGUNDO VECTOR DEL MÉTODO BLINDLIGHT> */
