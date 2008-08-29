@@ -13,8 +13,8 @@ import es.project.utilidades.RectaRegresionException;
  */
 public class GoodTuring {
 	/**
-	 * 1ª columna: r. Frecuencias observadas en la muestra
-	 * 2ª columna: n. Número de especies observadas con frecuencia r
+	 * 1ª columna r: frecuencias observadas en la muestra
+	 * 2ª columna n: número de especies observadas con frecuencia r
 	 */
 	private int[][] arrayFrecuenciasInicial, arrayFrecuenciasFinal;
 	private int indiceR = 0;
@@ -146,14 +146,14 @@ public class GoodTuring {
 	}
 	
 	/**
-	 * <p>P0 = n1/N, donde n1 es el valor n correspondiente a la primera fila del array</p>
+	 * <p>P<sub>0</sub> = n1/N, donde n1 es el valor n correspondiente a la primera fila del array</p>
 	 */
 	private void calcularP0() {
 		P0 = (arrayFrecuenciasFinal[0][1]/(double)N);
 	}
 	
 	/**
-	 * <p>N es el sumatorio de cada ri * ni (donde i va desde 0 hasta la última fila
+	 * <p>N es el sumatorio de cada r<sub>i</sub> * n<sub>i</sub> (donde i va desde 0 hasta la última fila
 	 * del array)</p>
 	 */
 	private void calcularN() {
@@ -179,6 +179,16 @@ public class GoodTuring {
 	/* </OPERACIONES PARA COMPONER EL PRIMER VECTOR DEL MÉTODO BLINDLIGHT> */
 	
 	/* <SEGUNDO VECTOR DEL MÉTODO BLINDLIGHT> */
+	/**
+	 * <p>En este método se rellena el otro array que utilizamos en la aplicación del
+	 * estimador Simple Good-Turing. Los valores en la columna Z (la primera) se insertan
+	 * de la siguiente manera: para cada fila j, i y k son los valores anterior y posterior
+	 * respectivamente, de la columna r (perteneciente al primer array). Si j es la primera
+	 * fila, i = 0, y si es la última, k = 2*j - i. Finalmente Z<sub>j</sub> = 2 * n<sub>j</sub>/(k - i).
+	 * A la vez, se van calculando los valores de las siguientes columnas: log r y log Z.
+	 * Por último, se llama al método que calcula los coeficientes a y b de la recta de regresión,
+	 * necesarios para obtener el valor de la cuarta columna, la r aproximada. </p>
+	 */
 	public void componerSegundoVector() {
 		int i, k = 0;
 		for (int j = 0; j < arrayReales.length; j++) {
@@ -203,6 +213,11 @@ public class GoodTuring {
 		calcularRAproximada();
 	}
 	
+	/**
+	 * <p>Calcula la recta de regresión para los valores de las columnas log r y log Z.
+	 * De aquí se obtienen los coeficientes a y b, necesarios para el cálculo de la
+	 * función antilog. </p>
+	 */
 	private void calcularCoeficientesRecta() {
 		int size = arrayReales.length;
 		float[] x = new float[(size-1)];
@@ -223,6 +238,16 @@ public class GoodTuring {
 		}
 	}
 	
+	/**
+	 * <p>Rellena la columna correspondiente a la r aproximada (el penúltimo paso del algoritmo).
+	 * Para ello recorremos el array desde la primera fila, y para cada valor de r seguimos el proceso
+	 * descrito <a href=http://petra.euitio.uniovi.es/~i6952349/pmwiki/pmwiki.php?n=Main.Procedimiento>aquí</a>
+	 * </p>
+	 * <p>El siguiente paso es calcular N', que será el resultado del sumatorio de los productos n<sub>r</sub> * r*.
+	 * Por último, calculamos el valor del estimador para cada fila: (1-P<sub>0</sub>) * r*\/N'. El valor
+	 * p<sub>r</sub> de esta columna será el estimador SGT para la frecuencia de población de una especie cuya
+	 * frecuencia en la muestra sea r.</p>
+	 */
 	private void calcularRAproximada() {
 		boolean cumpleInecuacion = true;
 		float x, y = 0.0f;
@@ -247,24 +272,47 @@ public class GoodTuring {
 		}
 		
 		this.calcularNPrima();
-		this.calcularEstimadorFinal();
+		calcularEstimadorFinal();
 	}
 	
+	/**
+	 * <p>Calcula el valor X durante la ejecución del método "calcularRAproximada". </p>
+	 * @param r Frecuencia actual 
+	 * @return Valor X según la ecuación (3) 
+	 * explicada <a href="http://petra.euitio.uniovi.es/~i6952349/pmwiki/pmwiki.php?n=Main.Procedimiento">aquí</a>
+	 */
 	private float calcularX(int r) {
 		float numerador = arrayFrecuenciasFinal[r][1];
 		float denominador = arrayFrecuenciasFinal[(r-1)][1];
 		return (r + 1) * (numerador/denominador);
 	}
 	
+	/**
+	 * <p>Calcula el valor X durante la ejecución del método "calcularRAproximada". </p>
+	 * @param r Frecuencia actual
+	 * @return Valor X según la ecuación (4) 
+	 * explicada <a href="http://petra.euitio.uniovi.es/~i6952349/pmwiki/pmwiki.php?n=Main.Procedimiento">aquí</a>
+	 */
 	private float calcularY(int r) {
 		return (r+1)*(antilog(r+1)/antilog(r));
 	}
 	
+	/**
+	 * <p>Calcula el valor de la función antilog, necesario para averiguar el valor de Y</p>
+	 * @param r Frecuencia actual
+	 * @return Valor según la función 10<sup>(a + b*log r)</sup>
+	 */
 	private float antilog (int r) {
 		float exponente = (float)(this.a + (this.b * Math.log10(r)));
 		return (float)Math.pow(10, exponente);
 	}
 	
+	/**
+	 * <p>Calcula el valor de la inecuación durante la ejecución del método "calcularRAproximada"</p>
+	 * @param r Frecuencia actual
+	 * @return Valor según la inecuación (5) 
+	 * explicada <a href="@return Valor X según la ecuación (3) explicada <a href="http://petra.euitio.uniovi.es/~i6952349/pmwiki/pmwiki.php?n=Main.Procedimiento">aquí</a>">aquí</a>
+	 */
 	private float calcularValorInecuacion(int r) {
 		float numerador1 = arrayFrecuenciasFinal[r][1];
 		float denominador1 = arrayFrecuenciasFinal[(r-1)][1];
@@ -274,23 +322,32 @@ public class GoodTuring {
 		return (float)(1.96 * Math.sqrt(Math.pow((r+1), 2) * (numerador1/Math.pow(denominador1, 2)) * (1 + (numerador2/denominador2))));
 	}
 	
+	/**
+	 * <p>Calcula N': esto es, el sumatorio de n<sub>r</sub> * r*</p>
+	 */
 	private void calcularNPrima() {
 		for (int i = 0; i < arrayFrecuenciasFinal.length; i++)
 			NPrima += arrayFrecuenciasFinal[i][1]*arrayReales[i][3];
 	}
 	
-	private float calcularEstimadorFinal() {
-		float aux = 0.0f;
+	/**
+	 * <p>Asigna a cada frecuencia su estimador SGT: (1-P<sub>0</sub>) * r*\/N'</p>
+	 */
+	private void calcularEstimadorFinal() {
 		for (int i = 0; i < arrayFrecuenciasFinal.length; i++)
 			arrayReales[i][4] = (float)((1 - this.getP0())*(arrayReales[i][3]/this.getNPrima()));
-		
-		return aux;
 	}
 	/* </SEGUNDO VECTOR DEL MÉTODO BLINDLIGHT> */
 	
+	
 	/**
-	 * asigna a cada ngrama del texto su probabilidad, una vez calculado el estimador
-	 * SGT
+	 * <p>Recibe una lista con los n-gramas de un texto, y le asigna a cada uno la probabilidad
+	 * estimada que le corresponde. Para ello, busca el n-grama en base a su frecuencia absoluta
+	 * (ver información del método "buscarProbabilidad")</p>
+	 * @param lista Lista de n-gramas a los cuales vamos a asignar su estimador de probabilidad
+	 * @return Devuelve una lista de n-gramas con sus probabilidades estimadas
+	 * @throws NGramaException Esta excepción se lanza si la longitud del texto de un n-grama no 
+	 * coincide con el tamaño de n-grama estipulado 
 	 */
 	public ArrayList<NGrama> cruzarListas(ArrayList<NGrama> lista) throws NGramaException{
 		Iterator<NGrama> i = lista.iterator();
@@ -308,6 +365,14 @@ public class GoodTuring {
 		return listaNueva;
 	}
 	
+	/**
+	 * <p>Busca, en el array de frecuencias, la frecuencia absoluta del n-grama que recibe
+	 * como parámetro. Una vez obtenido el índice donde se encuentra esta frecuencia, busca
+	 * la probabilidad que le corresponde en el segundo array, donde se almacena los valores
+	 * del estimador SGT</p>
+	 * @param aux N-grama del que queremos obtener su probabilidad estimada
+	 * @return Valor de la probabilidad estimada del n-grama
+	 */
 	private float buscarProbabilidad(NGrama aux) {
 		int frecuenciaAbsoluta = aux.getFrecuenciaAbsoluta();
 		float probabilidadEstimada = 0.0f;
@@ -321,26 +386,51 @@ public class GoodTuring {
 		return probabilidadEstimada;
 	}
 	
+	/**
+	 * <p>Accede al atributo</p>
+	 * @return Devuelve el sumatorio de cada r<sub>i</sub> * n<sub>i</sub>
+	 */
 	public int getN() {
 		return N;
 	}
 	
+	/**
+	 * <p>Accede al atributo</p>
+	 * @return Devuelve el sumatorio de cada n<sub>r</sub> * r*
+	 */
 	public float getNPrima() {
 		return NPrima;
 	}
 	
+	/**
+	 * <p>Accede al atributo</p>
+	 * @return Devuelve P<sub>0</sub> = n1/N
+	 */
 	public double getP0() {
 		return P0;
 	}
 	
+	/**
+	 * <p>Accede al atributo</p>
+	 * @return Devuelve el array de frecuencias - frecuencias de frecuencias
+	 */
 	public int[][] getArrayFrecuencias() {
 		return arrayFrecuenciasFinal;
 	}
 	
+	/**
+	 * <p>Accede al atributo</p>
+	 * @return Devuelve el segundo array, que contiene el valor del estimador SGT
+	 */
 	public float[][] getArrayReales() {
 		return arrayReales;
 	}
 	
+	/**
+	 * <p>Compone una cadena con los valores del array de frecuencias y frecuencias de
+	 * frecuencias</p>
+	 * @return Devuelve una cadena con la información explicada
+	 */
 	public String verArrayFrecuencias() {
 		String retorno = "r\tn";
 		for (int i = 0; i < arrayFrecuenciasFinal.length; i++) {
@@ -351,6 +441,11 @@ public class GoodTuring {
 		return retorno;
 	}
 	
+	/**
+	 * <p>Compone una cadena con los valores r* y p, una vez ya ha sido calculado el
+	 * estimador SGT</p>
+	 * @return Devuelve una cadena con la información explicada
+	 */
 	public String verArrayReales() {
 		//String retorno = "Z\t\tlog r\t\tlog Z\t\tr*\t\tp";
 		String retorno = "r*\t\tp";

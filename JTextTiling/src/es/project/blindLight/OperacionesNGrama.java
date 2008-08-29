@@ -3,9 +3,7 @@ package es.project.blindLight;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.LinkedList;
 
-import es.project.ficheros.configuracion.ConfigFicheros;
 import es.project.utilidades.ArchivoATexto;
 
 public class OperacionesNGrama {
