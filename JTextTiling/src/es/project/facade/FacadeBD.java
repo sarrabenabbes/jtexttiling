@@ -479,18 +479,40 @@ public class FacadeBD {
 	/* </ARCHIVOS>*/
 	
 	/* <DATOS> */
+	
+	/**
+	 * <p>Actualiza la base de datos con el nombre del usuario que ha sido
+	 * el último en realizar un login en el servicio</p>
+	 * @param usuario Usuario que acaba de entrar en el servicio
+	 * @return Verdadero si la operación fue bien, falso en caso contrario
+	 */
 	public boolean actualizarDatosUltimoLogin(Usuario usuario) {
 		return datosDAO.actualizarUltimoLogin(usuario);
 	}
 	
+	/**
+	 * <p>Actualiza la base de datos con el nombre del usuario que ha sido
+	 * el último en darse de alta en el servicio</p>
+	 * @param usuario Usuario que se acaba de registrar
+	 * @return Verdadero si la operación fue bien, falso en caso contrario
+	 */
 	public boolean actualizarDatosUltimaAlta(Usuario usuario) {
 		return datosDAO.actualizarUltimaAlta(usuario);
 	}
 	
+	/**
+	 * <p>Obtiene los datos del último usuario en entrar en el servicio</p>
+	 * @return Objeto que representa al último usuario que ha utilizado
+	 * el servicio
+	 */
 	public Usuario getDatosUltimoLogin() {
 		return datosDAO.getUltimoLogin();
 	}
 	
+	/**
+	 * <p>Obtiene los datos del último usuario que se ha dado de alta en el servicio</p>
+	 * @return Objeto que representa al último usuario en darse de alta
+	 */
 	public Usuario getDatosUltimaAlta() {
 		return datosDAO.getUltimaAlta();
 	}
