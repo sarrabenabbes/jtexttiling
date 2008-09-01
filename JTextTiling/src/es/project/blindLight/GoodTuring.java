@@ -21,7 +21,7 @@ public class GoodTuring {
 	private ArrayList<NGrama> lista;
 	
 	/**
-	 * Z, log r, log Z, r*, p
+	 * columnas: Z, log r, log Z, r*, p
 	 */
 	private float[][] arrayReales;
 	private int N, NPrima;
@@ -44,7 +44,6 @@ public class GoodTuring {
 	}
 	
 	/* <OPERACIONES PARA COMPONER EL PRIMER VECTOR DEL MÉTODO BLINDLIGHT> */
-	
 	/**
 	 * <p>Inicia el estimador, para lo cual necesitamos rellenar el array de frecuencias
 	 * y "frecuencias de frecuencias"</p>
@@ -338,7 +337,6 @@ public class GoodTuring {
 			arrayReales[i][4] = (float)((1 - this.getP0())*(arrayReales[i][3]/this.getNPrima()));
 	}
 	/* </SEGUNDO VECTOR DEL MÉTODO BLINDLIGHT> */
-	
 	
 	/**
 	 * <p>Recibe una lista con los n-gramas de un texto, y le asigna a cada uno la probabilidad
