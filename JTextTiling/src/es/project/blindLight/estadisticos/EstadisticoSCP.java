@@ -5,12 +5,29 @@ import java.util.ArrayList;
 import es.project.blindLight.DescomposicionNGrama;
 import es.project.blindLight.NGrama;
 
+/**
+ * <p>Clase que realiza los cálculos referidos al estadístico conocido como "SCP".
+ * La fórmula puede verse <a href="">aquí</a></p>
+ * @author Daniel Fernández Aller
+ */
 public class EstadisticoSCP extends EstadisticoPonderacion {
 	
+	/**
+	 * <p>Constructor de la clase</p>
+	 */
 	protected EstadisticoSCP() {
 		super();
 	}
 	
+	/**
+	 * <p>Calcula la significatividad del n-grama según la fórmula explicada. Para
+	 * ello, se basa en varios métodos de su clase base.</p>
+	 * @param ngrama N-grama del cual daremos un cálculo del peso
+	 * @param probabilidad Probabilidad estimada mediante Good-Turing del n-grama 
+	 * @param listaDesc Lista de fragmentos de los n-gramas del texto
+	 * @return El resultado es la significatividad (peso) del n-grama en el texto
+	 * calculado mediante el estimador SCP
+	 */
 	public float calcularEstadistico(NGrama ngrama, 
 			float probabilidad, ArrayList<DescomposicionNGrama> listaDesc) {
 		
@@ -20,5 +37,4 @@ public class EstadisticoSCP extends EstadisticoPonderacion {
 		retorno = numerador/avp;
 		return retorno;
 	}
-
 }
