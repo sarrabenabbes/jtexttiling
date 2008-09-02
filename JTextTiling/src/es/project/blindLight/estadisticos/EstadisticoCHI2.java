@@ -7,7 +7,7 @@ import es.project.blindLight.NGrama;
 
 /**
  * <p>Clase que realiza los cálculos referidos al estadístico conocido como "Chi-cuadrado".
- * La fórmula puede verse <a href="">aquí</a></p>
+ * La fórmula puede verse <a href="http://petra.euitio.uniovi.es/~i6952349/pmwiki/pmwiki.php?n=Main.Estadisticos">aquí</a></p>
  * @author Daniel Fernández Aller
  */
 public class EstadisticoCHI2 extends EstadisticoPonderacion{;

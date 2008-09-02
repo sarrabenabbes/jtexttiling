@@ -40,7 +40,7 @@ public abstract class EstadisticoPonderacion {
 	
 	/**
 	 * <p>Calcula un valor en base a las probabilidades de los fragmentos iniciales
-	 * y finales del n-grama. La fórmula puede verse <a href="">aquí</a></p>
+	 * y finales del n-grama. La fórmula puede verse <a href="http://petra.euitio.uniovi.es/~i6952349/pmwiki/pmwiki.php?n=Main.Estadisticos">aquí</a></p>
 	 * @param ngrama N-grama del que calcularemos su valor Avp
 	 * @param listaDesc Lista de fragmentos de los n-gramas del texto
 	 * @return Devuelve un valor utilizado en el cálculo del peso del n-grama por los
@@ -144,7 +144,7 @@ public abstract class EstadisticoPonderacion {
 	 * <p>Método utilizado para calcular los valores Avx y Avy, según sea necesario (se
 	 * distingue mediante el parámetro esAvx). Este valor es el resultado de sumar la
 	 * frecuencia absoluta de los fragmentos (iniciales o finales), y dividirlo por la
-	 * longitud del n-grama - 1. La fórmula puede verse <a href="">aquí</a></p>
+	 * longitud del n-grama - 1. La fórmula puede verse <a href="http://petra.euitio.uniovi.es/~i6952349/pmwiki/pmwiki.php?n=Main.Estadisticos">aquí</a></p>
 	 * @param ngrama N-grama del que estamos calculando su peso
 	 * @param listaDesc Lista de fragmentos de los n-gramas del texto
 	 * @param esAvx Si es true, calcula el valor avx, y si es false el valor avy 
