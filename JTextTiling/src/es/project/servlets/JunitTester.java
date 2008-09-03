@@ -19,7 +19,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import junit.framework.TestFailure;
 
-import es.project.bd.configuracion.ConfigBD;
 import es.project.facade.FacadeBD;
 import es.project.junit.configuracion.ConfigJunit;
 import es.project.procesadorXSLT.ProcesadorXSLT;
@@ -27,7 +26,8 @@ import es.project.procesadorXSLT.ProcesadorXSLT;
 import test.suite.TestGeneral;
 
 public class JunitTester extends HttpServlet {
-
+	private static final long serialVersionUID = -1;
+	
 	private final String TOKEN_APERTURA_1 = "<error>";
 	private final String TOKEN_APERTURA_2 = "<failure>";
 	private final String TOKEN_CIERRE_1 = "</error>";
@@ -78,7 +78,7 @@ public class JunitTester extends HttpServlet {
 										ConfigJunit.getRutaHtml()};
 		
 		try {
-			ProcesadorXSLT.main(args);
+			ProcesadorXSLT.validarDocumento(args);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

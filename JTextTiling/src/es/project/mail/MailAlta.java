@@ -37,6 +37,10 @@ public class MailAlta extends Mail{
 		borrarArchivos();
 	}
 	
+	/**
+	 * <p>Borra archivos residuales derivados de la creación del fichero html que se
+	 * enviará en el cuerpo del correo.</p>
+	 */
 	protected void borrarArchivos() {
 		//TODO poco importante
 		//borrar mail.xml
@@ -63,7 +67,7 @@ public class MailAlta extends Mail{
 			bw.close();
 			
 			String args[] = new String[]{this.rutaXsl, super.rutaXml, super.rutaHtml};
- 			ProcesadorXSLT.main(args);
+ 			ProcesadorXSLT.validarDocumento(args);
 			
 		} catch (FileNotFoundException fnfe) {
 			System.err.println("file not found exception: \n" + fnfe.getMessage());

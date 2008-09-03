@@ -15,17 +15,16 @@ public class EstadisticasUsuarios implements Estadisticas{
 	private FacadeBD facadeBD = new FacadeBD();
 	
 	/**
-	 * <p>Devuelve el número total de usuarios presentes en la aplicación</p>
-	 */
-	public int getNum() {
-		return facadeBD.getNumeroUsuarios();
-	}
-	
-	/**
 	 * <p>Devuelve una lista conteniendo todos los usuarios presentes en la aplicación</p>
 	 */
 	public List<Usuario> getLista() {
 		return facadeBD.getTodosUsuarios();
 	}
-
+	
+	/**
+	 * <p>Devuelve el número total de usuarios presentes en la aplicación</p>
+	 */
+	public int getNum() {
+		return facadeBD.getNumeroUsuarios();
+	}
 }

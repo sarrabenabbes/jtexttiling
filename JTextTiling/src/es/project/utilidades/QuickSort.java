@@ -110,7 +110,6 @@ public class QuickSort {
 	 * @return <p>Array de enteros de dos dimensiones</p>
 	 */
 	public int[][] getArray() {
-		System.out.println(this.toString());
 		return this.arrayOrdenable;
 	}
 	

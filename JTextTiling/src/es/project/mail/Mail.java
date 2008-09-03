@@ -45,7 +45,12 @@ public abstract class Mail {
 	 */
 	public abstract void enviarMail(Usuario usuario) throws MessagingException;
 	
+	/**
+	 * <p>Borra archivos residuales derivados de la creación del fichero html que se
+	 * enviará en el cuerpo del correo.</p>
+	 */
 	protected abstract void borrarArchivos();
+	
 	/**
 	 * <p>Crea los objetos necesarios para enviar el mensaje e inicializa las propiedades
 	 * según los valores obtenidos del fichero de propiedades.</p>
@@ -107,10 +112,6 @@ public abstract class Mail {
 		adjunto.setDataHandler(new DataHandler(source));
 		adjunto.setFileName(fichero.getName());
 		mp.addBodyPart(adjunto);
-	}
-	
-	protected void borrarTemp(){
-		
 	}
 	
 	/**

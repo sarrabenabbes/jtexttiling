@@ -447,7 +447,7 @@ public class TestBD {
 		
 		String args[] = new String[]{rutaXsl, rutaXml, rutaHtml};
 		try {
-			ProcesadorXSLT.main(args);
+			ProcesadorXSLT.validarDocumento(args);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
